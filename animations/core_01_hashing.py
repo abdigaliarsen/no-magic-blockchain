@@ -13,7 +13,7 @@ from PIL import Image, ImageDraw, ImageFont
 # CONFIG
 # ============================================================================
 
-W, H = 1000, 620
+W, H = 1000, 660
 BG = (13, 17, 23)
 
 # Colors
@@ -71,7 +71,7 @@ def _mono(size):
 
 
 F_TITLE = _try_font(30, bold=True)
-F_SUBTITLE = _try_font(15)
+F_SUBTITLE = _try_font(14)
 F_HEAD = _try_font(20, bold=True)
 F_BODY = _try_font(14)
 F_BODY_B = _try_font(14, bold=True)
@@ -80,8 +80,9 @@ F_SMALL_B = _try_font(11, bold=True)
 F_MONO = _mono(13)
 F_MONO_LG = _mono(15)
 F_MONO_SM = _mono(11)
+F_MONO_XS = _mono(10)
 F_BIG = _try_font(22, bold=True)
-F_HUGE = _mono(36)
+F_HASH_SYM = _mono(28)
 
 
 # ============================================================================
@@ -95,6 +96,12 @@ def rrect(d, box, fill, outline=None, r=10, w=2):
 def txt_c(d, s, cx, cy, f=F_BODY, fill=TEXT):
     bb = d.textbbox((0, 0), s, font=f)
     d.text((cx - (bb[2] - bb[0]) // 2, cy - (bb[3] - bb[1]) // 2), s, font=f, fill=fill)
+
+
+def char_width(d, f):
+    """Get the width of a single character in a monospace font."""
+    bb = d.textbbox((0, 0), "0", font=f)
+    return bb[2] - bb[0]
 
 
 def circle(d, cx, cy, r, fill, outline=None):
@@ -147,16 +154,16 @@ def draw_static(d):
     # LEFT HALF: "What is hashing?" — the big picture
     # ════════════════════════════════════════════════════════
 
-    lx = 30  # left margin
-    mid = W // 2 - 15  # divider
+    lx = 30
+    mid = W // 2 - 15
 
     # ── Section: Any Input → Fixed Output ──
-    sy = 90
+    sy = 88
     d.text((lx, sy), "Any input", font=F_HEAD, fill=GREEN)
     solid_arrow(d, lx + 145, sy + 12, lx + 175, sy + 12, GREEN)
     d.text((lx + 182, sy), "Fixed-size output", font=F_HEAD, fill=YELLOW)
 
-    # Show 3 examples in a clean table
+    # Show 3 examples
     examples = [
         ('"hi"', "8f14e45f"),
         ('"hello world"', "b94d27b9"),
@@ -167,25 +174,25 @@ def draw_static(d):
         # Input pill
         rrect(d, (lx, ty, lx + 170, ty + 30), CYAN_BG, CYAN, r=8)
         txt_c(d, inp, lx + 85, ty + 15, F_MONO, TEXT)
-        # Arrow
+        # Arrow in
         solid_arrow(d, lx + 178, ty + 15, lx + 210, ty + 15, (70, 80, 95))
-        # SHA-256 box (only on first row)
+        # SHA-256 box (spans all 3 rows, drawn once)
         if inp == '"hi"':
             rrect(d, (lx + 215, ty - 5, lx + 315, ty + 85), PURPLE_BG, PURPLE, r=10)
-            txt_c(d, "SHA-256", lx + 265, ty + 25, F_BODY_B, PURPLE)
-            txt_c(d, "#", lx + 265, ty + 55, F_HUGE, PURPLE)
+            txt_c(d, "SHA-256", lx + 265, ty + 20, F_BODY_B, PURPLE)
+            txt_c(d, "#", lx + 265, ty + 52, F_HASH_SYM, PURPLE)
         # Arrow out
         solid_arrow(d, lx + 323, ty + 15, lx + 350, ty + 15, (70, 80, 95))
-        # Output pill
+        # Output pill — light text on dark yellow bg
         rrect(d, (lx + 355, ty, lx + 475, ty + 30), YELLOW_BG, YELLOW, r=8)
-        txt_c(d, out + "...", lx + 415, ty + 15, F_MONO, (30, 30, 20))
+        txt_c(d, out + "...", lx + 415, ty + 15, F_MONO, YELLOW)
         ty += 34
 
-    # ── Key insight ──
+    # Key insight
     ty += 12
-    rrect(d, (lx, ty, mid, ty + 32), (25, 40, 30), GREEN, r=8)
+    rrect(d, (lx, ty, mid, ty + 30), (25, 40, 30), GREEN, r=8)
     txt_c(d, "Always 64 hex characters out, no matter the input size",
-          (lx + mid) // 2, ty + 16, F_SMALL_B, GREEN)
+          (lx + mid) // 2, ty + 15, F_SMALL_B, GREEN)
 
     # ════════════════════════════════════════════════════════
     # RIGHT HALF: Three key properties
@@ -193,82 +200,84 @@ def draw_static(d):
 
     rx = mid + 30
     rw = W - 30
-    py = 90
+    py = 88
 
     d.text((rx, py), "Three Key Properties", font=F_HEAD, fill=ORANGE)
     py += 32
 
-    # Property 1: Deterministic
-    rrect(d, (rx, py, rw, py + 52), DARK_BOX, (50, 60, 75), r=8)
-    circle(d, rx + 18, py + 26, 12, GREEN)
-    txt_c(d, "1", rx + 18, py + 26, F_BODY_B, (20, 20, 20))
-    d.text((rx + 38, py + 6), "Deterministic", font=F_BODY_B, fill=GREEN)
-    d.text((rx + 38, py + 26), "Same input → always same output", font=F_SMALL, fill=TEXT_DIM)
-    py += 60
-
-    # Property 2: One-way
-    rrect(d, (rx, py, rw, py + 52), DARK_BOX, (50, 60, 75), r=8)
-    circle(d, rx + 18, py + 26, 12, PINK)
-    txt_c(d, "2", rx + 18, py + 26, F_BODY_B, (20, 20, 20))
-    d.text((rx + 38, py + 6), "One-way", font=F_BODY_B, fill=PINK)
-    d.text((rx + 38, py + 26), "Cannot reverse hash → find input", font=F_SMALL, fill=TEXT_DIM)
-    py += 60
-
-    # Property 3: Unique
-    rrect(d, (rx, py, rw, py + 52), DARK_BOX, (50, 60, 75), r=8)
-    circle(d, rx + 18, py + 26, 12, YELLOW)
-    txt_c(d, "3", rx + 18, py + 26, F_BODY_B, (20, 20, 20))
-    d.text((rx + 38, py + 6), "Collision-resistant", font=F_BODY_B, fill=YELLOW)
-    d.text((rx + 38, py + 26), "Different inputs → different outputs", font=F_SMALL, fill=TEXT_DIM)
+    props = [
+        ("1", GREEN, "Deterministic", "Same input always gives same output"),
+        ("2", PINK, "One-way", "Cannot reverse the hash to find input"),
+        ("3", YELLOW, "Collision-resistant", "Different inputs give different outputs"),
+    ]
+    for num, color, title, desc in props:
+        rrect(d, (rx, py, rw, py + 52), DARK_BOX, (50, 60, 75), r=8)
+        circle(d, rx + 18, py + 26, 12, color)
+        txt_c(d, num, rx + 18, py + 26, F_BODY_B, (20, 20, 20))
+        d.text((rx + 38, py + 8), title, font=F_BODY_B, fill=color)
+        d.text((rx + 38, py + 28), desc, font=F_SMALL, fill=TEXT_DIM)
+        py += 60
 
     # ════════════════════════════════════════════════════════
     # BOTTOM: Avalanche Effect — the hero visual
     # ════════════════════════════════════════════════════════
 
-    ay = 310
+    ay = 320
     rrect(d, (25, ay, W - 25, H - 15), (18, 22, 30), (50, 60, 75), r=12)
 
     # Title
     d.text((45, ay + 12), "Avalanche Effect", font=F_HEAD, fill=RED)
-    d.text((250, ay + 16), "— change 1 letter, get a completely different hash", font=F_BODY, fill=TEXT_DIM)
+    d.text((250, ay + 16), "-- change 1 letter, the hash changes completely",
+           font=F_BODY, fill=TEXT_DIM)
 
-    # Two rows: original and modified
+    # ── Two rows: original and modified ──
     row_y = ay + 52
 
+    # Measure char width for proper spacing
+    cw = char_width(d, F_MONO_XS)
+
+    # Truncate hashes to fit (show first 32 chars + "...")
+    ha_full = hashlib.sha256(b"hello").hexdigest()
+    hb_full = hashlib.sha256(b"hallo").hexdigest()
+    show_chars = 40
+    ha = ha_full[:show_chars]
+    hb = hb_full[:show_chars]
+
+    hash_x = 210  # where hash text starts
+
     # Row 1: "hello"
-    rrect(d, (45, row_y, 170, row_y + 40), CYAN_BG, CYAN, r=8)
-    txt_c(d, '"hello"', 107, row_y + 20, F_MONO_LG, TEXT)
+    rrect(d, (45, row_y, 155, row_y + 36), CYAN_BG, CYAN, r=8)
+    txt_c(d, '"hello"', 100, row_y + 18, F_MONO_LG, TEXT)
+    d.text((hash_x, row_y + 5), ha + "...", font=F_MONO_XS, fill=CYAN)
+    d.text((hash_x, row_y + 20), "hash of \"hello\"", font=F_SMALL, fill=TEXT_DIM)
 
-    ha = hashlib.sha256(b"hello").hexdigest()
-    d.text((250, row_y + 4), ha, font=F_MONO, fill=CYAN)
-    d.text((250, row_y + 24), "← hash of \"hello\"", font=F_SMALL, fill=TEXT_DIM)
+    # Row 2: "hallo"
+    row_y2 = row_y + 52
+    rrect(d, (45, row_y2, 155, row_y2 + 36), RED_BG, RED, r=8)
+    txt_c(d, '"hallo"', 100, row_y2 + 18, F_MONO_LG, TEXT)
 
-    # Row 2: "hallo" (one char different)
-    row_y2 = row_y + 55
-    rrect(d, (45, row_y2, 170, row_y2 + 40), RED_BG, RED, r=8)
-    txt_c(d, '"hallo"', 107, row_y2 + 20, F_MONO_LG, TEXT)
+    # Color each hex char: red if different, dim green if same
+    for i in range(show_chars):
+        ca, cb = ha_full[i], hb_full[i]
+        x = hash_x + i * cw
+        color = RED if ca != cb else (50, 70, 55)
+        d.text((x, row_y2 + 5), cb, font=F_MONO_XS, fill=color)
+    d.text((hash_x + show_chars * cw + 2, row_y2 + 5), "...", font=F_MONO_XS, fill=RED)
+    d.text((hash_x, row_y2 + 20), "hash of \"hallo\" — red = changed", font=F_SMALL, fill=TEXT_DIM)
 
-    hb = hashlib.sha256(b"hallo").hexdigest()
-    # Color each hex char: red if different, dim if same
-    for i, (ca, cb) in enumerate(zip(ha, hb)):
-        x = 250 + i * 10.2
-        color = RED if ca != cb else (45, 55, 45)
-        d.text((x, row_y2 + 4), cb, font=F_MONO, fill=color)
-    d.text((250, row_y2 + 24), "← hash of \"hallo\" (red = changed characters)", font=F_SMALL, fill=TEXT_DIM)
-
-    # Changed letter callout
-    d.text((180, row_y + 28), "e", font=F_BODY_B, fill=CYAN)
-    solid_arrow(d, 192, row_y + 45, 192, row_y2 + 5, YELLOW)
-    d.text((180, row_y2 - 8), "a", font=F_BODY_B, fill=RED)
-    d.text((198, row_y + 35), "just 1", font=F_SMALL, fill=YELLOW)
-    d.text((198, row_y + 47), "letter!", font=F_SMALL, fill=YELLOW)
+    # "just 1 letter" callout — between the two input pills
+    callout_x = 162
+    callout_y = row_y + 36
+    d.text((callout_x, callout_y), "e -> a", font=F_SMALL_B, fill=YELLOW)
+    d.text((callout_x, callout_y + 14), "just 1", font=F_SMALL_B, fill=YELLOW)
+    d.text((callout_x, callout_y + 26), "letter!", font=F_SMALL_B, fill=YELLOW)
 
     # ── Bit grid: visual impact ──
-    bits_a = bin(int(ha, 16))[2:].zfill(256)
-    bits_b = bin(int(hb, 16))[2:].zfill(256)
+    bits_a = bin(int(ha_full, 16))[2:].zfill(256)
+    bits_b = bin(int(hb_full, 16))[2:].zfill(256)
     flipped = sum(a != b for a, b in zip(bits_a, bits_b))
 
-    gy = row_y2 + 58
+    gy = row_y2 + 50
     d.text((45, gy), "Bit-by-bit comparison (256 bits):", font=F_SMALL_B, fill=TEXT_DIM)
 
     cell, gap = 8, 1
@@ -285,63 +294,51 @@ def draw_static(d):
             y = gy0 + row * (cell + gap)
             d.rectangle([x, y, x + cell, y + cell], fill=c)
 
-    # Stats badge — the punchline
-    badge_y = gy0 + 4 * (cell + gap) + 12
+    # Legend
+    badge_y = gy0 + 4 * (cell + gap) + 10
     pct = flipped / 256 * 100
 
-    # Legend
     d.rectangle([gx0, badge_y + 2, gx0 + 10, badge_y + 12], fill=(25, 50, 45))
     d.text((gx0 + 14, badge_y), "= same", font=F_SMALL, fill=TEXT_DIM)
-    d.rectangle([gx0 + 80, badge_y + 2, gx0 + 90, badge_y + 12], fill=RED)
-    d.text((gx0 + 94, badge_y), "= different", font=F_SMALL, fill=RED)
+    d.rectangle([gx0 + 75, badge_y + 2, gx0 + 85, badge_y + 12], fill=RED)
+    d.text((gx0 + 89, badge_y), "= different", font=F_SMALL, fill=RED)
 
-    # Big stat
-    rrect(d, (320, badge_y - 8, 680, badge_y + 28), YELLOW_BG, YELLOW, r=14)
-    txt_c(d, f"{flipped} / 256 bits changed  =  {pct:.0f}%", 500, badge_y + 10, F_BODY_B, YELLOW)
+    # Big stat badge
+    rrect(d, (280, badge_y - 6, 620, badge_y + 26), YELLOW_BG, YELLOW, r=14)
+    txt_c(d, f"{flipped} / 256 bits changed  =  {pct:.0f}%", 450, badge_y + 10, F_BODY_B, YELLOW)
 
-    # Bottom-right: Why it matters
-    wx = 700
-    wy = ay + 55
-    rrect(d, (wx, wy, W - 40, H - 30), (25, 30, 20), GREEN, r=10)
-    d.text((wx + 12, wy + 8), "Why it matters", font=F_BODY_B, fill=GREEN)
+    # ── Bottom-right: Why it matters ──
+    wx = 640
+    wy = row_y - 5
+    rrect(d, (wx, wy, W - 40, H - 30), (22, 28, 22), GREEN, r=10)
+    d.text((wx + 14, wy + 10), "Why it matters", font=F_BODY_B, fill=GREEN)
+
     uses = [
-        "• Tamper detection",
-        "  (any change is obvious)",
-        "",
-        "• Password storage",
-        "  (store hash, not password)",
-        "",
-        "• Blockchain integrity",
-        "  (blocks linked by hashes)",
-        "",
-        "• Digital signatures",
-        "  (sign hash, not full doc)",
+        ("Tamper detection", "(any change is obvious)"),
+        ("Password storage", "(store hash, not password)"),
+        ("Blockchain", "(blocks linked by hashes)"),
+        ("Digital signatures", "(sign hash, not full doc)"),
     ]
-    for i, line in enumerate(uses):
-        col = GREEN if line.startswith("•") else TEXT_DIM
-        d.text((wx + 12, wy + 30 + i * 17), line, font=F_SMALL, fill=col)
+    uy = wy + 35
+    for title, desc in uses:
+        circle(d, wx + 22, uy + 7, 4, GREEN)
+        d.text((wx + 32, uy - 2), title, font=F_SMALL_B, fill=GREEN)
+        d.text((wx + 32, uy + 13), desc, font=F_SMALL, fill=TEXT_DIM)
+        uy += 35
 
     # Footer
     txt_c(d, "core/01_hashing.py", W // 2, H - 8, F_SMALL, (60, 65, 75))
 
 
 def draw_arrows(d, phase):
-    """Animated arrows: input → SHA-256 → output for each row."""
-    sy = 90 + 35
-    for i in range(3):
-        ty = sy + i * 34
-        # Arrows are already drawn as solid in static.
-        # Animate the main flow arrow from SHA-256 box to output
-        pass
-
-    # Animate the big arrow between "hello" and "hallo" sections
-    ay = 310
+    """Animated marching arrows."""
+    ay = 320
     row_y = ay + 52
-    # Pulsing dotted line connecting the two hash outputs
-    arrow_march(d, [(250, row_y + 40), (250, row_y + 55)], YELLOW, phase, w=1)
-    # Animated arrow from inputs to hash area
-    arrow_march(d, [(170, row_y + 20), (245, row_y + 20)], CYAN, phase)
-    arrow_march(d, [(170, row_y + 75), (245, row_y + 75)], RED, phase)
+    row_y2 = row_y + 52
+
+    # Animated arrows from input pills to hash text
+    arrow_march(d, [(155, row_y + 18), (205, row_y + 18)], CYAN, phase)
+    arrow_march(d, [(155, row_y2 + 18), (205, row_y2 + 18)], RED, phase)
 
 
 # ============================================================================
