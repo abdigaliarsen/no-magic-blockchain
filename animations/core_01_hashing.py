@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw, ImageFont
 # CONFIG
 # ============================================================================
 
-W, H = 800, 480
+W, H = 800, 510
 BG = (13, 17, 23)
 
 CYAN = (56, 189, 248)
@@ -240,7 +240,7 @@ def draw_frame(frame_idx):
                   color_1=CYAN, color_0=(20, 45, 58))
 
     # --- Row 2: "hallo" with diff bar ---
-    r2y = r1y + bar_h + 18
+    r2y = r1y + bar_h + 40
 
     rrect(d, (45, r2y, 160, r2y + bar_h), RED_BG, RED, r=8)
     txt_c(d, '"hallo"', 102, r2y + bar_h // 2, F_MONO, WHITE)
@@ -262,13 +262,14 @@ def draw_frame(frame_idx):
         d.rectangle([scan_x, bar_y, scan_x + sw, bar_y + bar_h],
                     fill=(255, 255, 255, 180))
 
-    # --- "e → a" callout between bars ---
-    callout_x = 55
-    callout_w = 100
-    callout_y = r1y + bar_h + 1
-    rrect(d, (callout_x, callout_y, callout_x + callout_w, callout_y + 16),
-          (60, 55, 15), YELLOW, r=5)
-    txt_c(d, "e \u2192 a", callout_x + callout_w // 2, callout_y + 8, F_SM_B, YELLOW)
+    # --- "e → a" callout centered between rows ---
+    callout_w = 130
+    callout_h = 22
+    callout_x = 50
+    callout_y = r1y + bar_h + (r2y - r1y - bar_h - callout_h) // 2
+    rrect(d, (callout_x, callout_y, callout_x + callout_w, callout_y + callout_h),
+          (60, 55, 15), YELLOW, r=8)
+    txt_c(d, "e \u2192 a  (1 letter)", callout_x + callout_w // 2, callout_y + callout_h // 2, F_SM_B, YELLOW)
 
     # --- Stats row ---
     sy = r2y + bar_h + 16
