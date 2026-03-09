@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw, ImageFont
 # CONFIG
 # ============================================================================
 
-W, H = 800, 510
+W, H = 800, 550
 BG = (13, 17, 23)
 
 CYAN = (56, 189, 248)
@@ -229,7 +229,7 @@ def draw_frame(frame_idx):
     bar_w = W - 50 - bar_x
     bar_h = 30
     r1y = ay + 58
-    row_gap = 55
+    row_gap = 80
 
     rrect(d, (inp_x, r1y, inp_x + inp_w, r1y + bar_h), CYAN_BG, CYAN, r=8)
     txt_c(d, '"hello"', inp_x + inp_w // 2, r1y + bar_h // 2, F_MONO, WHITE)
