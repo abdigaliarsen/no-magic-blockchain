@@ -226,9 +226,9 @@ def draw_static(d):
     # Hash in a pill (truncated, safe width)
     hash_lx = 220
     hash_rx = 420
-    rrect(d, (hash_lx, r1y, hash_rx, r1y + 30), CYAN_BG, (40, 80, 100), r=7)
-    txt_c(d, ha_short, (hash_lx + hash_rx) // 2, r1y + 10, F_MONO_HASH, CYAN)
-    d.text((hash_lx, r1y + 20), "hash of \"hello\"", font=F_SM, fill=TEXT_DIM)
+    rrect(d, (hash_lx, r1y, hash_rx, r1y + 26), CYAN_BG, (40, 80, 100), r=7)
+    txt_c(d, ha_short, (hash_lx + hash_rx) // 2, r1y + 13, F_MONO_HASH, CYAN)
+    d.text((hash_lx, r1y + 28), "hash of \"hello\"", font=F_SM, fill=TEXT_DIM)
 
     # Callout: "just 1 letter" — between the two rows, clear yellow badge
     cy = r1y + 38
@@ -244,18 +244,18 @@ def draw_static(d):
     txt_c(d, '"hallo"', 95, r2y + 15, F_MONO, TEXT)
 
     # Hash pill with per-character coloring
-    rrect(d, (hash_lx, r2y, hash_rx, r2y + 30), RED_BG, (100, 40, 40), r=7)
+    rrect(d, (hash_lx, r2y, hash_rx, r2y + 26), RED_BG, (100, 40, 40), r=7)
     cw_mono = d.textbbox((0, 0), "0", font=F_MONO_HASH)[2]
     # Center the truncated hash text inside the pill
     total_text_w = len(hb_short) * cw_mono
     text_start_x = (hash_lx + hash_rx) // 2 - total_text_w // 2
     for i, ch in enumerate(hb_short):
         if i < len(ha):
-            clr = RED if ha[i] != hb[i] else (40, 60, 50)
+            clr = RED if ha[i] != hb[i] else (90, 110, 100)
         else:
             clr = TEXT_DIM  # the "..." part
         d.text((text_start_x + i * cw_mono, r2y + 5), ch, font=F_MONO_HASH, fill=clr)
-    d.text((hash_lx, r2y + 20), "hash of \"hallo\" \u2014 red = changed",
+    d.text((hash_lx, r2y + 28), "hash of \"hallo\" \u2014 red = changed",
            font=F_SM, fill=TEXT_DIM)
 
     # Bit grid
