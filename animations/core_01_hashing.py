@@ -224,28 +224,32 @@ def draw_frame(frame_idx):
     txt_c(d, "change 1 letter, the entire hash changes", W // 2, ay + 38, F_SM, DIM)
 
     # --- Row 1: "hello" with hash bar ---
-    bar_x = 175
-    bar_w = W - 225 - bar_x
-    bar_h = 28
+    inp_x, inp_w = 70, 100
+    bar_x = 220
+    bar_w = W - 50 - bar_x
+    bar_h = 30
     r1y = ay + 58
+    row_gap = 55
 
-    rrect(d, (45, r1y, 160, r1y + bar_h), CYAN_BG, CYAN, r=8)
-    txt_c(d, '"hello"', 102, r1y + bar_h // 2, F_MONO, WHITE)
+    rrect(d, (inp_x, r1y, inp_x + inp_w, r1y + bar_h), CYAN_BG, CYAN, r=8)
+    txt_c(d, '"hello"', inp_x + inp_w // 2, r1y + bar_h // 2, F_MONO, WHITE)
 
     # Arrow
-    arrow_march(d, 162, r1y + bar_h // 2, bar_x - 2, r1y + bar_h // 2, CYAN, phase)
+    arrow_march(d, inp_x + inp_w + 4, r1y + bar_h // 2,
+                bar_x - 4, r1y + bar_h // 2, CYAN, phase)
 
     # Hash visualized as color bar
     draw_hash_bar(d, bar_x, r1y, bar_w, bar_h, BITS_A,
                   color_1=CYAN, color_0=(20, 45, 58))
 
     # --- Row 2: "hallo" with diff bar ---
-    r2y = r1y + bar_h + 40
+    r2y = r1y + row_gap
 
-    rrect(d, (45, r2y, 160, r2y + bar_h), RED_BG, RED, r=8)
-    txt_c(d, '"hallo"', 102, r2y + bar_h // 2, F_MONO, WHITE)
+    rrect(d, (inp_x, r2y, inp_x + inp_w, r2y + bar_h), RED_BG, RED, r=8)
+    txt_c(d, '"hallo"', inp_x + inp_w // 2, r2y + bar_h // 2, F_MONO, WHITE)
 
-    arrow_march(d, 162, r2y + bar_h // 2, bar_x - 2, r2y + bar_h // 2, RED, phase)
+    arrow_march(d, inp_x + inp_w + 4, r2y + bar_h // 2,
+                bar_x - 4, r2y + bar_h // 2, RED, phase)
 
     # Show differences: red = changed bit, dark = same
     draw_diff_bar(d, bar_x, r2y, bar_w, bar_h,
@@ -256,20 +260,23 @@ def draw_frame(frame_idx):
 
     # --- Scanning highlight line (animated) ---
     scan_x = bar_x + (frame_idx / N_FRAMES) * bar_w
-    # Draw a thin bright vertical line sweeping across both bars
     sw = 3
     for bar_y in [r1y, r2y]:
         d.rectangle([scan_x, bar_y, scan_x + sw, bar_y + bar_h],
                     fill=(255, 255, 255, 180))
 
-    # --- "e → a" callout centered between rows ---
-    callout_w = 130
-    callout_h = 22
-    callout_x = 50
-    callout_y = r1y + bar_h + (r2y - r1y - bar_h - callout_h) // 2
-    rrect(d, (callout_x, callout_y, callout_x + callout_w, callout_y + callout_h),
-          (60, 55, 15), YELLOW, r=8)
-    txt_c(d, "e \u2192 a  (1 letter)", callout_x + callout_w // 2, callout_y + callout_h // 2, F_SM_B, YELLOW)
+    # --- Vertical connector + "e → a" label on the left ---
+    # Small vertical arrow from hello box bottom to hallo box top
+    conn_x = inp_x + inp_w // 2
+    d.line([(conn_x, r1y + bar_h + 2), (conn_x, r2y - 2)], fill=YELLOW, width=2)
+    # Arrowhead pointing down
+    for s in [-1, 1]:
+        d.line([(conn_x, r2y - 2),
+                (conn_x + s * 5, r2y - 9)], fill=YELLOW, width=2)
+    # Label to the right of the arrow
+    label_x = conn_x + 12
+    label_y = (r1y + bar_h + r2y) // 2
+    d.text((label_x, label_y - 6), "e \u2192 a", font=F_SM_B, fill=YELLOW)
 
     # --- Stats row ---
     sy = r2y + bar_h + 16
