@@ -15,30 +15,23 @@ detailed inline comments explaining the *why* behind every decision.
 
 ## See It In Action
 
+### Core (chain-agnostic fundamentals)
+
 <table>
 <tr>
-<td align="center"><strong>SHA-256 Hashing</strong><br><a href="core/01_hashing.py"><img src="assets/gifs/core_01_hashing.gif" width="800"></a><br><em>Hashing & Avalanche Effect</em></td>
+<td align="center"><strong>SHA-256 Hashing</strong><br><a href="core/01_hashing.py"><img src="assets/gifs/core_01_hashing.gif" width="280"></a><br><em>Hashing & Avalanche Effect</em></td>
+<td align="center"><strong>Public Key Crypto</strong><br><a href="core/02_public_key_crypto.py"><img src="assets/gifs/core_02_public_key_crypto.gif" width="280"></a><br><em>Elliptic Curve Key Generation</em></td>
+<td align="center"><strong>Digital Signatures</strong><br><a href="core/03_digital_signatures.py"><img src="assets/gifs/core_03_digital_signatures.gif" width="280"></a><br><em>ECDSA Tamper Detection</em></td>
 </tr>
 <tr>
-<td align="center"><strong>Elliptic Curve Key Generation</strong><br><a href="core/02_public_key_crypto.py"><img src="assets/gifs/core_02_public_key_crypto.gif" width="800"></a><br><em>Public Key Cryptography</em></td>
+<td align="center"><strong>Merkle Trees</strong><br><a href="core/04_merkle_trees.py"><img src="assets/gifs/core_04_merkle_trees.gif" width="280"></a><br><em>Binary Hash Trees & Proofs</em></td>
+<td align="center"><strong>The Blockchain</strong><br><a href="core/05_blockchain.py"><img src="assets/gifs/core_05_blockchain.gif" width="280"></a><br><em>Blocks Linked by Hashes</em></td>
+<td align="center"><strong>Proof of Work</strong><br><a href="core/06_consensus_pow.py"><img src="assets/gifs/core_06_consensus_pow.gif" width="280"></a><br><em>Difficulty Adjustment</em></td>
 </tr>
 <tr>
-<td align="center"><strong>ECDSA Digital Signatures</strong><br><a href="core/03_digital_signatures.py"><img src="assets/gifs/core_03_digital_signatures.gif" width="800"></a><br><em>Tamper Detection</em></td>
-</tr>
-<tr>
-<td align="center"><strong>Merkle Tree Structure</strong><br><a href="core/04_merkle_trees.py"><img src="assets/gifs/core_04_merkle_trees.gif" width="800"></a><br><em>Binary Hash Trees & Proofs</em></td>
-</tr>
-<tr>
-<td align="center"><strong>The Blockchain</strong><br><a href="core/05_blockchain.py"><img src="assets/gifs/core_05_blockchain.gif" width="800"></a><br><em>Blocks Linked by Hashes</em></td>
-</tr>
-<tr>
-<td align="center"><strong>Proof of Work</strong><br><a href="core/06_consensus_pow.py"><img src="assets/gifs/core_06_consensus_pow.gif" width="800"></a><br><em>Difficulty Adjustment</em></td>
-</tr>
-<tr>
-<td align="center"><strong>Proof of Stake</strong><br><a href="core/07_consensus_pos.py"><img src="assets/gifs/core_07_consensus_pos.gif" width="800"></a><br><em>Validator Rewards & Slashing</em></td>
-</tr>
-<tr>
-<td align="center"><strong>P2P Gossip Network</strong><br><a href="core/08_p2p_network.py"><img src="assets/gifs/core_08_p2p_network.gif" width="800"></a><br><em>Gossip Propagation</em></td>
+<td align="center"><strong>Proof of Stake</strong><br><a href="core/07_consensus_pos.py"><img src="assets/gifs/core_07_consensus_pos.gif" width="280"></a><br><em>Rewards & Slashing</em></td>
+<td align="center"><strong>P2P Network</strong><br><a href="core/08_p2p_network.py"><img src="assets/gifs/core_08_p2p_network.gif" width="280"></a><br><em>Gossip Propagation</em></td>
+<td></td>
 </tr>
 </table>
 
@@ -46,28 +39,19 @@ detailed inline comments explaining the *why* behind every decision.
 
 <table>
 <tr>
-<td align="center"><strong>UTXO Transaction Chain</strong><br><a href="bitcoin/01_utxo_model.py"><img src="assets/gifs/bitcoin_01_utxo_model.gif" width="800"></a><br><em>Inputs, Outputs & Change</em></td>
+<td align="center"><strong>UTXO Model</strong><br><a href="bitcoin/01_utxo_model.py"><img src="assets/gifs/bitcoin_01_utxo_model.gif" width="280"></a><br><em>Inputs, Outputs & Change</em></td>
+<td align="center"><strong>Bitcoin Script</strong><br><a href="bitcoin/02_bitcoin_script.py"><img src="assets/gifs/bitcoin_02_bitcoin_script.gif" width="280"></a><br><em>Lock & Unlock</em></td>
+<td align="center"><strong>Mining</strong><br><a href="bitcoin/03_mining.py"><img src="assets/gifs/bitcoin_03_mining.gif" width="280"></a><br><em>Block Assembly</em></td>
 </tr>
 <tr>
-<td align="center"><strong>Bitcoin Script: Lock & Unlock</strong><br><a href="bitcoin/02_bitcoin_script.py"><img src="assets/gifs/bitcoin_02_bitcoin_script.gif" width="800"></a><br><em>Stack-Based Script VM</em></td>
+<td align="center"><strong>SPV Verification</strong><br><a href="bitcoin/04_spv_verification.py"><img src="assets/gifs/bitcoin_04_spv_verification.gif" width="280"></a><br><em>Full Node vs Light Client</em></td>
+<td align="center"><strong>HD Wallets</strong><br><a href="bitcoin/05_wallets_hd.py"><img src="assets/gifs/bitcoin_05_wallets_hd.gif" width="280"></a><br><em>BIP-32 Derivation Paths</em></td>
+<td align="center"><strong>SegWit</strong><br><a href="bitcoin/06_segwit.py"><img src="assets/gifs/bitcoin_06_segwit.gif" width="280"></a><br><em>The Malleability Fix</em></td>
 </tr>
 <tr>
-<td align="center"><strong>Bitcoin Mining: Block Assembly</strong><br><a href="bitcoin/03_mining.py"><img src="assets/gifs/bitcoin_03_mining.gif" width="800"></a><br><em>Coinbase Tx & Double SHA-256</em></td>
-</tr>
-<tr>
-<td align="center"><strong>SPV Verification</strong><br><a href="bitcoin/04_spv_verification.py"><img src="assets/gifs/bitcoin_04_spv_verification.gif" width="800"></a><br><em>Full Node vs Light Client</em></td>
-</tr>
-<tr>
-<td align="center"><strong>HD Wallets: BIP-32 Derivation</strong><br><a href="bitcoin/05_wallets_hd.py"><img src="assets/gifs/bitcoin_05_wallets_hd.gif" width="800"></a><br><em>Derivation Paths</em></td>
-</tr>
-<tr>
-<td align="center"><strong>SegWit: The Malleability Fix</strong><br><a href="bitcoin/06_segwit.py"><img src="assets/gifs/bitcoin_06_segwit.gif" width="800"></a><br><em>Legacy vs SegWit</em></td>
-</tr>
-<tr>
-<td align="center"><strong>Difficulty Adjustment</strong><br><a href="bitcoin/07_difficulty_adjustment.py"><img src="assets/gifs/bitcoin_07_difficulty_adjustment.gif" width="800"></a><br><em>The Thermostat</em></td>
-</tr>
-<tr>
-<td align="center"><strong>Lightning Network</strong><br><a href="bitcoin/08_simplified_lightning.py"><img src="assets/gifs/bitcoin_08_simplified_lightning.gif" width="800"></a><br><em>Payment Channels</em></td>
+<td align="center"><strong>Difficulty Adjustment</strong><br><a href="bitcoin/07_difficulty_adjustment.py"><img src="assets/gifs/bitcoin_07_difficulty_adjustment.gif" width="280"></a><br><em>The Thermostat</em></td>
+<td align="center"><strong>Lightning Network</strong><br><a href="bitcoin/08_simplified_lightning.py"><img src="assets/gifs/bitcoin_08_simplified_lightning.gif" width="280"></a><br><em>Payment Channels</em></td>
+<td></td>
 </tr>
 </table>
 
@@ -75,28 +59,19 @@ detailed inline comments explaining the *why* behind every decision.
 
 <table>
 <tr>
-<td align="center"><strong>Accounts & State Transitions</strong><br><a href="ethereum/01_accounts_state.py"><img src="assets/gifs/ethereum_01_accounts_state.gif" width="800"></a><br><em>World State Before/After</em></td>
+<td align="center"><strong>Accounts & State</strong><br><a href="ethereum/01_accounts_state.py"><img src="assets/gifs/ethereum_01_accounts_state.gif" width="280"></a><br><em>World State Transitions</em></td>
+<td align="center"><strong>EVM Architecture</strong><br><a href="ethereum/02_evm_bytecode.py"><img src="assets/gifs/ethereum_02_evm_bytecode.gif" width="280"></a><br><em>Stack, Memory & Storage</em></td>
+<td align="center"><strong>EIP-1559 Gas</strong><br><a href="ethereum/03_gas_execution.py"><img src="assets/gifs/ethereum_03_gas_execution.gif" width="280"></a><br><em>Base Fee & Block Fullness</em></td>
 </tr>
 <tr>
-<td align="center"><strong>EVM Architecture</strong><br><a href="ethereum/02_evm_bytecode.py"><img src="assets/gifs/ethereum_02_evm_bytecode.gif" width="800"></a><br><em>Stack, Memory & Storage</em></td>
+<td align="center"><strong>RLP Encoding</strong><br><a href="ethereum/04_rlp_encoding.py"><img src="assets/gifs/ethereum_04_rlp_encoding.gif" width="280"></a><br><em>Nested Structure</em></td>
+<td align="center"><strong>Merkle Patricia Trie</strong><br><a href="ethereum/05_merkle_patricia_trie.py"><img src="assets/gifs/ethereum_05_merkle_patricia_trie.gif" width="280"></a><br><em>Trie Path Routing</em></td>
+<td align="center"><strong>Smart Contracts</strong><br><a href="ethereum/06_smart_contracts.py"><img src="assets/gifs/ethereum_06_smart_contracts.gif" width="280"></a><br><em>Deploy vs Call</em></td>
 </tr>
 <tr>
-<td align="center"><strong>EIP-1559 Fee Market</strong><br><a href="ethereum/03_gas_execution.py"><img src="assets/gifs/ethereum_03_gas_execution.gif" width="800"></a><br><em>Base Fee & Block Fullness</em></td>
-</tr>
-<tr>
-<td align="center"><strong>RLP Nested Encoding</strong><br><a href="ethereum/04_rlp_encoding.py"><img src="assets/gifs/ethereum_04_rlp_encoding.gif" width="800"></a><br><em>Recursive Length Prefix</em></td>
-</tr>
-<tr>
-<td align="center"><strong>Merkle Patricia Trie</strong><br><a href="ethereum/05_merkle_patricia_trie.py"><img src="assets/gifs/ethereum_05_merkle_patricia_trie.gif" width="800"></a><br><em>Trie Structure & Path Routing</em></td>
-</tr>
-<tr>
-<td align="center"><strong>Smart Contracts: Deploy vs Call</strong><br><a href="ethereum/06_smart_contracts.py"><img src="assets/gifs/ethereum_06_smart_contracts.gif" width="800"></a><br><em>Contract Lifecycle</em></td>
-</tr>
-<tr>
-<td align="center"><strong>Casper FFG Finality</strong><br><a href="ethereum/07_pos_beacon.py"><img src="assets/gifs/ethereum_07_pos_beacon.gif" width="800"></a><br><em>Beacon Chain & Supermajority Voting</em></td>
-</tr>
-<tr>
-<td align="center"><strong>ABI Encoding: Function Selector</strong><br><a href="ethereum/08_abi_encoding.py"><img src="assets/gifs/ethereum_08_abi_encoding.gif" width="800"></a><br><em>Calldata Construction</em></td>
+<td align="center"><strong>Casper FFG</strong><br><a href="ethereum/07_pos_beacon.py"><img src="assets/gifs/ethereum_07_pos_beacon.gif" width="280"></a><br><em>Beacon Chain Finality</em></td>
+<td align="center"><strong>ABI Encoding</strong><br><a href="ethereum/08_abi_encoding.py"><img src="assets/gifs/ethereum_08_abi_encoding.gif" width="280"></a><br><em>Function Selectors & Calldata</em></td>
+<td></td>
 </tr>
 </table>
 
@@ -104,28 +79,19 @@ detailed inline comments explaining the *why* behind every decision.
 
 <table>
 <tr>
-<td align="center"><strong>Solana Account Anatomy</strong><br><a href="solana/01_accounts_model.py"><img src="assets/gifs/solana_01_accounts_model.gif" width="800"></a><br><em>Wallet vs Program Account</em></td>
+<td align="center"><strong>Account Model</strong><br><a href="solana/01_accounts_model.py"><img src="assets/gifs/solana_01_accounts_model.gif" width="280"></a><br><em>Wallet vs Program Account</em></td>
+<td align="center"><strong>Proof of History</strong><br><a href="solana/02_proof_of_history.py"><img src="assets/gifs/solana_02_proof_of_history.gif" width="280"></a><br><em>Event Ordering</em></td>
+<td align="center"><strong>Program Model</strong><br><a href="solana/03_programs.py"><img src="assets/gifs/solana_03_programs.gif" width="280"></a><br><em>Solana vs Ethereum</em></td>
 </tr>
 <tr>
-<td align="center"><strong>Proof of History: Event Ordering</strong><br><a href="solana/02_proof_of_history.py"><img src="assets/gifs/solana_02_proof_of_history.gif" width="800"></a><br><em>Cryptographic Time Proof</em></td>
+<td align="center"><strong>Transactions</strong><br><a href="solana/04_transactions.py"><img src="assets/gifs/solana_04_transactions.gif" width="280"></a><br><em>Anatomy & Signing</em></td>
+<td align="center"><strong>Rent Model</strong><br><a href="solana/05_rent_model.py"><img src="assets/gifs/solana_05_rent_model.gif" width="280"></a><br><em>Pay Rent or Die</em></td>
+<td align="center"><strong>SPL Tokens</strong><br><a href="solana/06_token_program.py"><img src="assets/gifs/solana_06_token_program.gif" width="280"></a><br><em>Mint, Transfer & Burn</em></td>
 </tr>
 <tr>
-<td align="center"><strong>Solana vs Ethereum: Program Model</strong><br><a href="solana/03_programs.py"><img src="assets/gifs/solana_03_programs.gif" width="800"></a><br><em>Code/State Separation</em></td>
-</tr>
-<tr>
-<td align="center"><strong>Transaction Anatomy</strong><br><a href="solana/04_transactions.py"><img src="assets/gifs/solana_04_transactions.gif" width="800"></a><br><em>Signatures, Message & Instructions</em></td>
-</tr>
-<tr>
-<td align="center"><strong>Rent: Pay or Die</strong><br><a href="solana/05_rent_model.py"><img src="assets/gifs/solana_05_rent_model.gif" width="800"></a><br><em>Rent Exemption vs Purge</em></td>
-</tr>
-<tr>
-<td align="center"><strong>SPL Token Operations</strong><br><a href="solana/06_token_program.py"><img src="assets/gifs/solana_06_token_program.gif" width="800"></a><br><em>Mint, Transfer & Burn</em></td>
-</tr>
-<tr>
-<td align="center"><strong>Naive Broadcast vs Turbine</strong><br><a href="solana/07_turbine_propagation.py"><img src="assets/gifs/solana_07_turbine_propagation.gif" width="800"></a><br><em>O(N) vs O(log N) Propagation</em></td>
-</tr>
-<tr>
-<td align="center"><strong>Gulf Stream: Leader Pipeline</strong><br><a href="solana/08_gulf_stream.py"><img src="assets/gifs/solana_08_gulf_stream.gif" width="800"></a><br><em>Mempool-less Transaction Forwarding</em></td>
+<td align="center"><strong>Turbine</strong><br><a href="solana/07_turbine_propagation.py"><img src="assets/gifs/solana_07_turbine_propagation.gif" width="280"></a><br><em>Broadcast vs Tree Propagation</em></td>
+<td align="center"><strong>Gulf Stream</strong><br><a href="solana/08_gulf_stream.py"><img src="assets/gifs/solana_08_gulf_stream.gif" width="280"></a><br><em>Leader Schedule Pipeline</em></td>
+<td></td>
 </tr>
 </table>
 
