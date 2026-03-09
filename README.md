@@ -71,6 +71,64 @@ detailed inline comments explaining the *why* behind every decision.
 </tr>
 </table>
 
+### Ethereum
+
+<table>
+<tr>
+<td align="center"><strong>Accounts & State Transitions</strong><br><a href="ethereum/01_accounts_state.py"><img src="assets/gifs/ethereum_01_accounts_state.gif" width="800"></a><br><em>World State Before/After</em></td>
+</tr>
+<tr>
+<td align="center"><strong>EVM Architecture</strong><br><a href="ethereum/02_evm_bytecode.py"><img src="assets/gifs/ethereum_02_evm_bytecode.gif" width="800"></a><br><em>Stack, Memory & Storage</em></td>
+</tr>
+<tr>
+<td align="center"><strong>EIP-1559 Fee Market</strong><br><a href="ethereum/03_gas_execution.py"><img src="assets/gifs/ethereum_03_gas_execution.gif" width="800"></a><br><em>Base Fee & Block Fullness</em></td>
+</tr>
+<tr>
+<td align="center"><strong>RLP Nested Encoding</strong><br><a href="ethereum/04_rlp_encoding.py"><img src="assets/gifs/ethereum_04_rlp_encoding.gif" width="800"></a><br><em>Recursive Length Prefix</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Merkle Patricia Trie</strong><br><a href="ethereum/05_merkle_patricia_trie.py"><img src="assets/gifs/ethereum_05_merkle_patricia_trie.gif" width="800"></a><br><em>Trie Structure & Path Routing</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Smart Contracts: Deploy vs Call</strong><br><a href="ethereum/06_smart_contracts.py"><img src="assets/gifs/ethereum_06_smart_contracts.gif" width="800"></a><br><em>Contract Lifecycle</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Casper FFG Finality</strong><br><a href="ethereum/07_pos_beacon.py"><img src="assets/gifs/ethereum_07_pos_beacon.gif" width="800"></a><br><em>Beacon Chain & Supermajority Voting</em></td>
+</tr>
+<tr>
+<td align="center"><strong>ABI Encoding: Function Selector</strong><br><a href="ethereum/08_abi_encoding.py"><img src="assets/gifs/ethereum_08_abi_encoding.gif" width="800"></a><br><em>Calldata Construction</em></td>
+</tr>
+</table>
+
+### Solana
+
+<table>
+<tr>
+<td align="center"><strong>Solana Account Anatomy</strong><br><a href="solana/01_accounts_model.py"><img src="assets/gifs/solana_01_accounts_model.gif" width="800"></a><br><em>Wallet vs Program Account</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Proof of History: Event Ordering</strong><br><a href="solana/02_proof_of_history.py"><img src="assets/gifs/solana_02_proof_of_history.gif" width="800"></a><br><em>Cryptographic Time Proof</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Solana vs Ethereum: Program Model</strong><br><a href="solana/03_programs.py"><img src="assets/gifs/solana_03_programs.gif" width="800"></a><br><em>Code/State Separation</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Transaction Anatomy</strong><br><a href="solana/04_transactions.py"><img src="assets/gifs/solana_04_transactions.gif" width="800"></a><br><em>Signatures, Message & Instructions</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Rent: Pay or Die</strong><br><a href="solana/05_rent_model.py"><img src="assets/gifs/solana_05_rent_model.gif" width="800"></a><br><em>Rent Exemption vs Purge</em></td>
+</tr>
+<tr>
+<td align="center"><strong>SPL Token Operations</strong><br><a href="solana/06_token_program.py"><img src="assets/gifs/solana_06_token_program.gif" width="800"></a><br><em>Mint, Transfer & Burn</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Naive Broadcast vs Turbine</strong><br><a href="solana/07_turbine_propagation.py"><img src="assets/gifs/solana_07_turbine_propagation.gif" width="800"></a><br><em>O(N) vs O(log N) Propagation</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Gulf Stream: Leader Pipeline</strong><br><a href="solana/08_gulf_stream.py"><img src="assets/gifs/solana_08_gulf_stream.gif" width="800"></a><br><em>Mempool-less Transaction Forwarding</em></td>
+</tr>
+</table>
+
 ## Quick Start
 
 ```bash
