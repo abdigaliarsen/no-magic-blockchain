@@ -42,6 +42,35 @@ detailed inline comments explaining the *why* behind every decision.
 </tr>
 </table>
 
+### Bitcoin
+
+<table>
+<tr>
+<td align="center"><strong>UTXO Transaction Chain</strong><br><a href="bitcoin/01_utxo_model.py"><img src="assets/gifs/bitcoin_01_utxo_model.gif" width="800"></a><br><em>Inputs, Outputs & Change</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Bitcoin Script: Lock & Unlock</strong><br><a href="bitcoin/02_bitcoin_script.py"><img src="assets/gifs/bitcoin_02_bitcoin_script.gif" width="800"></a><br><em>Stack-Based Script VM</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Bitcoin Mining: Block Assembly</strong><br><a href="bitcoin/03_mining.py"><img src="assets/gifs/bitcoin_03_mining.gif" width="800"></a><br><em>Coinbase Tx & Double SHA-256</em></td>
+</tr>
+<tr>
+<td align="center"><strong>SPV Verification</strong><br><a href="bitcoin/04_spv_verification.py"><img src="assets/gifs/bitcoin_04_spv_verification.gif" width="800"></a><br><em>Full Node vs Light Client</em></td>
+</tr>
+<tr>
+<td align="center"><strong>HD Wallets: BIP-32 Derivation</strong><br><a href="bitcoin/05_wallets_hd.py"><img src="assets/gifs/bitcoin_05_wallets_hd.gif" width="800"></a><br><em>Derivation Paths</em></td>
+</tr>
+<tr>
+<td align="center"><strong>SegWit: The Malleability Fix</strong><br><a href="bitcoin/06_segwit.py"><img src="assets/gifs/bitcoin_06_segwit.gif" width="800"></a><br><em>Legacy vs SegWit</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Difficulty Adjustment</strong><br><a href="bitcoin/07_difficulty_adjustment.py"><img src="assets/gifs/bitcoin_07_difficulty_adjustment.gif" width="800"></a><br><em>The Thermostat</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Lightning Network</strong><br><a href="bitcoin/08_simplified_lightning.py"><img src="assets/gifs/bitcoin_08_simplified_lightning.gif" width="800"></a><br><em>Payment Channels</em></td>
+</tr>
+</table>
+
 ## Quick Start
 
 ```bash
