@@ -13,6 +13,25 @@ Inspired by [no-magic](https://github.com/Mathews-Tom/no-magic).
 Each script uses **only the Python 3.10+ standard library**, runs in seconds on any machine, and includes
 detailed inline comments explaining the *why* behind every decision.
 
+## See It In Action
+
+<table>
+<tr>
+<td align="center"><strong>SHA-256 From Scratch</strong><br><a href="core/01_hashing.py"><img src="assets/gifs/core_01_hashing.gif" width="400"></a></td>
+<td align="center"><strong>Blockchain & Tamper Detection</strong><br><a href="core/05_blockchain.py"><img src="assets/gifs/core_05_blockchain.gif" width="400"></a></td>
+</tr>
+<tr>
+<td align="center"><strong>Proof-of-Work Mining</strong><br><a href="core/06_consensus_pow.py"><img src="assets/gifs/core_06_consensus_pow.gif" width="400"></a></td>
+<td align="center"><strong>EVM Bytecode Interpreter</strong><br><a href="ethereum/02_evm_bytecode.py"><img src="assets/gifs/ethereum_02_evm_bytecode.gif" width="400"></a></td>
+</tr>
+<tr>
+<td align="center"><strong>Bitcoin Script VM</strong><br><a href="bitcoin/02_bitcoin_script.py"><img src="assets/gifs/bitcoin_02_bitcoin_script.gif" width="400"></a></td>
+<td align="center"><strong>Proof of History</strong><br><a href="solana/02_proof_of_history.py"><img src="assets/gifs/solana_02_proof_of_history.gif" width="400"></a></td>
+</tr>
+</table>
+
+> Every script produces visual, step-by-step output like these. Just run `python3 <script>.py`.
+
 ## Quick Start
 
 ```bash
