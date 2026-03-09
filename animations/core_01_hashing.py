@@ -13,7 +13,7 @@ from PIL import Image, ImageDraw, ImageFont
 # CONFIG
 # ============================================================================
 
-W, H = 1000, 750
+W, H = 1000, 650
 BG = (13, 17, 23)
 
 CYAN = (56, 189, 248)
@@ -36,6 +36,9 @@ TEXT_DIM = (110, 120, 135)
 
 N_FRAMES = 20
 FRAME_MS = 120
+
+# Max right edge for any content (generous margin from 1000px width)
+MAX_X = 940
 
 
 def _font(size, bold=False):
@@ -61,17 +64,17 @@ def _mono(size):
     return ImageFont.load_default()
 
 
-F_TITLE = _font(28, True)
-F_SUB = _font(13)
-F_HEAD = _font(18, True)
-F_BODY = _font(13)
-F_BODY_B = _font(13, True)
-F_SM = _font(11)
-F_SM_B = _font(11, True)
-F_MONO = _mono(12)
+F_TITLE = _font(24, True)
+F_SUB = _font(12)
+F_HEAD = _font(16, True)
+F_BODY = _font(12)
+F_BODY_B = _font(12, True)
+F_SM = _font(10)
+F_SM_B = _font(10, True)
+F_MONO = _mono(11)
 F_MONO_SM = _mono(9)
-F_MONO_LG = _mono(14)
-F_HASH = _mono(24)
+F_MONO_HASH = _mono(9)
+F_HASH = _mono(20)
 
 
 def rrect(d, box, fill, outline=None, r=10, w=2):
@@ -88,7 +91,7 @@ def dot(d, cx, cy, r, fill):
 
 
 def num_badge(d, cx, cy, num, color):
-    dot(d, cx, cy, 12, color)
+    dot(d, cx, cy, 11, color)
     txt_c(d, str(num), cx, cy, F_BODY_B, (15, 15, 20))
 
 
@@ -96,8 +99,8 @@ def arrow_solid(d, x0, y0, x1, y1, color, w=2):
     d.line([(x0, y0), (x1, y1)], fill=color, width=w)
     a = math.atan2(y1 - y0, x1 - x0)
     for s in [-1, 1]:
-        d.line([(x1, y1), (x1 - 9 * math.cos(a + s * 0.4),
-                           y1 - 9 * math.sin(a + s * 0.4))], fill=color, width=w)
+        d.line([(x1, y1), (x1 - 8 * math.cos(a + s * 0.4),
+                           y1 - 8 * math.sin(a + s * 0.4))], fill=color, width=w)
 
 
 def arrow_march(d, pts, color, phase, dash=8, gap=5, w=2):
@@ -115,8 +118,13 @@ def arrow_march(d, pts, color, phase, dash=8, gap=5, w=2):
     x0, y0 = pts[-2]; x1, y1 = pts[-1]
     a = math.atan2(y1 - y0, x1 - x0)
     for s in [-1, 1]:
-        d.line([(x1, y1), (x1 - 10 * math.cos(a + s * 0.4),
-                           y1 - 10 * math.sin(a + s * 0.4))], fill=color, width=w)
+        d.line([(x1, y1), (x1 - 9 * math.cos(a + s * 0.4),
+                           y1 - 9 * math.sin(a + s * 0.4))], fill=color, width=w)
+
+
+def trunc_hash(h, n=24):
+    """Truncate hash to n chars + ellipsis."""
+    return h[:n] + "..."
 
 
 # ============================================================================
@@ -126,59 +134,60 @@ def arrow_march(d, pts, color, phase, dash=8, gap=5, w=2):
 def draw_static(d):
 
     # ── TITLE ──
-    txt_c(d, "SHA-256  Hashing", W // 2, 26, F_TITLE, CYAN)
-    txt_c(d, "A hash function is a digital fingerprint machine", W // 2, 52, F_SUB, TEXT_DIM)
+    txt_c(d, "SHA-256  Hashing", W // 2, 22, F_TITLE, CYAN)
+    txt_c(d, "A hash function is a digital fingerprint machine", W // 2, 46, F_SUB, TEXT_DIM)
 
     # ════════════════════════════════════════════════════════
-    # TOP-LEFT: Input → SHA-256 → Output
+    # TOP-LEFT: Input → SHA-256 → Output  (x: 40..510)
     # ════════════════════════════════════════════════════════
 
-    lx, sy = 30, 80
+    lx, sy = 40, 70
     d.text((lx, sy), "Any input", font=F_HEAD, fill=GREEN)
-    arrow_solid(d, lx + 125, sy + 10, lx + 150, sy + 10, GREEN)
-    d.text((lx + 157, sy), "Fixed-size output", font=F_HEAD, fill=YELLOW)
+    arrow_solid(d, lx + 115, sy + 9, lx + 135, sy + 9, GREEN)
+    d.text((lx + 142, sy), "Fixed-size output", font=F_HEAD, fill=YELLOW)
 
     examples = ['"hi"', '"hello world"', '(entire book)']
     outputs = ["8f14e45f...", "b94d27b9...", "9f86d081..."]
 
-    ty = sy + 30
+    ty = sy + 28
     # SHA-256 box spanning all rows
-    sha_x = lx + 195
-    sha_w = 100
-    rrect(d, (sha_x, ty - 5, sha_x + sha_w, ty + 88), PURPLE_BG, PURPLE, r=10)
-    txt_c(d, "SHA-256", sha_x + sha_w // 2, ty + 22, F_BODY_B, PURPLE)
-    txt_c(d, "#", sha_x + sha_w // 2, ty + 55, F_HASH, PURPLE)
+    sha_x = lx + 175
+    sha_w = 90
+    rrect(d, (sha_x, ty - 4, sha_x + sha_w, ty + 82), PURPLE_BG, PURPLE, r=10)
+    txt_c(d, "SHA-256", sha_x + sha_w // 2, ty + 18, F_BODY_B, PURPLE)
+    txt_c(d, "#", sha_x + sha_w // 2, ty + 48, F_HASH, PURPLE)
 
     for i, (inp, out) in enumerate(zip(examples, outputs)):
-        row_y = ty + i * 32
+        row_y = ty + i * 30
         # Input pill
-        rrect(d, (lx, row_y, lx + 160, row_y + 26), CYAN_BG, CYAN, r=7)
-        txt_c(d, inp, lx + 80, row_y + 13, F_MONO, TEXT)
+        rrect(d, (lx, row_y, lx + 145, row_y + 24), CYAN_BG, CYAN, r=7)
+        txt_c(d, inp, lx + 72, row_y + 12, F_MONO, TEXT)
         # Arrow to SHA
-        arrow_solid(d, lx + 165, row_y + 13, sha_x, row_y + 13, (60, 70, 85))
+        arrow_solid(d, lx + 150, row_y + 12, sha_x, row_y + 12, (60, 70, 85))
         # Arrow from SHA
-        arrow_solid(d, sha_x + sha_w, row_y + 13, sha_x + sha_w + 25, row_y + 13, (60, 70, 85))
+        arrow_solid(d, sha_x + sha_w, row_y + 12, sha_x + sha_w + 20, row_y + 12, (60, 70, 85))
         # Output pill
-        ox = sha_x + sha_w + 30
-        rrect(d, (ox, row_y, ox + 120, row_y + 26), YELLOW_BG, YELLOW, r=7)
-        txt_c(d, out, ox + 60, row_y + 13, F_MONO, YELLOW)
+        ox = sha_x + sha_w + 25
+        rrect(d, (ox, row_y, ox + 110, row_y + 24), YELLOW_BG, YELLOW, r=7)
+        txt_c(d, out, ox + 55, row_y + 12, F_MONO, YELLOW)
 
     # Key insight
-    ky = ty + 100
-    rrect(d, (lx, ky, sha_x + sha_w + 155, ky + 26), GREEN_BG, GREEN, r=7)
+    ky = ty + 94
+    insight_right = sha_x + sha_w + 140
+    rrect(d, (lx, ky, insight_right, ky + 22), GREEN_BG, GREEN, r=7)
     txt_c(d, "Always 64 hex characters, no matter the input size",
-          (lx + sha_x + sha_w + 155) // 2, ky + 13, F_SM_B, GREEN)
+          (lx + insight_right) // 2, ky + 11, F_SM_B, GREEN)
 
     # ════════════════════════════════════════════════════════
-    # TOP-RIGHT: Properties
+    # TOP-RIGHT: Properties  (x: 550..960)
     # ════════════════════════════════════════════════════════
 
-    rx = 560
-    rw = W - 30
-    py = 80
+    rx = 550
+    rw = MAX_X
+    py = 70
 
     d.text((rx, py), "Key Properties", font=F_HEAD, fill=ORANGE)
-    py += 28
+    py += 26
 
     props = [
         ("1", GREEN, "Deterministic", "Same input always gives same output"),
@@ -186,48 +195,67 @@ def draw_static(d):
         ("3", YELLOW, "Collision-resistant", "Different inputs give different outputs"),
     ]
     for num, color, title, desc in props:
-        rrect(d, (rx, py, rw, py + 48), DARK_BOX, (45, 55, 70), r=8)
-        num_badge(d, rx + 16, py + 24, num, color)
-        d.text((rx + 35, py + 6), title, font=F_BODY_B, fill=color)
-        d.text((rx + 35, py + 24), desc, font=F_SM, fill=TEXT_DIM)
-        py += 56
+        rrect(d, (rx, py, rw, py + 44), DARK_BOX, (45, 55, 70), r=8)
+        num_badge(d, rx + 15, py + 22, num, color)
+        d.text((rx + 32, py + 5), title, font=F_BODY_B, fill=color)
+        d.text((rx + 32, py + 22), desc, font=F_SM, fill=TEXT_DIM)
+        py += 50
 
     # ════════════════════════════════════════════════════════
     # MIDDLE: Avalanche Effect — full width
     # ════════════════════════════════════════════════════════
 
-    ay = 300
-    rrect(d, (25, ay, W - 25, 570), (18, 22, 30), (50, 60, 75), r=12)
+    ay = 280
+    av_bottom = 540
+    rrect(d, (30, ay, W - 30, av_bottom), (18, 22, 30), (50, 60, 75), r=12)
 
-    d.text((45, ay + 12), "Avalanche Effect", font=F_HEAD, fill=RED)
-    d.text((230, ay + 15), "-- change 1 letter, the entire hash changes",
+    d.text((50, ay + 10), "Avalanche Effect", font=F_HEAD, fill=RED)
+    d.text((220, ay + 13), "-- change 1 letter, the entire hash changes",
            font=F_BODY, fill=TEXT_DIM)
 
-    # Row 1: "hello" → its hash (FULL WIDTH available now)
-    r1y = ay + 48
-    rrect(d, (45, r1y, 145, r1y + 32), CYAN_BG, CYAN, r=7)
-    txt_c(d, '"hello"', 95, r1y + 16, F_MONO_LG, TEXT)
-
     ha = hashlib.sha256(b"hello").hexdigest()
-    d.text((220, r1y + 3), ha, font=F_MONO_SM, fill=CYAN)
-    d.text((220, r1y + 18), "hash of \"hello\"", font=F_SM, fill=TEXT_DIM)
-
-    # Callout: "just 1 letter" — clearly between the two rows
-    cy = r1y + 38
-    rrect(d, (55, cy, 200, cy + 28), (60, 55, 15), YELLOW, r=6)
-    txt_c(d, "only 1 letter changed:  e -> a", 127, cy + 14, F_SM_B, YELLOW)
-
-    # Row 2: "hallo" → its hash (colored per char)
-    r2y = cy + 36
-    rrect(d, (45, r2y, 145, r2y + 32), RED_BG, RED, r=7)
-    txt_c(d, '"hallo"', 95, r2y + 16, F_MONO_LG, TEXT)
-
     hb = hashlib.sha256(b"hallo").hexdigest()
-    cw_mono = d.textbbox((0, 0), "0", font=F_MONO_SM)[2]
-    for i, (ca, cb) in enumerate(zip(ha, hb)):
-        clr = RED if ca != cb else (40, 60, 50)
-        d.text((220 + i * cw_mono, r2y + 3), cb, font=F_MONO_SM, fill=clr)
-    d.text((220, r2y + 18), "hash of \"hallo\" — red = changed hex digits",
+    ha_short = trunc_hash(ha)
+    hb_short = trunc_hash(hb)
+
+    # Row 1: "hello" → its truncated hash
+    r1y = ay + 42
+    # Input pill
+    rrect(d, (50, r1y, 140, r1y + 30), CYAN_BG, CYAN, r=7)
+    txt_c(d, '"hello"', 95, r1y + 15, F_MONO, TEXT)
+    # Hash in a pill (truncated, safe width)
+    hash_lx = 220
+    hash_rx = 420
+    rrect(d, (hash_lx, r1y, hash_rx, r1y + 30), CYAN_BG, (40, 80, 100), r=7)
+    txt_c(d, ha_short, (hash_lx + hash_rx) // 2, r1y + 10, F_MONO_HASH, CYAN)
+    d.text((hash_lx, r1y + 20), "hash of \"hello\"", font=F_SM, fill=TEXT_DIM)
+
+    # Callout: "just 1 letter" — between the two rows, clear yellow badge
+    cy = r1y + 38
+    badge_w = 210
+    badge_lx = 60
+    rrect(d, (badge_lx, cy, badge_lx + badge_w, cy + 24), (60, 55, 15), YELLOW, r=6)
+    txt_c(d, "only 1 letter changed:  e \u2192 a",
+          badge_lx + badge_w // 2, cy + 12, F_SM_B, YELLOW)
+
+    # Row 2: "hallo" → its truncated hash (colored per char to show diff)
+    r2y = cy + 32
+    rrect(d, (50, r2y, 140, r2y + 30), RED_BG, RED, r=7)
+    txt_c(d, '"hallo"', 95, r2y + 15, F_MONO, TEXT)
+
+    # Hash pill with per-character coloring
+    rrect(d, (hash_lx, r2y, hash_rx, r2y + 30), RED_BG, (100, 40, 40), r=7)
+    cw_mono = d.textbbox((0, 0), "0", font=F_MONO_HASH)[2]
+    # Center the truncated hash text inside the pill
+    total_text_w = len(hb_short) * cw_mono
+    text_start_x = (hash_lx + hash_rx) // 2 - total_text_w // 2
+    for i, ch in enumerate(hb_short):
+        if i < len(ha):
+            clr = RED if ha[i] != hb[i] else (40, 60, 50)
+        else:
+            clr = TEXT_DIM  # the "..." part
+        d.text((text_start_x + i * cw_mono, r2y + 5), ch, font=F_MONO_HASH, fill=clr)
+    d.text((hash_lx, r2y + 20), "hash of \"hallo\" \u2014 red = changed",
            font=F_SM, fill=TEXT_DIM)
 
     # Bit grid
@@ -236,11 +264,11 @@ def draw_static(d):
     flipped = sum(a != b for a, b in zip(bits_a, bits_b))
     pct = flipped / 256 * 100
 
-    gy = r2y + 46
-    d.text((45, gy), "Bit-by-bit comparison (256 bits):", font=F_SM_B, fill=TEXT_DIM)
+    gy = r2y + 42
+    d.text((50, gy), "Bit-by-bit comparison (256 bits):", font=F_SM_B, fill=TEXT_DIM)
 
-    cell, gap = 7, 1
-    gx0, gy0 = 45, gy + 16
+    cell, gap = 6, 1
+    gx0, gy0 = 50, gy + 14
     for row in range(4):
         for col in range(64):
             idx = row * 64 + col
@@ -251,24 +279,26 @@ def draw_static(d):
             y = gy0 + row * (cell + gap)
             d.rectangle([x, y, x + cell, y + cell], fill=c)
 
-    # Legend + big stat on same line
-    ly = gy0 + 4 * (cell + gap) + 8
-    d.rectangle([gx0, ly + 2, gx0 + 10, ly + 12], fill=(25, 48, 42))
-    d.text((gx0 + 14, ly), "= same", font=F_SM, fill=TEXT_DIM)
-    d.rectangle([gx0 + 70, ly + 2, gx0 + 80, ly + 12], fill=RED)
-    d.text((gx0 + 84, ly), "= different", font=F_SM, fill=RED)
+    # Legend + stat
+    ly = gy0 + 4 * (cell + gap) + 6
+    d.rectangle([gx0, ly + 2, gx0 + 8, ly + 10], fill=(25, 48, 42))
+    d.text((gx0 + 12, ly), "= same", font=F_SM, fill=TEXT_DIM)
+    d.rectangle([gx0 + 60, ly + 2, gx0 + 68, ly + 10], fill=RED)
+    d.text((gx0 + 72, ly), "= different", font=F_SM, fill=RED)
 
-    rrect(d, (350, ly - 6, 640, ly + 22), YELLOW_BG, YELLOW, r=12)
+    stat_lx = 340
+    stat_rx = 600
+    rrect(d, (stat_lx, ly - 4, stat_rx, ly + 18), YELLOW_BG, YELLOW, r=10)
     txt_c(d, f"{flipped} / 256 bits changed  =  {pct:.0f}%",
-          495, ly + 8, F_BODY_B, YELLOW)
+          (stat_lx + stat_rx) // 2, ly + 7, F_BODY_B, YELLOW)
 
     # ════════════════════════════════════════════════════════
     # BOTTOM: Why it matters — horizontal strip
     # ════════════════════════════════════════════════════════
 
-    wy = 585
-    rrect(d, (25, wy, W - 25, H - 15), (20, 28, 22), GREEN, r=12)
-    d.text((45, wy + 10), "Why it matters", font=F_HEAD, fill=GREEN)
+    wy = 555
+    rrect(d, (30, wy, W - 30, H - 15), (20, 28, 22), GREEN, r=12)
+    d.text((50, wy + 8), "Why it matters", font=F_HEAD, fill=GREEN)
 
     uses = [
         ("Tamper detection", "any file change is obvious"),
@@ -276,24 +306,26 @@ def draw_static(d):
         ("Blockchain", "blocks are linked by hashes"),
         ("Digital signatures", "sign the hash, not the full doc"),
     ]
-    ux = 45
+    col_w = (W - 100) // 4  # evenly space 4 columns
+    ux = 50
     for title, desc in uses:
-        dot(d, ux + 6, wy + 48, 5, GREEN)
-        d.text((ux + 16, wy + 38), title, font=F_BODY_B, fill=GREEN)
-        d.text((ux + 16, wy + 56), desc, font=F_SM, fill=TEXT_DIM)
-        ux += 235
+        dot(d, ux + 5, wy + 42, 4, GREEN)
+        d.text((ux + 14, wy + 33), title, font=F_BODY_B, fill=GREEN)
+        d.text((ux + 14, wy + 49), desc, font=F_SM, fill=TEXT_DIM)
+        ux += col_w
 
     # Footer
     txt_c(d, "core/01_hashing.py", W // 2, H - 6, F_SM, (50, 55, 65))
 
 
 def draw_arrows(d, phase):
-    ay = 300
-    r1y = ay + 48
+    """Marching-ant arrows from input pills to hash pills in avalanche section."""
+    ay = 280
+    r1y = ay + 42
     cy = r1y + 38
-    r2y = cy + 36
-    arrow_march(d, [(145, r1y + 16), (215, r1y + 16)], CYAN, phase)
-    arrow_march(d, [(145, r2y + 16), (215, r2y + 16)], RED, phase)
+    r2y = cy + 32
+    arrow_march(d, [(140, r1y + 15), (218, r1y + 15)], CYAN, phase)
+    arrow_march(d, [(140, r2y + 15), (218, r2y + 15)], RED, phase)
 
 
 def main():
