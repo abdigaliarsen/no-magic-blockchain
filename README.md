@@ -17,7 +17,28 @@ detailed inline comments explaining the *why* behind every decision.
 
 <table>
 <tr>
-<td align="center"><strong>SHA-256 From Scratch</strong><br><a href="core/01_hashing.py"><img src="assets/gifs/core_01_hashing.gif" width="800"></a><br><em>Hashing & Avalanche Effect</em></td>
+<td align="center"><strong>SHA-256 Hashing</strong><br><a href="core/01_hashing.py"><img src="assets/gifs/core_01_hashing.gif" width="800"></a><br><em>Hashing & Avalanche Effect</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Elliptic Curve Key Generation</strong><br><a href="core/02_public_key_crypto.py"><img src="assets/gifs/core_02_public_key_crypto.gif" width="800"></a><br><em>Public Key Cryptography</em></td>
+</tr>
+<tr>
+<td align="center"><strong>ECDSA Digital Signatures</strong><br><a href="core/03_digital_signatures.py"><img src="assets/gifs/core_03_digital_signatures.gif" width="800"></a><br><em>Tamper Detection</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Merkle Tree Structure</strong><br><a href="core/04_merkle_trees.py"><img src="assets/gifs/core_04_merkle_trees.gif" width="800"></a><br><em>Binary Hash Trees & Proofs</em></td>
+</tr>
+<tr>
+<td align="center"><strong>The Blockchain</strong><br><a href="core/05_blockchain.py"><img src="assets/gifs/core_05_blockchain.gif" width="800"></a><br><em>Blocks Linked by Hashes</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Proof of Work</strong><br><a href="core/06_consensus_pow.py"><img src="assets/gifs/core_06_consensus_pow.gif" width="800"></a><br><em>Difficulty Adjustment</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Proof of Stake</strong><br><a href="core/07_consensus_pos.py"><img src="assets/gifs/core_07_consensus_pos.gif" width="800"></a><br><em>Validator Rewards & Slashing</em></td>
+</tr>
+<tr>
+<td align="center"><strong>P2P Gossip Network</strong><br><a href="core/08_p2p_network.py"><img src="assets/gifs/core_08_p2p_network.gif" width="800"></a><br><em>Gossip Propagation</em></td>
 </tr>
 </table>
 
