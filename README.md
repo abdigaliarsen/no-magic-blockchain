@@ -9,13 +9,17 @@ Inspired by [no-magic](https://github.com/Mathews-Tom/no-magic).
 
 ## What This Is
 
-32 self-contained Python scripts across 4 categories that implement blockchain concepts from scratch.
+64 self-contained Python scripts across 4 categories that implement blockchain concepts from scratch.
 Each script uses **only the Python 3.10+ standard library**, runs in seconds on any machine, and includes
 detailed inline comments explaining the *why* behind every decision.
+
+Scripts are organized into three tiers: **fundamentals** (core concepts), **intermediate** (deeper mechanics), and **advanced** (cutting-edge protocols).
 
 ## See It In Action
 
 ### Core (chain-agnostic fundamentals)
+
+#### Fundamentals
 
 <table>
 <tr>
@@ -35,7 +39,39 @@ detailed inline comments explaining the *why* behind every decision.
 </tr>
 </table>
 
+#### Intermediate
+
+<table>
+<tr>
+<td align="center"><strong>Shamir's Secret Sharing</strong><br><a href="core/intermediate/09_shamirs_secret_sharing.py"><img src="assets/gifs/core_09_shamirs_secret_sharing.gif" width="280"></a><br><em>Threshold Cryptography</em></td>
+<td align="center"><strong>Bloom Filters</strong><br><a href="core/intermediate/10_bloom_filters.py"><img src="assets/gifs/core_10_bloom_filters.gif" width="280"></a><br><em>Probabilistic Membership</em></td>
+<td align="center"><strong>VRFs</strong><br><a href="core/intermediate/11_verifiable_random_functions.py"><img src="assets/gifs/core_11_verifiable_random_functions.gif" width="280"></a><br><em>Provable Randomness</em></td>
+</tr>
+<tr>
+<td align="center"><strong>DHTs (Kademlia)</strong><br><a href="core/intermediate/12_distributed_hash_tables.py"><img src="assets/gifs/core_12_distributed_hash_tables.gif" width="280"></a><br><em>Decentralized Key-Value Store</em></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
+#### Advanced
+
+<table>
+<tr>
+<td align="center"><strong>Zero-Knowledge Proofs</strong><br><a href="core/advanced/13_zero_knowledge_proofs.py"><img src="assets/gifs/core_13_zero_knowledge_proofs.gif" width="280"></a><br><em>Schnorr & R1CS</em></td>
+<td align="center"><strong>BFT Consensus</strong><br><a href="core/advanced/14_bft_consensus.py"><img src="assets/gifs/core_14_bft_consensus.gif" width="280"></a><br><em>PBFT Byzantine Tolerance</em></td>
+<td align="center"><strong>Erasure Coding</strong><br><a href="core/advanced/15_erasure_coding.py"><img src="assets/gifs/core_15_erasure_coding.gif" width="280"></a><br><em>Reed-Solomon Recovery</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Optimistic Rollups</strong><br><a href="core/advanced/16_optimistic_rollups.py"><img src="assets/gifs/core_16_optimistic_rollups.gif" width="280"></a><br><em>L2 Fraud Proofs</em></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
 ### Bitcoin
+
+#### Fundamentals
 
 <table>
 <tr>
@@ -55,7 +91,39 @@ detailed inline comments explaining the *why* behind every decision.
 </tr>
 </table>
 
+#### Intermediate
+
+<table>
+<tr>
+<td align="center"><strong>Schnorr Signatures</strong><br><a href="bitcoin/intermediate/09_schnorr_signatures.py"><img src="assets/gifs/bitcoin_09_schnorr_signatures.gif" width="280"></a><br><em>BIP 340 & MuSig</em></td>
+<td align="center"><strong>Taproot & MAST</strong><br><a href="bitcoin/intermediate/10_taproot_mast.py"><img src="assets/gifs/bitcoin_10_taproot_mast.gif" width="280"></a><br><em>Script Trees & Privacy</em></td>
+<td align="center"><strong>Compact Blocks</strong><br><a href="bitcoin/intermediate/11_compact_block_relay.py"><img src="assets/gifs/bitcoin_11_compact_block_relay.gif" width="280"></a><br><em>BIP 152 Bandwidth Savings</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Timelocks & HTLCs</strong><br><a href="bitcoin/intermediate/12_timelocks_htlcs.py"><img src="assets/gifs/bitcoin_12_timelocks_htlcs.gif" width="280"></a><br><em>Atomic Swaps</em></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
+#### Advanced
+
+<table>
+<tr>
+<td align="center"><strong>Covenants</strong><br><a href="bitcoin/advanced/13_covenants.py"><img src="assets/gifs/bitcoin_13_covenants.gif" width="280"></a><br><em>OP_CTV Vaults</em></td>
+<td align="center"><strong>Miniscript</strong><br><a href="bitcoin/advanced/14_miniscript_compiler.py"><img src="assets/gifs/bitcoin_14_miniscript_compiler.gif" width="280"></a><br><em>Policy-to-Script Compiler</em></td>
+<td align="center"><strong>BitVM</strong><br><a href="bitcoin/advanced/15_simplified_bitvm.py"><img src="assets/gifs/bitcoin_15_simplified_bitvm.gif" width="280"></a><br><em>Fraud Proof Circuits</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Stratum V2</strong><br><a href="bitcoin/advanced/16_stratum_v2.py"><img src="assets/gifs/bitcoin_16_stratum_v2.gif" width="280"></a><br><em>Mining Pool Protocol</em></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
 ### Ethereum
+
+#### Fundamentals
 
 <table>
 <tr>
@@ -75,7 +143,39 @@ detailed inline comments explaining the *why* behind every decision.
 </tr>
 </table>
 
+#### Intermediate
+
+<table>
+<tr>
+<td align="center"><strong>SSZ Encoding</strong><br><a href="ethereum/intermediate/09_ssz_encoding.py"><img src="assets/gifs/ethereum_09_ssz_encoding.gif" width="280"></a><br><em>Merkleization & Proofs</em></td>
+<td align="center"><strong>ERC-20 Tokens</strong><br><a href="ethereum/intermediate/10_erc20_token.py"><img src="assets/gifs/ethereum_10_erc20_token.gif" width="280"></a><br><em>Fungible Token Standard</em></td>
+<td align="center"><strong>Blob Transactions</strong><br><a href="ethereum/intermediate/11_blob_transactions.py"><img src="assets/gifs/ethereum_11_blob_transactions.gif" width="280"></a><br><em>EIP-4844 Proto-Danksharding</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Account Abstraction</strong><br><a href="ethereum/intermediate/12_account_abstraction.py"><img src="assets/gifs/ethereum_12_account_abstraction.gif" width="280"></a><br><em>ERC-4337 Smart Wallets</em></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
+#### Advanced
+
+<table>
+<tr>
+<td align="center"><strong>MEV & Flashbots</strong><br><a href="ethereum/advanced/13_mev_flashbots.py"><img src="assets/gifs/ethereum_13_mev_flashbots.gif" width="280"></a><br><em>Sandwich Attacks & PBS</em></td>
+<td align="center"><strong>Verkle Trees</strong><br><a href="ethereum/advanced/14_verkle_trees.py"><img src="assets/gifs/ethereum_14_verkle_trees.gif" width="280"></a><br><em>Stateless Ethereum</em></td>
+<td align="center"><strong>EVM Precompiles</strong><br><a href="ethereum/advanced/15_evm_precompiles.py"><img src="assets/gifs/ethereum_15_evm_precompiles.gif" width="280"></a><br><em>Native Crypto Operations</em></td>
+</tr>
+<tr>
+<td align="center"><strong>devp2p Protocol</strong><br><a href="ethereum/advanced/16_devp2p_wire_protocol.py"><img src="assets/gifs/ethereum_16_devp2p_wire_protocol.gif" width="280"></a><br><em>RLPx & eth/68</em></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
 ### Solana
+
+#### Fundamentals
 
 <table>
 <tr>
@@ -95,6 +195,36 @@ detailed inline comments explaining the *why* behind every decision.
 </tr>
 </table>
 
+#### Intermediate
+
+<table>
+<tr>
+<td align="center"><strong>Tower BFT</strong><br><a href="solana/intermediate/09_tower_bft.py"><img src="assets/gifs/solana_09_tower_bft.gif" width="280"></a><br><em>PoH-Optimized Consensus</em></td>
+<td align="center"><strong>Sealevel</strong><br><a href="solana/intermediate/10_sealevel_parallel.py"><img src="assets/gifs/solana_10_sealevel_parallel.gif" width="280"></a><br><em>Parallel Transaction Runtime</em></td>
+<td align="center"><strong>Versioned Transactions</strong><br><a href="solana/intermediate/11_versioned_transactions.py"><img src="assets/gifs/solana_11_versioned_transactions.gif" width="280"></a><br><em>Address Lookup Tables</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Stake Economics</strong><br><a href="solana/intermediate/12_stake_economics.py"><img src="assets/gifs/solana_12_stake_economics.gif" width="280"></a><br><em>Inflation & Rewards</em></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
+#### Advanced
+
+<table>
+<tr>
+<td align="center"><strong>Jito MEV</strong><br><a href="solana/advanced/13_jito_mev_bundles.py"><img src="assets/gifs/solana_13_jito_mev_bundles.gif" width="280"></a><br><em>Bundle Auctions</em></td>
+<td align="center"><strong>PDAs & CPIs</strong><br><a href="solana/advanced/14_pdas_cpis_deep.py"><img src="assets/gifs/solana_14_pdas_cpis_deep.gif" width="280"></a><br><em>Program-Derived Addresses</em></td>
+<td align="center"><strong>Clockwork</strong><br><a href="solana/advanced/15_clockwork_automation.py"><img src="assets/gifs/solana_15_clockwork_automation.gif" width="280"></a><br><em>On-Chain Automation</em></td>
+</tr>
+<tr>
+<td align="center"><strong>Banking Stage</strong><br><a href="solana/advanced/16_banking_stage.py"><img src="assets/gifs/solana_16_banking_stage.gif" width="280"></a><br><em>TPU Pipeline</em></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
 ## Quick Start
 
 ```bash
@@ -107,7 +237,7 @@ python3 solana/fundamentals/02_proof_of_history.py
 
 ## Topics
 
-### Core (chain-agnostic fundamentals)
+### Core (chain-agnostic)
 
 | # | Script | Concept |
 |---|--------|---------|
@@ -119,6 +249,14 @@ python3 solana/fundamentals/02_proof_of_history.py
 | 06 | `core/fundamentals/06_consensus_pow.py` | Proof-of-work mining with difficulty adjustment |
 | 07 | `core/fundamentals/07_consensus_pos.py` | Proof-of-stake with validator selection and slashing |
 | 08 | `core/fundamentals/08_p2p_network.py` | Gossip protocol simulation with fork resolution |
+| 09 | `core/intermediate/09_shamirs_secret_sharing.py` | Shamir's secret sharing with Lagrange interpolation |
+| 10 | `core/intermediate/10_bloom_filters.py` | Probabilistic membership with false positive analysis |
+| 11 | `core/intermediate/11_verifiable_random_functions.py` | EC-based VRF with DLEQ proofs |
+| 12 | `core/intermediate/12_distributed_hash_tables.py` | Kademlia DHT with XOR routing |
+| 13 | `core/advanced/13_zero_knowledge_proofs.py` | Schnorr sigma protocol and R1CS circuits |
+| 14 | `core/advanced/14_bft_consensus.py` | PBFT with Byzantine fault simulation |
+| 15 | `core/advanced/15_erasure_coding.py` | Reed-Solomon encode/decode over GF(p) |
+| 16 | `core/advanced/16_optimistic_rollups.py` | L2 sequencer with fraud proofs and slashing |
 
 ### Bitcoin
 
@@ -132,6 +270,14 @@ python3 solana/fundamentals/02_proof_of_history.py
 | 06 | `bitcoin/fundamentals/06_segwit.py` | Segregated Witness and malleability fix |
 | 07 | `bitcoin/fundamentals/07_difficulty_adjustment.py` | Retarget algorithm with 4x clamp |
 | 08 | `bitcoin/fundamentals/08_simplified_lightning.py` | Payment channels, HTLCs, multi-hop routing |
+| 09 | `bitcoin/intermediate/09_schnorr_signatures.py` | BIP 340 Schnorr with MuSig key aggregation |
+| 10 | `bitcoin/intermediate/10_taproot_mast.py` | BIP 341 Taproot with MAST script trees |
+| 11 | `bitcoin/intermediate/11_compact_block_relay.py` | BIP 152 compact blocks with SipHash IDs |
+| 12 | `bitcoin/intermediate/12_timelocks_htlcs.py` | CLTV/CSV timelocks and cross-chain atomic swaps |
+| 13 | `bitcoin/advanced/13_covenants.py` | OP_CTV covenants with vault construction |
+| 14 | `bitcoin/advanced/14_miniscript_compiler.py` | Policy AST to Bitcoin Script compiler |
+| 15 | `bitcoin/advanced/15_simplified_bitvm.py` | BitVM bit commitments and fraud proofs |
+| 16 | `bitcoin/advanced/16_stratum_v2.py` | Mining pool protocol with PPLNS rewards |
 
 ### Ethereum
 
@@ -145,6 +291,14 @@ python3 solana/fundamentals/02_proof_of_history.py
 | 06 | `ethereum/fundamentals/06_smart_contracts.py` | Contract deploy, call, and storage lifecycle |
 | 07 | `ethereum/fundamentals/07_pos_beacon.py` | Beacon chain with Casper FFG finality |
 | 08 | `ethereum/fundamentals/08_abi_encoding.py` | ABI encoding for function calls and data |
+| 09 | `ethereum/intermediate/09_ssz_encoding.py` | SSZ serialization with Merkleization and proofs |
+| 10 | `ethereum/intermediate/10_erc20_token.py` | Complete ERC-20 token standard implementation |
+| 11 | `ethereum/intermediate/11_blob_transactions.py` | EIP-4844 proto-danksharding and blob fee market |
+| 12 | `ethereum/intermediate/12_account_abstraction.py` | ERC-4337 smart wallets with paymaster |
+| 13 | `ethereum/advanced/13_mev_flashbots.py` | MEV extraction, sandwich attacks, PBS |
+| 14 | `ethereum/advanced/14_verkle_trees.py` | Verkle trees with Pedersen commitments |
+| 15 | `ethereum/advanced/15_evm_precompiles.py` | All 9 EVM precompiled contracts |
+| 16 | `ethereum/advanced/16_devp2p_wire_protocol.py` | RLPx framing and eth/68 messages |
 
 ### Solana
 
@@ -158,6 +312,14 @@ python3 solana/fundamentals/02_proof_of_history.py
 | 06 | `solana/fundamentals/06_token_program.py` | SPL Token: mint, transfer, burn |
 | 07 | `solana/fundamentals/07_turbine_propagation.py` | Block shredding with erasure coding |
 | 08 | `solana/fundamentals/08_gulf_stream.py` | Mempool-less transaction forwarding |
+| 09 | `solana/intermediate/09_tower_bft.py` | Tower BFT with vote lockouts and fork choice |
+| 10 | `solana/intermediate/10_sealevel_parallel.py` | Parallel runtime with conflict detection |
+| 11 | `solana/intermediate/11_versioned_transactions.py` | v0 transactions with Address Lookup Tables |
+| 12 | `solana/intermediate/12_stake_economics.py` | Inflation schedule and validator rewards |
+| 13 | `solana/advanced/13_jito_mev_bundles.py` | Jito bundle auctions and tip distribution |
+| 14 | `solana/advanced/14_pdas_cpis_deep.py` | PDA derivation and CPI with signer seeds |
+| 15 | `solana/advanced/15_clockwork_automation.py` | On-chain cron jobs with trigger conditions |
+| 16 | `solana/advanced/16_banking_stage.py` | TPU pipeline and multi-threaded banking |
 
 ## Prerequisites
 
@@ -175,8 +337,11 @@ python3 solana/fundamentals/02_proof_of_history.py
 ## Learning Path
 
 Start with `core/fundamentals/` scripts in order (01-08) to build foundational understanding,
-then explore any chain folder that interests you. Each chain's scripts are numbered
-in suggested reading order within each tier (fundamentals → intermediate → advanced).
+then explore any chain folder that interests you. Within each chain, follow the tiers:
+
+1. **Fundamentals** (01-08) — core protocol concepts
+2. **Intermediate** (09-12) — deeper protocol mechanics
+3. **Advanced** (13-16) — cutting-edge features and research topics
 
 ## Contributing
 

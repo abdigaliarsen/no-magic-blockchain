@@ -7,9 +7,10 @@ Inspired by [no-magic](https://github.com/Mathews-Tom/no-magic).
 
 ## Project Overview
 
-This project contains ~32 Python scripts across 4 categories that implement blockchain
+This project contains 64 Python scripts across 4 categories that implement blockchain
 concepts from first principles. Each script is self-contained, uses only Python 3.10+ stdlib,
-and runs in seconds on CPU.
+and runs in seconds on CPU. Scripts are organized into three tiers: fundamentals (01-08),
+intermediate (09-12), and advanced (13-16).
 
 ## Branch Strategy
 
@@ -24,22 +25,22 @@ no-magic-blockchain/
 ├── README.md              # Project overview with GIF previews
 ├── core/                  # Chain-agnostic fundamentals
 │   ├── fundamentals/      # 8 scripts (01-08)
-│   ├── intermediate/      # (planned)
-│   └── advanced/          # (planned)
+│   ├── intermediate/      # 4 scripts (09-12)
+│   └── advanced/          # 4 scripts (13-16)
 ├── bitcoin/               # Bitcoin-specific implementations
 │   ├── fundamentals/      # 8 scripts (01-08)
-│   ├── intermediate/      # (planned)
-│   └── advanced/          # (planned)
+│   ├── intermediate/      # 4 scripts (09-12)
+│   └── advanced/          # 4 scripts (13-16)
 ├── ethereum/              # Ethereum-specific implementations
 │   ├── fundamentals/      # 8 scripts (01-08)
-│   ├── intermediate/      # (planned)
-│   └── advanced/          # (planned)
+│   ├── intermediate/      # 4 scripts (09-12)
+│   └── advanced/          # 4 scripts (13-16)
 ├── solana/                # Solana-specific implementations
 │   ├── fundamentals/      # 8 scripts (01-08)
-│   ├── intermediate/      # (planned)
-│   └── advanced/          # (planned)
-├── animations/            # Manim animation scripts (HAS external deps, separate from core)
-│   └── requirements.txt   # manim dependency lives here only
+│   ├── intermediate/      # 4 scripts (09-12)
+│   └── advanced/          # 4 scripts (13-16)
+├── animations/            # Pillow animation scripts (generates GIF infographics)
+│   └── requirements.txt   # Pillow dependency
 ├── assets/gifs/           # Pre-rendered GIFs for README
 └── docs/plans/            # Design documents
 ```
@@ -209,13 +210,56 @@ but groups must be sequential (core first, then chains).
 | 07 | `solana/fundamentals/07_turbine_propagation.py` | Turbine: shred blocks into packets, erasure coding (Reed-Solomon simplified), tree-based propagation to validators. Demo: shred block, simulate tree broadcast, reconstruct from partial data |
 | 08 | `solana/fundamentals/08_gulf_stream.py` | Gulf Stream: transaction forwarding to upcoming leaders, leader schedule, mempool-less architecture. Demo: simulate leader rotation, show tx forwarding path |
 
+### Group 5: Intermediate scripts (all chains)
+
+| # | File | What to Build |
+|---|------|--------------|
+| 09 | `core/intermediate/09_shamirs_secret_sharing.py` | Shamir's secret sharing with Lagrange interpolation over GF(p) |
+| 10 | `core/intermediate/10_bloom_filters.py` | Probabilistic membership with false positive analysis |
+| 11 | `core/intermediate/11_verifiable_random_functions.py` | EC-based VRF with DLEQ proofs |
+| 12 | `core/intermediate/12_distributed_hash_tables.py` | Kademlia DHT with XOR routing over 50-node network |
+| 09 | `bitcoin/intermediate/09_schnorr_signatures.py` | BIP 340 Schnorr with MuSig key aggregation |
+| 10 | `bitcoin/intermediate/10_taproot_mast.py` | BIP 341 Taproot with MAST script trees |
+| 11 | `bitcoin/intermediate/11_compact_block_relay.py` | BIP 152 compact blocks with SipHash short IDs |
+| 12 | `bitcoin/intermediate/12_timelocks_htlcs.py` | CLTV/CSV timelocks and cross-chain atomic swaps |
+| 09 | `ethereum/intermediate/09_ssz_encoding.py` | SSZ serialization with Merkleization and generalized index proofs |
+| 10 | `ethereum/intermediate/10_erc20_token.py` | Complete ERC-20 token standard implementation |
+| 11 | `ethereum/intermediate/11_blob_transactions.py` | EIP-4844 proto-danksharding and blob fee market |
+| 12 | `ethereum/intermediate/12_account_abstraction.py` | ERC-4337 smart wallets with paymaster and social recovery |
+| 09 | `solana/intermediate/09_tower_bft.py` | Tower BFT with vote lockouts and fork choice |
+| 10 | `solana/intermediate/10_sealevel_parallel.py` | Parallel runtime with account-level conflict detection |
+| 11 | `solana/intermediate/11_versioned_transactions.py` | v0 transactions with Address Lookup Tables |
+| 12 | `solana/intermediate/12_stake_economics.py` | Inflation schedule, validator rewards, commission |
+
+### Group 6: Advanced scripts (all chains)
+
+| # | File | What to Build |
+|---|------|--------------|
+| 13 | `core/advanced/13_zero_knowledge_proofs.py` | Schnorr sigma protocol and R1CS circuit satisfiability |
+| 14 | `core/advanced/14_bft_consensus.py` | PBFT with Byzantine fault simulation |
+| 15 | `core/advanced/15_erasure_coding.py` | Reed-Solomon encode/decode over GF(p) |
+| 16 | `core/advanced/16_optimistic_rollups.py` | L2 sequencer with fraud proofs and slashing |
+| 13 | `bitcoin/advanced/13_covenants.py` | OP_CTV covenants with vault construction |
+| 14 | `bitcoin/advanced/14_miniscript_compiler.py` | Policy AST to Bitcoin Script compiler |
+| 15 | `bitcoin/advanced/15_simplified_bitvm.py` | BitVM bit commitments and bisection fraud proofs |
+| 16 | `bitcoin/advanced/16_stratum_v2.py` | Mining pool protocol with PPLNS rewards |
+| 13 | `ethereum/advanced/13_mev_flashbots.py` | MEV extraction, sandwich attacks, PBS |
+| 14 | `ethereum/advanced/14_verkle_trees.py` | Verkle trees with Pedersen commitments |
+| 15 | `ethereum/advanced/15_evm_precompiles.py` | All 9 EVM precompiled contracts (0x01-0x09) |
+| 16 | `ethereum/advanced/16_devp2p_wire_protocol.py` | RLPx framing and eth/68 message exchange |
+| 13 | `solana/advanced/13_jito_mev_bundles.py` | Jito bundle auctions and tip distribution |
+| 14 | `solana/advanced/14_pdas_cpis_deep.py` | PDA derivation and CPI with signer seeds |
+| 15 | `solana/advanced/15_clockwork_automation.py` | On-chain cron jobs with trigger conditions |
+| 16 | `solana/advanced/16_banking_stage.py` | TPU pipeline and multi-threaded banking stage |
+
 ## Animations (separate from core scripts)
 
 - Located in `animations/` folder
-- USE Manim (external dependency, listed in `animations/requirements.txt`)
-- One animation per core script: `animations/core_01_hashing.py`, etc.
-- Pre-rendered GIFs saved to `assets/gifs/` for README embedding
-- Animations are OPTIONAL — build them AFTER all 32 scripts are done
+- USE Pillow (PIL) — no Manim (needs sudo for pangocairo)
+- One animation per script: `animations/{category}_{nn}_{topic}.py`
+- Pre-rendered GIFs saved to `assets/gifs/{category}_{nn}_{topic}.gif`
+- Specs: 800x550px, 36 frames, 90ms delay, `optimize=True`
+- All 64 GIF animations are complete
 
 ## Quality Checklist (verify each script against this)
 
@@ -229,12 +273,12 @@ but groups must be sequential (core first, then chains).
 - [ ] No network calls, no file reads, no external data
 - [ ] Runs in under 30 seconds on a modern laptop
 
-## v2 Plan (in progress — v2 branch)
+## v2 Status (COMPLETE — v2 branch)
 
-Expanding to 16 scripts per chain (8 fundamentals + 4 intermediate + 4 advanced):
+Expanded to 16 scripts per chain (8 fundamentals + 4 intermediate + 4 advanced):
 1. ~~Create `v2` branch from `v1`~~ (done)
 2. ~~Reorganize each chain folder into `fundamentals/`, `intermediate/`, `advanced/`~~ (done)
-3. Add intermediate topics: 4 scripts per chain covering deeper protocol mechanics
-4. Add advanced topics: 4 scripts per chain (ZK proofs, MEV, sharding, rollups, etc.)
-5. Generate GIFs for all new scripts
+3. ~~Add intermediate topics: 4 scripts per chain covering deeper protocol mechanics~~ (done)
+4. ~~Add advanced topics: 4 scripts per chain (ZK proofs, MEV, sharding, rollups, etc.)~~ (done)
+5. ~~Generate GIFs for all new scripts~~ (done — 64/64 GIFs complete)
 6. Future: add more chains (Cosmos/Tendermint, Polkadot, Cardano)
