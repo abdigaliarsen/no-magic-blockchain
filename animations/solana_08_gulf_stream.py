@@ -37,7 +37,7 @@ def load_fonts():
         fname = "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"
         try:
             fonts[name] = ImageFont.truetype(f"/usr/share/fonts/truetype/dejavu/{fname}", size)
-        except:
+        except Exception:
             fonts[name] = ImageFont.load_default()
     return fonts
 
@@ -203,6 +203,7 @@ def draw_frame(frame_idx):
 
     return img
 
-frames = [draw_frame(i) for i in range(FRAMES)]
-frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=DELAY, loop=0)
-print(f"Saved {OUT}")
+if __name__ == "__main__":
+    frames = [draw_frame(i) for i in range(FRAMES)]
+    frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=DELAY, loop=0, optimize=True)
+    print(f"Saved {OUT}")

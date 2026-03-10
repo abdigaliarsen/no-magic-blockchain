@@ -236,9 +236,6 @@ def make_frame(frame_idx):
     scan_x = 40 + int((W - 80) * ((frame_idx % 18) / 17.0))
     draw.line([(scan_x, vote_y + 32), (scan_x, vote_y + 33)], fill=WHITE, width=1)
 
-    # Frame counter
-    draw.text((W - 80, H - 20), f"Frame {frame_idx + 1}/{FRAMES}", fill=DIM, font=FONTS["small"])
-
     return img
 
 frames = [make_frame(i) for i in range(FRAMES)]

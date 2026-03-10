@@ -2,7 +2,6 @@
 
 from PIL import Image, ImageDraw, ImageFont
 import math
-import struct
 
 # =============================================================================
 # COLORS

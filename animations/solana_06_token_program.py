@@ -207,6 +207,7 @@ def draw_frame(frame_idx):
     return img
 
 
-frames = [draw_frame(i) for i in range(FRAMES)]
-frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=DELAY, loop=0)
-print(f"Saved {OUT} ({len(frames)} frames)")
+if __name__ == "__main__":
+    frames = [draw_frame(i) for i in range(FRAMES)]
+    frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=DELAY, loop=0, optimize=True)
+    print(f"Saved {OUT} ({len(frames)} frames)")

@@ -132,12 +132,11 @@ def make_frame(f):
     draw.text((rx + 10, sol_y + 25), "= TxID is stable forever", fill=GREEN, font=body_font)
     draw.text((rx + 10, sol_y + 40), "Enables: Lightning, atomic swaps, etc.", fill=CYAN, font=small_font)
 
-    # X on left, checkmark on right
+    # Status indicators below TxID boxes (not overlapping text)
     cross_pulse = int(255 * (0.6 + 0.4 * pulse))
-    draw.text((lx + 160, txid_y + 44), "X", fill=(cross_pulse, 50, 50), font=title_font)
+    draw.text((lx + 155, txid_y + 40), "UNSTABLE", fill=(cross_pulse, 50, 50), font=header_font)
     check_pulse = int(255 * (0.6 + 0.4 * pulse))
-    # checkmark as "OK"
-    draw.text((rx + 165, stxid_y + 40), "OK", fill=(20, check_pulse, 80), font=header_font)
+    draw.text((rx + 155, stxid_y + 40), "STABLE", fill=(20, check_pulse, 80), font=header_font)
 
     # Bottom
     draw_rounded_box(draw, 20, 460, 760, 70, PANEL, BORDER)
@@ -147,6 +146,8 @@ def make_frame(f):
 
     return img
 
-frames = [make_frame(f) for f in range(FRAMES)]
-frames[0].save("assets/gifs/bitcoin_06_segwit.gif", save_all=True, append_images=frames[1:], duration=DELAY, loop=0)
-print("Saved assets/gifs/bitcoin_06_segwit.gif")
+if __name__ == "__main__":
+    frames = [make_frame(f) for f in range(FRAMES)]
+    frames[0].save("assets/gifs/bitcoin_06_segwit.gif", save_all=True,
+                   append_images=frames[1:], duration=DELAY, loop=0, optimize=True)
+    print("Saved assets/gifs/bitcoin_06_segwit.gif")

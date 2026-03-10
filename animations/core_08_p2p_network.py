@@ -3,7 +3,7 @@ Generate GIF: P2P Gossip Propagation — information spreads exponentially throu
 """
 
 from PIL import Image, ImageDraw, ImageFont
-import math, os
+import math
 
 # --- Configuration ---
 W, H = 800, 550
@@ -283,6 +283,7 @@ for frame in range(FRAMES):
     frames.append(img)
 
 # --- Save GIF ---
-out = "assets/gifs/core_08_p2p_network.gif"
-frames[0].save(out, save_all=True, append_images=frames[1:], duration=DELAY_MS, loop=0)
-print(f"Saved {out} ({len(frames)} frames)")
+if __name__ == "__main__":
+    out = "assets/gifs/core_08_p2p_network.gif"
+    frames[0].save(out, save_all=True, append_images=frames[1:], duration=DELAY_MS, loop=0, optimize=True)
+    print(f"Saved {out} ({len(frames)} frames)")

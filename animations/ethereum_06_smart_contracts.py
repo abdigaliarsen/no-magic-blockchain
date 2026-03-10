@@ -43,7 +43,7 @@ def load_fonts():
         fonts["header"] = ImageFont.truetype(paths[0], 14)
         fonts["body"] = ImageFont.truetype(paths[1], 12)
         fonts["small"] = ImageFont.truetype(paths[1], 10)
-    except:
+    except Exception:
         fb = ImageFont.load_default()
         fonts = {"title": fb, "header": fb, "body": fb, "small": fb}
     return fonts

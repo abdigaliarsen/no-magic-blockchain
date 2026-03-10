@@ -250,22 +250,17 @@ def make_frame(frame_idx):
     return img
 
 
-def text_right(draw, text, x, y, font, fill):
-    bbox = draw.textbbox((0, 0), text, font=font)
-    tw = bbox[2] - bbox[0]
-    draw.text((x - tw, y), text, font=font, fill=fill)
-
-
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
-frames = [make_frame(i) for i in range(FRAMES)]
-frames[0].save(
-    "assets/gifs/core_07_consensus_pos.gif",
-    save_all=True,
-    append_images=frames[1:],
-    duration=DELAY_MS,
-    loop=0,
-    optimize=True,
-)
-print("Saved assets/gifs/core_07_consensus_pos.gif")
+if __name__ == "__main__":
+    frames = [make_frame(i) for i in range(FRAMES)]
+    frames[0].save(
+        "assets/gifs/core_07_consensus_pos.gif",
+        save_all=True,
+        append_images=frames[1:],
+        duration=DELAY_MS,
+        loop=0,
+        optimize=True,
+    )
+    print("Saved assets/gifs/core_07_consensus_pos.gif")

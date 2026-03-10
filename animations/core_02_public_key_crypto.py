@@ -1,6 +1,6 @@
 """Generate animated GIF: Elliptic Curve Key Generation Flow."""
 from PIL import Image, ImageDraw, ImageFont
-import math, struct
+import math
 
 # === PALETTE ===
 BG = (13, 17, 23)
@@ -341,13 +341,14 @@ def make_frame(fi):
 
 
 # === GENERATE GIF ===
-frames = [make_frame(i) for i in range(N_FRAMES)]
-frames[0].save(
-    "assets/gifs/core_02_public_key_crypto.gif",
-    save_all=True,
-    append_images=frames[1:],
-    duration=DELAY_MS,
-    loop=0,
-    optimize=True,
-)
-print(f"Saved assets/gifs/core_02_public_key_crypto.gif  ({N_FRAMES} frames, {DELAY_MS}ms)")
+if __name__ == "__main__":
+    frames = [make_frame(i) for i in range(N_FRAMES)]
+    frames[0].save(
+        "assets/gifs/core_02_public_key_crypto.gif",
+        save_all=True,
+        append_images=frames[1:],
+        duration=DELAY_MS,
+        loop=0,
+        optimize=True,
+    )
+    print(f"Saved assets/gifs/core_02_public_key_crypto.gif  ({N_FRAMES} frames, {DELAY_MS}ms)")

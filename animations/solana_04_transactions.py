@@ -38,7 +38,7 @@ try:
     font_head = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 14)
     font_body = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 12)
     font_small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 10)
-except:
+except Exception:
     font_title = ImageFont.load_default()
     font_head = ImageFont.load_default()
     font_body = ImageFont.load_default()
@@ -51,7 +51,6 @@ def text_size(draw, text, font):
 
 
 def draw_rounded_rect(draw, xy, fill, outline, radius=6):
-    x0, y0, x1, y1 = xy
     draw.rounded_rectangle(xy, radius=radius, fill=fill, outline=outline)
 
 
@@ -154,7 +153,7 @@ def generate_frame(frame_idx):
     draw.line([(arr_x0, arr_y), (arr_x1, arr_y)], fill=arr_col, width=2)
     draw.polygon([(arr_x1, arr_y), (arr_x1 - 8, arr_y - 5), (arr_x1 - 8, arr_y + 5)],
                  fill=arr_col)
-    draw.text((arr_x0 + 4, arr_y - 16), "signs", fill=DIM, font=font_small)
+    draw.text((arr_x0 + 2, arr_y - 18), "signs", fill=WHITE, font=font_head)
 
     # ---- Legend (bottom-left) ----
     leg_y = 220
@@ -174,7 +173,6 @@ def generate_frame(frame_idx):
     # ---- Animated scan line (horizontal, sweeps down the transaction) ----
     scan_y = tx_y + int((tx_h) * ((frame_idx % FRAMES) / FRAMES))
     scan_alpha = int(80 + 40 * math.sin(2 * math.pi * t))
-    scan_col = (*CYAN[:3], )
     # Draw a faint horizontal highlight line
     overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     od = ImageDraw.Draw(overlay)
@@ -198,25 +196,19 @@ def generate_frame(frame_idx):
         draw2.ellipse((dx - blink, dy - blink, dx + blink, dy + blink), fill=col)
 
     # ---- Bottom bar: byte size indicator ----
-    draw2.text((60, 510), "Serialized size: ~234 bytes", fill=DIM, font=font_small)
-    bar_x, bar_y, bar_w = 240, 512, 200
-    draw2.rounded_rectangle((bar_x, bar_y, bar_x + bar_w, bar_y + 12),
-                            radius=3, fill=DARK_BOX, outline=BORDER)
-    fill_w = int(bar_w * (0.5 + 0.5 * math.sin(2 * math.pi * t * 0.5)))
-    if fill_w > 2:
-        draw2.rounded_rectangle((bar_x, bar_y, bar_x + fill_w, bar_y + 12),
-                                radius=3, fill=CYAN_BG)
+    draw2.text((60, 510), "Max serialized size: 1,232 bytes", fill=DIM, font=font_small)
 
     return img
 
 
-frames = [generate_frame(i) for i in range(FRAMES)]
-frames[0].save(
+if __name__ == "__main__":
+    frames = [generate_frame(i) for i in range(FRAMES)]
+    frames[0].save(
     "assets/gifs/solana_04_transactions.gif",
     save_all=True,
     append_images=frames[1:],
     duration=DELAY,
     loop=0,
     optimize=True,
-)
-print("Saved assets/gifs/solana_04_transactions.gif")
+    )
+    print("Saved assets/gifs/solana_04_transactions.gif")

@@ -315,7 +315,7 @@ def generate_gif():
         append_images=frames[1:],
         duration=DELAY_MS,
         loop=0,
-        optimize=False,
+        optimize=True,
     )
     print("Saved assets/gifs/core_04_merkle_trees.gif")
 

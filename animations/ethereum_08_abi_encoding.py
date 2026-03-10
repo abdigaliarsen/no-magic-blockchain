@@ -5,8 +5,7 @@ Then shows how arguments are padded to 32 bytes each. Color-coded selector vs ar
 """
 
 from PIL import Image, ImageDraw, ImageFont
-import hashlib
-import struct
+import math
 
 # --- Constants ---
 W, H = 800, 550
@@ -120,7 +119,7 @@ def make_frame(f):
         x_hash += cw + 1
 
     # Underline selector portion with animated pulse
-    pulse = 0.5 + 0.5 * __import__("math").sin(t * __import__("math").pi * 4)
+    pulse = 0.5 + 0.5 * math.sin(t * math.pi * 4)
     ul_color = lerp_color(ORANGE, YELLOW, pulse)
     sel_end_x = 40
     for i in range(8):
@@ -194,5 +193,5 @@ def make_frame(f):
 
 # --- Generate GIF ---
 frames = [make_frame(f) for f in range(FRAMES)]
-frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=DELAY, loop=0)
+frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=DELAY, loop=0, optimize=True)
 print(f"Saved {OUT}")

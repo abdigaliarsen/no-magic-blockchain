@@ -35,7 +35,7 @@ def load_fonts():
         fonts["header"] = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 14)
         fonts["body"] = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 12)
         fonts["small"] = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 10)
-    except:
+    except Exception:
         f = ImageFont.load_default()
         fonts = {"title": f, "header": f, "body": f, "small": f}
     return fonts
@@ -58,18 +58,18 @@ def lerp_color(c1, c2, t):
 #   "cat" = 0x83, 'c','a','t'  (3 bytes, prefix 0x80+3)
 #   "dog" = 0x83, 'd','o','g'
 #   "bird" = 0x84, 'b','i','r','d'  (4 bytes, prefix 0x80+4)
-#   inner list ["dog","bird"] = contents 8 bytes, prefix 0xC0+8 = 0xC8
-#     = 0xC8, 0x83,'d','o','g', 0x84,'b','i','r','d'  (9 bytes)
-#   outer list = contents 4+9 = 13 bytes, prefix 0xC0+13 = 0xCD
-#     = 0xCD, 0x83,'c','a','t', 0xC8, 0x83,'d','o','g', 0x84,'b','i','r','d'
+#   inner list ["dog","bird"] = contents 9 bytes, prefix 0xC0+9 = 0xC9
+#     = 0xC9, 0x83,'d','o','g', 0x84,'b','i','r','d'  (10 bytes)
+#   outer list = contents 4+10 = 14 bytes, prefix 0xC0+14 = 0xCE
+#     = 0xCE, 0x83,'c','a','t', 0xC9, 0x83,'d','o','g', 0x84,'b','i','r','d'
 
 FULL_BYTES = [
-    ("CD", "outer list prefix", PURPLE, 0),
+    ("CE", "outer list prefix", PURPLE, 0),
     ("83", '"cat" prefix', GREEN, 1),
     ("63", "'c'", CYAN, 1),
     ("61", "'a'", CYAN, 1),
     ("74", "'t'", CYAN, 1),
-    ("C8", "inner list prefix", ORANGE, 1),
+    ("C9", "inner list prefix", ORANGE, 1),
     ("83", '"dog" prefix', GREEN, 2),
     ("64", "'d'", CYAN, 2),
     ("6F", "'o'", CYAN, 2),
@@ -116,7 +116,7 @@ def render_frame(frame_idx):
                       fill=PURPLE_BG, outline=out_border, r=10, width=2)
 
     # Outer list label
-    ol = "List (13 bytes) prefix=0xCD"
+    ol = "List (14 bytes) prefix=0xCE"
     olw, olh = text_size(draw, ol, FONTS["small"])
     draw.text((outer_x + 10, outer_y + 6), ol, fill=PURPLE, font=FONTS["small"])
 
@@ -171,7 +171,7 @@ def render_frame(frame_idx):
     draw_rounded_rect(draw, (inner_x, inner_y, inner_x + inner_w, inner_y + inner_h),
                       fill=YELLOW_BG, outline=inner_border, r=8)
 
-    il = "Inner List (8 bytes) prefix=0xC8"
+    il = "Inner List (9 bytes) prefix=0xC9"
     ilw, ilh = text_size(draw, il, FONTS["small"])
     draw.text((inner_x + 10, inner_y + 6), il, fill=ORANGE, font=FONTS["small"])
 
@@ -242,7 +242,7 @@ def render_frame(frame_idx):
     stream_y = 300
     draw_rounded_rect(draw, (40, stream_y, W - 40, stream_y + 100), fill=PANEL, outline=BORDER)
 
-    st = "Full Encoded Byte Stream (14 bytes)"
+    st = "Full Encoded Byte Stream (15 bytes)"
     stw, sth = text_size(draw, st, FONTS["header"])
     draw.text(((W - stw) // 2, stream_y + 8), st, fill=WHITE, font=FONTS["header"])
 
@@ -292,8 +292,8 @@ def render_frame(frame_idx):
     draw.text(((W - ltw) // 2, legend_y + 8), leg_title, fill=WHITE, font=FONTS["header"])
 
     levels_info = [
-        ("Level 0", "Outer list", "0xCD = 0xC0 + 13", PURPLE),
-        ("Level 1", '"cat" / inner list', "0x83 / 0xC8", GREEN),
+        ("Level 0", "Outer list", "0xCE = 0xC0 + 14", PURPLE),
+        ("Level 1", '"cat" / inner list', "0x83 / 0xC9", GREEN),
         ("Level 2", '"dog" / "bird"', "0x83 / 0x84", CYAN),
     ]
 

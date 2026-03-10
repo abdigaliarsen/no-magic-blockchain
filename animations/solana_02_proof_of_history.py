@@ -39,7 +39,7 @@ try:
     font_body = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 12)
     font_small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 10)
     font_mid = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 16)
-except:
+except Exception:
     font_title = ImageFont.load_default()
     font_header = font_title
     font_body = font_title
@@ -307,7 +307,8 @@ def make_frame(frame_idx):
 
 
 # --- Generate GIF ---
-frames = [make_frame(i) for i in range(FRAMES)]
-frames[0].save(OUT, save_all=True, append_images=frames[1:],
-               duration=DELAY, loop=0, optimize=True)
-print(f"Saved {OUT} ({len(frames)} frames)")
+if __name__ == "__main__":
+    frames = [make_frame(i) for i in range(FRAMES)]
+    frames[0].save(OUT, save_all=True, append_images=frames[1:],
+                   duration=DELAY, loop=0, optimize=True)
+    print(f"Saved {OUT} ({len(frames)} frames)")

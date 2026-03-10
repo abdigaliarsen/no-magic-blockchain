@@ -57,12 +57,15 @@ def rounded_rect(draw, box, fill, outline, r=8):
     draw.rounded_rectangle(box, radius=r, fill=fill, outline=outline, width=2)
 
 
-def draw_arrow_v(draw, x, y1, y2, color, t_frac):
-    draw.line([(x, y1), (x, y2)], fill=color, width=2)
-    d = 8 if y2 > y1 else -8
-    draw.polygon([(x, y2), (x - 5, y2 - d), (x + 5, y2 - d)], fill=color)
+def draw_arrow_v(draw, x, y1, y2, color, t_frac, thick=False):
+    w = 3 if thick else 2
+    draw.line([(x, y1), (x, y2)], fill=color, width=w)
+    d = 10 if y2 > y1 else -10
+    hs = 7 if thick else 5  # arrowhead half-size
+    draw.polygon([(x, y2), (x - hs, y2 - d), (x + hs, y2 - d)], fill=color)
     sy = y1 + (y2 - y1) * t_frac
-    draw.ellipse([x - 4, sy - 4, x + 4, sy + 4], fill=color)
+    r = 5 if thick else 4
+    draw.ellipse([x - r, sy - r, x + r, sy + r], fill=color)
 
 
 def draw_scan_h(draw, x1, x2, y, color, t_frac):
@@ -106,8 +109,8 @@ def make_frame(fi):
 
     # Storage section inside contract
     stor_y = code_y + 70
-    rounded_rect(draw, [scx + 12, stor_y, scx + scw - 12, stor_y + 80], DARK_BOX, RED, r=4)
-    text_center(draw, lmid, stor_y + 12, "Storage (state)", font_bold_12, RED)
+    rounded_rect(draw, [scx + 12, stor_y, scx + scw - 12, stor_y + 80], DARK_BOX, PURPLE, r=4)
+    text_center(draw, lmid, stor_y + 12, "Storage (state)", font_bold_12, PURPLE)
     draw.text((scx + 22, stor_y + 28), "slot[0]: totalSupply", font=font_10, fill=DIM)
     draw.text((scx + 22, stor_y + 44), "slot[1]: balances map", font=font_10, fill=DIM)
     draw.text((scx + 22, stor_y + 60), "slot[2]: allowances", font=font_10, fill=DIM)
@@ -117,19 +120,18 @@ def make_frame(fi):
 
     # Label: "Tightly coupled"
     lbl_y = scy + sch + 15
-    rounded_rect(draw, [scx + 20, lbl_y, scx + scw - 20, lbl_y + 28], RED_BG, RED, r=6)
-    text_center(draw, lmid, lbl_y + 14, "Code + State = Coupled", font_bold_12, RED)
+    rounded_rect(draw, [scx + 20, lbl_y, scx + scw - 20, lbl_y + 28], PURPLE_BG, PURPLE, r=6)
+    text_center(draw, lmid, lbl_y + 14, "Code + State = Coupled", font_bold_12, PURPLE)
 
     # Ethereum properties
     prop_y = lbl_y + 42
     props_eth = [
-        ("Each contract owns its storage", DIM),
-        ("State is internal, private", DIM),
-        ("Deploy = new code + new storage", DIM),
-        ("Upgrade = complex proxy pattern", ORANGE),
+        ("Contract owns its storage", DIM),
+        ("Deploy = new code + storage", DIM),
+        ("Upgrade = proxy pattern", ORANGE),
     ]
     for j, (txt, col) in enumerate(props_eth):
-        draw.text((scx + 14, prop_y + j * 16), txt, font=font_10, fill=col)
+        draw.text((scx + 14, prop_y + j * 18), txt, font=font_12, fill=col)
 
     # =============================================
     # RIGHT SIDE: Solana
@@ -155,11 +157,11 @@ def make_frame(fi):
     acc_gap = 20
 
     # Arrow program -> accounts
-    draw_arrow_v(draw, rmid - acw // 2 - acc_gap // 2 + acw // 2, spy + sph + 4, acc_y - 4, GREEN, t)
-    draw_arrow_v(draw, rmid + acw // 2 + acc_gap // 2 - acw // 2 + acw // 2, spy + sph + 4, acc_y - 4, GREEN, t)
+    draw_arrow_v(draw, rmid - acw // 2 - acc_gap // 2 + acw // 2, spy + sph + 4, acc_y - 4, CYAN, t, thick=True)
+    draw_arrow_v(draw, rmid + acw // 2 + acc_gap // 2 - acw // 2 + acw // 2, spy + sph + 4, acc_y - 4, CYAN, t, thick=True)
 
     # "operates on" label
-    text_center(draw, rmid, spy + sph + 25, "operates on", font_10, DIM)
+    text_center(draw, rmid, spy + sph + 25, "operates on", font_bold_14, CYAN)
 
     # Account 1
     a1x = spx
@@ -185,13 +187,12 @@ def make_frame(fi):
     # Solana properties
     sprop_y = dlbl_y + 42
     props_sol = [
-        ("Programs are stateless executables", DIM),
-        ("State lives in separate accounts", DIM),
-        ("Deploy = just upload new code", DIM),
-        ("Upgrade = swap program binary", GREEN),
+        ("Programs are stateless", DIM),
+        ("State in separate accounts", DIM),
+        ("Upgrade = swap binary", GREEN),
     ]
     for j, (txt, col) in enumerate(props_sol):
-        draw.text((spx + 14, sprop_y + j * 16), txt, font=font_10, fill=col)
+        draw.text((spx + 14, sprop_y + j * 18), txt, font=font_12, fill=col)
 
     # --- Bottom insight ---
     iy = H - 38
@@ -205,6 +206,7 @@ def make_frame(fi):
     return img
 
 
-frames = [make_frame(i) for i in range(FRAMES)]
-frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=DELAY, loop=0)
-print(f"Saved {OUT} ({len(frames)} frames)")
+if __name__ == "__main__":
+    frames = [make_frame(i) for i in range(FRAMES)]
+    frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=DELAY, loop=0, optimize=True)
+    print(f"Saved {OUT} ({len(frames)} frames)")

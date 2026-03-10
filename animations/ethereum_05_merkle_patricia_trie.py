@@ -38,7 +38,7 @@ try:
     font_header = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 14)
     font_body = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 12)
     font_small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 10)
-except:
+except Exception:
     font_title = ImageFont.load_default()
     font_header = font_title
     font_body = font_title
@@ -146,7 +146,7 @@ def draw_frame(frame_idx):
     # Key-value table on right
     kv_x = 620
     kv_y = 475
-    draw.text((kv_x, kv_y), "Stored pairs:", fill=DIM, font=font_small)
+    draw.text((kv_x, kv_y), "Stored pairs:", fill=WHITE, font=font_body)
     pairs = [("a77d3", "42"), ("a7b91", "10"), ("a7c5f", "7")]
     for pi, (k, v) in enumerate(pairs):
         py = kv_y + 14 + pi * 14
@@ -183,11 +183,12 @@ def draw_frame(frame_idx):
 
         draw_arrow(draw, sx, sy, dx, dy, ecol, width=ewidth)
 
-        # Edge label
+        # Edge label — use bright color and larger font for readability
         if elbl:
             mx = (sx + dx) // 2 + 8
             my = (sy + dy) // 2 - 8
-            draw.text((mx, my), elbl, fill=ecol, font=font_small)
+            elbl_col = CYAN if not (on_path and path_edge_idx <= active_edge) else ORANGE
+            draw.text((mx, my), elbl, fill=elbl_col, font=font_body)
 
     # Draw scan dot on active edge
     if 0 <= active_edge < num_edges:
@@ -259,5 +260,5 @@ def draw_frame(frame_idx):
 
 
 frames = [draw_frame(i) for i in range(FRAMES)]
-frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=DELAY, loop=0)
+frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=DELAY, loop=0, optimize=True)
 print(f"Saved {OUT} ({len(frames)} frames)")

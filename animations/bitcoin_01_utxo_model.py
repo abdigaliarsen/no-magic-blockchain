@@ -136,7 +136,7 @@ for f in range(FRAMES):
     draw.line([(0, scan_y), (W, scan_y)], fill=(*CYAN[:3], 30), width=1)
 
     # Bottom bar
-    cycle_val = f"Nonce: {(f * 1117) % 99999:05d}"
+    cycle_val = f"UTXO Set Size: {3 + (f * 7) % 12}"
     draw.text((W // 2, H - 20), cycle_val, fill=DIM, font=small_font, anchor="mt")
 
     frames.append(img)
