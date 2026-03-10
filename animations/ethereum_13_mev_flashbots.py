@@ -75,15 +75,6 @@ def draw_arrow_h(draw, x1, x2, y, color, t_anim):
     draw.ellipse((dx - 3, y - 3, dx + 3, y + 3), fill=color)
 
 
-def draw_arrow_v(draw, x, y1, y2, color, t_anim):
-    """Vertical arrow with animated dot."""
-    draw.line((x, y1, x, y2), fill=DIM, width=2)
-    direction = 1 if y2 > y1 else -1
-    draw.polygon([(x, y2), (x - 4, y2 - direction * 6), (x + 4, y2 - direction * 6)], fill=color)
-    dy = y1 + (y2 - y1) * (t_anim % 1.0)
-    draw.ellipse((x - 3, dy - 3, x + 3, dy + 3), fill=color)
-
-
 def make_frame(f):
     img = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(img)

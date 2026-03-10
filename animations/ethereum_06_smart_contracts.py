@@ -223,13 +223,14 @@ def render_frame(frame):
     return img
 
 # --- Generate GIF ---
-frames = [render_frame(f) for f in range(FRAMES)]
-frames[0].save(
-    "assets/gifs/ethereum_06_smart_contracts.gif",
-    save_all=True,
-    append_images=frames[1:],
-    duration=DELAY,
-    loop=0,
-    optimize=True,
-)
-print("Saved assets/gifs/ethereum_06_smart_contracts.gif")
+if __name__ == "__main__":
+    frames = [render_frame(f) for f in range(FRAMES)]
+    frames[0].save(
+        "assets/gifs/ethereum_06_smart_contracts.gif",
+        save_all=True,
+        append_images=frames[1:],
+        duration=DELAY,
+        loop=0,
+        optimize=True,
+    )
+    print("Saved assets/gifs/ethereum_06_smart_contracts.gif")

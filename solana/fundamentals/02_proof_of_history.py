@@ -32,7 +32,7 @@ import time
 # ============================================================================
 
 # Number of hashes between ticks — in real Solana this is tuned so that
-# ticks occur every ~6.25ms (about 160 ticks per 400ms slot)
+# ticks occur regularly (64 ticks per slot)
 HASHES_PER_TICK = 50
 
 # Number of ticks per slot — real Solana uses 64 ticks per slot

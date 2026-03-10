@@ -9,7 +9,7 @@ WHAT THIS IMPLEMENTS:
     is purged.
 
 KEY CONCEPTS:
-    - Rent rate: lamports charged per byte per epoch
+    - Rent rate: lamports charged per byte per year
     - Rent exemption: accounts with balance >= 2 years of rent are exempt
     - Rent collection: non-exempt accounts lose rent each epoch
     - Account purging: accounts drained to zero are removed
@@ -30,7 +30,7 @@ import math
 # ============================================================================
 
 LAMPORTS_PER_SOL = 1_000_000_000          # 1 SOL = 1 billion lamports
-LAMPORTS_PER_BYTE_PER_EPOCH = 3_480       # Approximate rent rate on Solana mainnet
+LAMPORTS_PER_BYTE_PER_YEAR = 3_480        # Approximate rent rate on Solana mainnet (per year)
 ACCOUNT_HEADER_SIZE = 128                  # Every account has 128 bytes of fixed overhead
 EXEMPTION_YEARS = 2                        # Must hold enough for 2 years of rent to be exempt
 EPOCHS_PER_YEAR = 182                      # Roughly 2 days per epoch → ~182 epochs/year
@@ -68,9 +68,9 @@ class Account:
 def calculate_rent_per_epoch(total_size: int) -> int:
     """Calculate how many lamports an account owes per epoch.
 
-    Rent = total_size_in_bytes * lamports_per_byte_per_epoch.
+    Rent = total_size_in_bytes * lamports_per_byte_per_year / epochs_per_year.
     """
-    return total_size * LAMPORTS_PER_BYTE_PER_EPOCH
+    return total_size * LAMPORTS_PER_BYTE_PER_YEAR // EPOCHS_PER_YEAR
 
 
 def calculate_minimum_balance(data_size: int) -> int:
@@ -80,9 +80,8 @@ def calculate_minimum_balance(data_size: int) -> int:
     total_size includes the 128-byte header that every account has.
     """
     total_size = data_size + ACCOUNT_HEADER_SIZE
-    rent_per_epoch = calculate_rent_per_epoch(total_size)
-    epochs_in_exemption_period = EXEMPTION_YEARS * EPOCHS_PER_YEAR  # 2 * 182 = 364 epochs
-    return rent_per_epoch * epochs_in_exemption_period
+    # Minimum balance = total_size * rate_per_year * 2 years
+    return total_size * LAMPORTS_PER_BYTE_PER_YEAR * EXEMPTION_YEARS
 
 
 def is_rent_exempt(account: Account) -> bool:
@@ -178,7 +177,7 @@ def demo():
     print("  SOLANA RENT MODEL")
     print("=" * 70)
     print()
-    print("Rent rate:", LAMPORTS_PER_BYTE_PER_EPOCH, "lamports/byte/epoch")
+    print("Rent rate:", LAMPORTS_PER_BYTE_PER_YEAR, "lamports/byte/year")
     print("Exemption requirement: hold enough for", EXEMPTION_YEARS, "years of rent")
     print("Epochs per year:", EPOCHS_PER_YEAR)
     print()

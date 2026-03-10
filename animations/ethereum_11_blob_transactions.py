@@ -115,7 +115,6 @@ def make_frame(f):
     cell_size = 14
     cols, rows = 16, 10
     # Use a deterministic color pattern with animation
-    import hashlib
     for row in range(rows):
         for col in range(cols):
             seed = row * cols + col

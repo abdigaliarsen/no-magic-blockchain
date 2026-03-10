@@ -45,7 +45,7 @@ GAS_COSTS = {
     "DUP": 3,
     "SWAP": 3,
     "SLOAD": 100,    # Reading storage is expensive (cold access)
-    "SSTORE": 5000,  # Writing storage is the most expensive operation
+    "SSTORE": 20000, # Writing storage is the most expensive operation (zero → non-zero, per EIP-2200)
     "MLOAD": 3,
     "MSTORE": 3,
     "JUMP": 8,

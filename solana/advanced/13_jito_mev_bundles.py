@@ -41,7 +41,7 @@ NUM_TIP_ACCOUNTS = 8
 
 # Minimum tip to be considered in the auction (in lamports)
 # Real Jito has dynamic minimums based on demand
-MIN_TIP_LAMPORTS = 10_000  # 0.00001 SOL
+MIN_TIP_LAMPORTS = 1_000   # 0.000001 SOL
 
 # Maximum transactions per bundle — Jito enforces a limit to prevent
 # oversized bundles from hogging block space
@@ -528,13 +528,14 @@ def demo():
         print(f"  └─────────────────────────────────────────────────────┘")
 
         print(f"\n  Auction results (sorted by tip, descending):")
-        for i, (bundle_tip, bundle) in enumerate(
-                sorted(zip(tips, auction.pending_bundles),
-                       key=lambda x: x[0], reverse=True)):
+        # Collect all bundles for this opportunity (winner + losers) sorted by tip
+        all_bundles = [winner] + result["losers"]
+        all_bundles.sort(key=lambda b: b.tip_lamports, reverse=True)
+        for bundle in all_bundles:
             status_icon = "★" if bundle.status == "won" else " "
-            tip_sol = bundle_tip / LAMPORTS_PER_SOL
+            tip_sol = bundle.tip_lamports / LAMPORTS_PER_SOL
             print(f"    {status_icon} {bundle.searcher:>10}: "
-                  f"{bundle_tip:>12,} lamports ({tip_sol:.6f} SOL) "
+                  f"{bundle.tip_lamports:>12,} lamports ({tip_sol:.6f} SOL) "
                   f"[{bundle.status}]")
 
     # --- Step 5: Validator produces block with winning bundle ---

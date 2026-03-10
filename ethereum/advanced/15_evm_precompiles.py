@@ -63,7 +63,7 @@ PRECOMPILE_GAS = {
     0x06: 150,        # ecAdd (alt_bn128) — Istanbul pricing
     0x07: 6_000,      # ecMul (alt_bn128) — Istanbul pricing
     0x08: 45_000,     # ecPairing — base (+ 34,000 per pair)
-    0x09: 4_000,      # blake2f — per round
+    0x09: 1,          # blake2f — 1 gas per round (EIP-152)
 }
 
 

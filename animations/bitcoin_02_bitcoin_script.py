@@ -68,92 +68,93 @@ def draw_marching_arrow(draw, x0, y0, x1, y1, color, frame, thickness=2):
     draw.polygon([(ax, ay), (ax - dx * 10 - dy * 5, ay - dy * 10 + dx * 5),
                   (ax - dx * 10 + dy * 5, ay - dy * 10 - dx * 5)], fill=color)
 
-frames = []
-for f in range(FRAMES):
-    img = Image.new("RGB", (W, H), BG)
-    draw = ImageDraw.Draw(img)
-    t = f / FRAMES
-    pulse = 0.5 + 0.5 * math.sin(2 * math.pi * t)
+if __name__ == "__main__":
+    frames = []
+    for f in range(FRAMES):
+        img = Image.new("RGB", (W, H), BG)
+        draw = ImageDraw.Draw(img)
+        t = f / FRAMES
+        pulse = 0.5 + 0.5 * math.sin(2 * math.pi * t)
 
-    draw.text((W // 2, 25), "Script: Lock and Unlock", fill=CYAN, font=title_font, anchor="mt")
-    draw.text((W // 2, 55), "Two scripts combine to authorize spending", fill=DIM, font=body_font, anchor="mt")
+        draw.text((W // 2, 25), "Script: Lock and Unlock", fill=CYAN, font=title_font, anchor="mt")
+        draw.text((W // 2, 55), "Two scripts combine to authorize spending", fill=DIM, font=body_font, anchor="mt")
 
-    # Left: Locking Script (scriptPubKey) - Lock
-    lock_x, lock_y = 50, 100
-    lock_w, lock_h = 280, 200
-    red_glow = int(180 + 75 * pulse)
-    draw.rounded_rectangle((lock_x, lock_y, lock_x + lock_w, lock_y + lock_h),
-                           radius=10, fill=RED_BG, outline=(red_glow, 80, 80), width=2)
+        # Left: Locking Script (scriptPubKey) - Lock
+        lock_x, lock_y = 50, 100
+        lock_w, lock_h = 280, 200
+        red_glow = int(180 + 75 * pulse)
+        draw.rounded_rectangle((lock_x, lock_y, lock_x + lock_w, lock_y + lock_h),
+                               radius=10, fill=RED_BG, outline=(red_glow, 80, 80), width=2)
 
-    # Lock icon (simple padlock shape)
-    lx, ly = lock_x + 140, lock_y + 45
-    draw.arc((lx - 12, ly - 15, lx + 12, ly + 5), 0, 360, fill=RED, width=3)
-    draw.rounded_rectangle((lx - 16, ly + 2, lx + 16, ly + 22), radius=3, fill=RED, outline=RED)
+        # Lock icon (simple padlock shape)
+        lx, ly = lock_x + 140, lock_y + 45
+        draw.arc((lx - 12, ly - 15, lx + 12, ly + 5), 0, 360, fill=RED, width=3)
+        draw.rounded_rectangle((lx - 16, ly + 2, lx + 16, ly + 22), radius=3, fill=RED, outline=RED)
 
-    draw.text((lock_x + 140, ly + 38), "Locking Script", fill=RED, font=header_font, anchor="mt")
-    draw.text((lock_x + 140, ly + 58), "(scriptPubKey)", fill=DIM, font=small_font, anchor="mt")
+        draw.text((lock_x + 140, ly + 38), "Locking Script", fill=RED, font=header_font, anchor="mt")
+        draw.text((lock_x + 140, ly + 58), "(scriptPubKey)", fill=DIM, font=small_font, anchor="mt")
 
-    # Locking script contents
-    lock_ops = ["OP_DUP", "OP_HASH160", "<pubKeyHash>", "OP_EQUALVERIFY", "OP_CHECKSIG"]
-    for i, op in enumerate(lock_ops):
-        y = lock_y + 110 + i * 18
-        col = ORANGE if op.startswith("<") else DIM
-        draw.text((lock_x + 20, y), op, fill=col, font=mono_font)
+        # Locking script contents
+        lock_ops = ["OP_DUP", "OP_HASH160", "<pubKeyHash>", "OP_EQUALVERIFY", "OP_CHECKSIG"]
+        for i, op in enumerate(lock_ops):
+            y = lock_y + 110 + i * 18
+            col = ORANGE if op.startswith("<") else DIM
+            draw.text((lock_x + 20, y), op, fill=col, font=mono_font)
 
-    # Right: Unlocking Script (scriptSig) - Key
-    key_x, key_y = 470, 100
-    key_w, key_h = 280, 200
-    grn_glow = int(100 + 155 * pulse)
-    draw.rounded_rectangle((key_x, key_y, key_x + key_w, key_y + key_h),
-                           radius=10, fill=GREEN_BG, outline=(52, grn_glow, 153), width=2)
+        # Right: Unlocking Script (scriptSig) - Key
+        key_x, key_y = 470, 100
+        key_w, key_h = 280, 200
+        grn_glow = int(100 + 155 * pulse)
+        draw.rounded_rectangle((key_x, key_y, key_x + key_w, key_y + key_h),
+                               radius=10, fill=GREEN_BG, outline=(52, grn_glow, 153), width=2)
 
-    # Key icon (simple key shape)
-    kx, ky = key_x + 140, key_y + 45
-    draw.ellipse((kx - 10, ky - 10, kx + 10, ky + 10), outline=GREEN, width=2)
-    draw.line([(kx + 10, ky), (kx + 30, ky)], fill=GREEN, width=2)
-    draw.line([(kx + 25, ky), (kx + 25, ky + 8)], fill=GREEN, width=2)
-    draw.line([(kx + 30, ky), (kx + 30, ky + 8)], fill=GREEN, width=2)
+        # Key icon (simple key shape)
+        kx, ky = key_x + 140, key_y + 45
+        draw.ellipse((kx - 10, ky - 10, kx + 10, ky + 10), outline=GREEN, width=2)
+        draw.line([(kx + 10, ky), (kx + 30, ky)], fill=GREEN, width=2)
+        draw.line([(kx + 25, ky), (kx + 25, ky + 8)], fill=GREEN, width=2)
+        draw.line([(kx + 30, ky), (kx + 30, ky + 8)], fill=GREEN, width=2)
 
-    draw.text((key_x + 140, ky + 20), "Unlocking Script", fill=GREEN, font=header_font, anchor="mt")
-    draw.text((key_x + 140, ky + 40), "(scriptSig)", fill=DIM, font=small_font, anchor="mt")
+        draw.text((key_x + 140, ky + 20), "Unlocking Script", fill=GREEN, font=header_font, anchor="mt")
+        draw.text((key_x + 140, ky + 40), "(scriptSig)", fill=DIM, font=small_font, anchor="mt")
 
-    # Unlocking script contents
-    unlock_ops = ["<signature>", "<publicKey>"]
-    for i, op in enumerate(unlock_ops):
-        y = key_y + 110 + i * 18
-        draw.text((key_x + 20, y), op, fill=CYAN, font=mono_font)
+        # Unlocking script contents
+        unlock_ops = ["<signature>", "<publicKey>"]
+        for i, op in enumerate(unlock_ops):
+            y = key_y + 110 + i * 18
+            draw.text((key_x + 20, y), op, fill=CYAN, font=mono_font)
 
-    draw.text((key_x + 140, key_y + 165), "Provided by spender", fill=DIM, font=small_font, anchor="mt")
+        draw.text((key_x + 140, key_y + 165), "Provided by spender", fill=DIM, font=small_font, anchor="mt")
 
-    # Center: Combine arrows
-    center_x = W // 2
-    draw_marching_arrow(draw, lock_x + lock_w + 5, 200, center_x - 35, 350, RED, f)
-    draw_marching_arrow(draw, key_x - 5, 200, center_x + 35, 350, GREEN, f)
+        # Center: Combine arrows
+        center_x = W // 2
+        draw_marching_arrow(draw, lock_x + lock_w + 5, 200, center_x - 35, 350, RED, f)
+        draw_marching_arrow(draw, key_x - 5, 200, center_x + 35, 350, GREEN, f)
 
-    draw.text((center_x, 330), "+", fill=WHITE, font=title_font, anchor="mm")
+        draw.text((center_x, 330), "+", fill=WHITE, font=title_font, anchor="mm")
 
-    # Execution box
-    exec_y = 360
-    draw.rounded_rectangle((center_x - 150, exec_y, center_x + 150, exec_y + 60),
-                           radius=10, fill=DARK_BOX, outline=YELLOW, width=2)
-    draw.text((center_x, exec_y + 15), "Combined Script Execution", fill=YELLOW, font=header_font, anchor="mt")
-    draw.text((center_x, exec_y + 38), "scriptSig + scriptPubKey", fill=DIM, font=small_font, anchor="mt")
+        # Execution box
+        exec_y = 360
+        draw.rounded_rectangle((center_x - 150, exec_y, center_x + 150, exec_y + 60),
+                               radius=10, fill=DARK_BOX, outline=YELLOW, width=2)
+        draw.text((center_x, exec_y + 15), "Combined Script Execution", fill=YELLOW, font=header_font, anchor="mt")
+        draw.text((center_x, exec_y + 38), "scriptSig + scriptPubKey", fill=DIM, font=small_font, anchor="mt")
 
-    # Arrow down to result
-    draw_marching_arrow(draw, center_x, exec_y + 62, center_x, exec_y + 100, YELLOW, f)
+        # Arrow down to result
+        draw_marching_arrow(draw, center_x, exec_y + 62, center_x, exec_y + 100, YELLOW, f)
 
-    # Result box
-    res_y = exec_y + 105
-    result_glow = int(100 + 155 * pulse)
-    draw.rounded_rectangle((center_x - 120, res_y, center_x + 120, res_y + 55),
-                           radius=10, fill=GREEN_BG, outline=(52, result_glow, 153), width=2)
-    draw.text((center_x, res_y + 15), "Result: TRUE", fill=GREEN, font=header_font, anchor="mt")
-    draw.text((center_x, res_y + 38), "Spend authorized!", fill=WHITE, font=small_font, anchor="mt")
+        # Result box
+        res_y = exec_y + 105
+        result_glow = int(100 + 155 * pulse)
+        draw.rounded_rectangle((center_x - 120, res_y, center_x + 120, res_y + 55),
+                               radius=10, fill=GREEN_BG, outline=(52, result_glow, 153), width=2)
+        draw.text((center_x, res_y + 15), "Result: TRUE", fill=GREEN, font=header_font, anchor="mt")
+        draw.text((center_x, res_y + 38), "Spend authorized!", fill=WHITE, font=small_font, anchor="mt")
 
-    # Bottom explanation
-    draw.text((W // 2, H - 30), "Lock defines the condition  |  Key provides the proof  |  VM verifies both", fill=DIM, font=small_font, anchor="mt")
+        # Bottom explanation
+        draw.text((W // 2, H - 30), "Lock defines the condition  |  Key provides the proof  |  VM verifies both", fill=DIM, font=small_font, anchor="mt")
 
-    frames.append(img)
+        frames.append(img)
 
-frames[0].save("assets/gifs/bitcoin_02_bitcoin_script.gif", save_all=True, append_images=frames[1:], duration=DUR, loop=0)
-print("Saved assets/gifs/bitcoin_02_bitcoin_script.gif")
+    frames[0].save("assets/gifs/bitcoin_02_bitcoin_script.gif", save_all=True, append_images=frames[1:], duration=DUR, loop=0, optimize=True)
+    print("Saved assets/gifs/bitcoin_02_bitcoin_script.gif")

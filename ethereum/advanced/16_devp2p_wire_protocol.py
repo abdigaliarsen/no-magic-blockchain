@@ -131,7 +131,7 @@ def _encode_length(length: int) -> bytes:
 class RLPxFrame:
     """An RLPx frame — the unit of data exchange between Ethereum nodes.
 
-    Real RLPx uses ECIES encryption + AES-256-CTR + HMAC-SHA-256.
+    Real RLPx uses ECIES encryption + AES-128-CTR + HMAC-SHA-256.
     We simulate the frame structure without actual encryption (stdlib only).
     """
 

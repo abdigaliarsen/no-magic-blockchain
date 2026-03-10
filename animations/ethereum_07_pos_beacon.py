@@ -238,7 +238,8 @@ def make_frame(frame_idx):
 
     return img
 
-frames = [make_frame(i) for i in range(FRAMES)]
-frames[0].save("assets/gifs/ethereum_07_pos_beacon.gif", save_all=True, append_images=frames[1:],
-               duration=DELAY, loop=0, optimize=True)
-print("Saved assets/gifs/ethereum_07_pos_beacon.gif")
+if __name__ == "__main__":
+    frames = [make_frame(i) for i in range(FRAMES)]
+    frames[0].save("assets/gifs/ethereum_07_pos_beacon.gif", save_all=True, append_images=frames[1:],
+                   duration=DELAY, loop=0, optimize=True)
+    print("Saved assets/gifs/ethereum_07_pos_beacon.gif")

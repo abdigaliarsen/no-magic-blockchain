@@ -406,7 +406,7 @@ class BeaconState:
         if v.slashed:
             return  # Already slashed
 
-        penalty = v.balance // 4  # Lose 25% of balance (simplified)
+        penalty = v.balance // 32  # Lose ~3.125% of balance (initial penalty per Ethereum spec)
         v.balance -= penalty
         v.slashed = True
         v.exit_epoch = self.epoch + 1  # Force exit at next epoch

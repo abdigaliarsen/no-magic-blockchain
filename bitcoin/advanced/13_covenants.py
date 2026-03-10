@@ -134,7 +134,11 @@ def compute_template_hash(
     preimage = b""
     preimage += serialize_uint32(version)
     preimage += serialize_uint32(locktime)
-    preimage += scriptsigs_hash                     # 32 bytes
+    # BIP-119: scriptsigs_hash is only included when at least one scriptSig
+    # is non-empty. For segwit inputs (the common case), all scriptSigs are
+    # empty, so this field is omitted.
+    if scriptsigs_hash != sha256(b""):
+        preimage += scriptsigs_hash                 # 32 bytes (only if non-empty)
     preimage += serialize_uint32(num_inputs)
     preimage += sequences_hash                      # 32 bytes
     preimage += serialize_uint32(num_outputs)

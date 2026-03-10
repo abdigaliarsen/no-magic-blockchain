@@ -102,7 +102,7 @@ def ch(x, y, z):
     Think of x as a selector switch: it 'chooses' between y and z
     at every bit position independently.
     """
-    return (x & y) ^ (~x & z) & MASK_32
+    return ((x & y) ^ (~x & z)) & MASK_32
 
 
 def maj(x, y, z):

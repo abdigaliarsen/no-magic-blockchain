@@ -27,14 +27,14 @@ def load_font(size, bold=False):
         for p in [f"/usr/share/fonts/truetype/dejavu/{n}", f"/usr/share/fonts/truetype/liberation/{n}", f"/usr/share/fonts/{n}"]:
             if os.path.exists(p):
                 try: return ImageFont.truetype(p, size)
-                except: pass
+                except (OSError, IOError): pass
     return ImageFont.load_default()
 
 def load_mono(size):
     for p in ["/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",
               "/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf"]:
         try: return ImageFont.truetype(p, size)
-        except: pass
+        except (OSError, IOError): pass
     return ImageFont.load_default()
 
 title_font = load_font(26, True)

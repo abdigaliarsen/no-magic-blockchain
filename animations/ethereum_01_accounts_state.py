@@ -204,13 +204,14 @@ def generate_frame(frame):
     return img
 
 
-frames = [generate_frame(f) for f in range(FRAMES)]
-frames[0].save(
-    "assets/gifs/ethereum_01_accounts_state.gif",
-    save_all=True,
-    append_images=frames[1:],
-    duration=DELAY,
-    loop=0,
-    optimize=True,
-)
-print("Saved assets/gifs/ethereum_01_accounts_state.gif")
+if __name__ == "__main__":
+    frames = [generate_frame(f) for f in range(FRAMES)]
+    frames[0].save(
+        "assets/gifs/ethereum_01_accounts_state.gif",
+        save_all=True,
+        append_images=frames[1:],
+        duration=DELAY,
+        loop=0,
+        optimize=True,
+    )
+    print("Saved assets/gifs/ethereum_01_accounts_state.gif")

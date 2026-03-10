@@ -61,101 +61,102 @@ def marching_arrow_v(draw, x, y0, y1, color, frame, w=2):
         d += dash * 2
     draw.polygon([(x, y1), (x - 5, y1 - dy * 8), (x + 5, y1 - dy * 8)], fill=color)
 
-frames_list = []
-for f in range(FRAMES):
-    img = Image.new("RGB", (W, H), BG)
-    draw = ImageDraw.Draw(img)
-    t = f / FRAMES
-    pulse = 0.5 + 0.5 * math.sin(2 * math.pi * t)
+if __name__ == "__main__":
+    frames_list = []
+    for f in range(FRAMES):
+        img = Image.new("RGB", (W, H), BG)
+        draw = ImageDraw.Draw(img)
+        t = f / FRAMES
+        pulse = 0.5 + 0.5 * math.sin(2 * math.pi * t)
 
-    draw.text((W // 2, 20), "Bitcoin Mining: Block Assembly", fill=CYAN, font=title_font, anchor="mt")
+        draw.text((W // 2, 20), "Bitcoin Mining: Block Assembly", fill=CYAN, font=title_font, anchor="mt")
 
-    # Row 1: Transactions
-    tx_y = 60
-    # Coinbase
-    draw.rounded_rectangle((50, tx_y, 200, tx_y + 55), radius=6, fill=YELLOW_BG, outline=YELLOW, width=2)
-    draw.text((125, tx_y + 12), "Coinbase Tx", fill=YELLOW, font=header_font, anchor="mt")
-    draw.text((125, tx_y + 32), "6.25 BTC reward", fill=WHITE, font=small_font, anchor="mt")
+        # Row 1: Transactions
+        tx_y = 60
+        # Coinbase
+        draw.rounded_rectangle((50, tx_y, 200, tx_y + 55), radius=6, fill=YELLOW_BG, outline=YELLOW, width=2)
+        draw.text((125, tx_y + 12), "Coinbase Tx", fill=YELLOW, font=header_font, anchor="mt")
+        draw.text((125, tx_y + 32), "6.25 BTC reward", fill=WHITE, font=small_font, anchor="mt")
 
-    # Regular txs
-    txs = [("Tx1: A->B", 240), ("Tx2: C->D", 390), ("Tx3: E->F", 540)]
-    for label, x in txs:
-        draw.rounded_rectangle((x, tx_y, x + 130, tx_y + 55), radius=6, fill=CYAN_BG, outline=CYAN)
-        draw.text((x + 65, tx_y + 12), label, fill=CYAN, font=mono_font, anchor="mt")
-        draw.text((x + 65, tx_y + 32), "0.001 fee", fill=DIM, font=small_font, anchor="mt")
+        # Regular txs
+        txs = [("Tx1: A->B", 240), ("Tx2: C->D", 390), ("Tx3: E->F", 540)]
+        for label, x in txs:
+            draw.rounded_rectangle((x, tx_y, x + 130, tx_y + 55), radius=6, fill=CYAN_BG, outline=CYAN)
+            draw.text((x + 65, tx_y + 12), label, fill=CYAN, font=mono_font, anchor="mt")
+            draw.text((x + 65, tx_y + 32), "0.001 fee", fill=DIM, font=small_font, anchor="mt")
 
-    # Arrows down to Merkle root
-    for x in [125, 305, 455, 605]:
-        marching_arrow_v(draw, x, tx_y + 57, tx_y + 85, DIM, f)
+        # Arrows down to Merkle root
+        for x in [125, 305, 455, 605]:
+            marching_arrow_v(draw, x, tx_y + 57, tx_y + 85, DIM, f)
 
-    # Row 2: Merkle Root
-    mk_y = tx_y + 88
-    draw.rounded_rectangle((200, mk_y, 560, mk_y + 40), radius=6, fill=PURPLE_BG, outline=PURPLE)
-    draw.text((380, mk_y + 10), "Merkle Root: a3f2...8b1c", fill=PURPLE, font=mono_font, anchor="mt")
+        # Row 2: Merkle Root
+        mk_y = tx_y + 88
+        draw.rounded_rectangle((200, mk_y, 560, mk_y + 40), radius=6, fill=PURPLE_BG, outline=PURPLE)
+        draw.text((380, mk_y + 10), "Merkle Root: a3f2...8b1c", fill=PURPLE, font=mono_font, anchor="mt")
 
-    # Arrow down to block header
-    marching_arrow_v(draw, 380, mk_y + 42, mk_y + 65, PURPLE, f)
+        # Arrow down to block header
+        marching_arrow_v(draw, 380, mk_y + 42, mk_y + 65, PURPLE, f)
 
-    # Row 3: Block Header
-    hdr_y = mk_y + 68
-    draw.rounded_rectangle((100, hdr_y, 660, hdr_y + 140), radius=10, fill=DARK_BOX, outline=ORANGE, width=2)
-    draw.text((380, hdr_y + 12), "Block Header (80 bytes)", fill=ORANGE, font=header_font, anchor="mt")
+        # Row 3: Block Header
+        hdr_y = mk_y + 68
+        draw.rounded_rectangle((100, hdr_y, 660, hdr_y + 140), radius=10, fill=DARK_BOX, outline=ORANGE, width=2)
+        draw.text((380, hdr_y + 12), "Block Header (80 bytes)", fill=ORANGE, font=header_font, anchor="mt")
 
-    fields = [
-        ("version:", "0x20000000", CYAN),
-        ("prev_hash:", "00000000000000000003a1...", CYAN),
-        ("merkle_root:", "a3f2...8b1c", PURPLE),
-        ("timestamp:", "2024-01-15 14:23:07", DIM),
-        ("bits:", "0x17034219 (difficulty)", DIM),
-        ("nonce:", f"{(f * 7919 + 12345) % 999999:06d}", YELLOW),
-    ]
-    for i, (name, val, col) in enumerate(fields):
-        row = i // 2
-        col_idx = i % 2
-        x = 120 + col_idx * 280
-        y = hdr_y + 35 + row * 22
-        draw.text((x, y), name, fill=DIM, font=mono_sm)
-        draw.text((x + 90, y), val, fill=col, font=mono_sm)
+        fields = [
+            ("version:", "0x20000000", CYAN),
+            ("prev_hash:", "00000000000000000003a1...", CYAN),
+            ("merkle_root:", "a3f2...8b1c", PURPLE),
+            ("timestamp:", "2024-01-15 14:23:07", DIM),
+            ("bits:", "0x17034219 (difficulty)", DIM),
+            ("nonce:", f"{(f * 7919 + 12345) % 999999:06d}", YELLOW),
+        ]
+        for i, (name, val, col) in enumerate(fields):
+            row = i // 2
+            col_idx = i % 2
+            x = 120 + col_idx * 280
+            y = hdr_y + 35 + row * 22
+            draw.text((x, y), name, fill=DIM, font=mono_sm)
+            draw.text((x + 90, y), val, fill=col, font=mono_sm)
 
-    # Nonce cycling effect
-    nonce_y = hdr_y + 35 + 2 * 22
-    nonce_x = 120 + 1 * 280 + 90
-    cycling = f"{(f * 7919 + 12345) % 999999:06d}"
+        # Nonce cycling effect
+        nonce_y = hdr_y + 35 + 2 * 22
+        nonce_x = 120 + 1 * 280 + 90
+        cycling = f"{(f * 7919 + 12345) % 999999:06d}"
 
-    # Arrow to double hash
-    hash_y = hdr_y + 145
-    marching_arrow_v(draw, 380, hdr_y + 142, hash_y + 5, ORANGE, f)
+        # Arrow to double hash
+        hash_y = hdr_y + 145
+        marching_arrow_v(draw, 380, hdr_y + 142, hash_y + 5, ORANGE, f)
 
-    # Row 4: Double SHA-256
-    draw.rounded_rectangle((200, hash_y + 8, 560, hash_y + 48), radius=6, fill=PANEL, outline=YELLOW)
-    draw.text((380, hash_y + 18), "SHA-256( SHA-256( header ) )", fill=YELLOW, font=mono_font, anchor="mt")
+        # Row 4: Double SHA-256
+        draw.rounded_rectangle((200, hash_y + 8, 560, hash_y + 48), radius=6, fill=PANEL, outline=YELLOW)
+        draw.text((380, hash_y + 18), "SHA-256( SHA-256( header ) )", fill=YELLOW, font=mono_font, anchor="mt")
 
-    # Arrow to result
-    marching_arrow_v(draw, 380, hash_y + 50, hash_y + 72, YELLOW, f)
+        # Arrow to result
+        marching_arrow_v(draw, 380, hash_y + 50, hash_y + 72, YELLOW, f)
 
-    # Row 5: Result hash
-    res_y = hash_y + 75
-    # Simulated hash that starts with zeros
-    hash_prefix = "0000000000000000"
-    hash_rest = f"{(f * 31337) % 0xFFFFFFFF:08x}{'a1b2c3d4e5f6'}"
-    result_hash = hash_prefix + hash_rest[:48]
+        # Row 5: Result hash
+        res_y = hash_y + 75
+        # Simulated hash that starts with zeros
+        hash_prefix = "0000000000000000"
+        hash_rest = f"{(f * 31337) % 0xFFFFFFFF:08x}{'a1b2c3d4e5f6'}"
+        result_hash = hash_prefix + hash_rest[:48]
 
-    valid = True
-    border_col = GREEN if valid else RED
-    glow = int(100 + 155 * pulse)
-    draw.rounded_rectangle((80, res_y, 680, res_y + 45), radius=6, fill=GREEN_BG,
-                           outline=(52, glow, 153), width=2)
-    draw.text((380, res_y + 8), f"Hash: {result_hash[:40]}...", fill=WHITE, font=mono_sm, anchor="mt")
-    # Highlight leading zeros
-    draw.text((116, res_y + 8), f"Hash: {hash_prefix}", fill=GREEN, font=mono_sm)
-    draw.text((380, res_y + 28), "Starts with enough zeros = VALID BLOCK!", fill=GREEN, font=small_font, anchor="mt")
+        valid = True
+        border_col = GREEN if valid else RED
+        glow = int(100 + 155 * pulse)
+        draw.rounded_rectangle((80, res_y, 680, res_y + 45), radius=6, fill=GREEN_BG,
+                               outline=(52, glow, 153), width=2)
+        draw.text((380, res_y + 8), f"Hash: {result_hash[:40]}...", fill=WHITE, font=mono_sm, anchor="mt")
+        # Highlight leading zeros
+        draw.text((116, res_y + 8), f"Hash: {hash_prefix}", fill=GREEN, font=mono_sm)
+        draw.text((380, res_y + 28), "Starts with enough zeros = VALID BLOCK!", fill=GREEN, font=small_font, anchor="mt")
 
-    # Bottom summary
-    draw.rounded_rectangle((50, H - 70, 750, H - 15), radius=8, fill=PANEL, outline=BORDER)
-    draw.text((400, H - 55), "Miner increments nonce until hash < target difficulty", fill=WHITE, font=body_font, anchor="mt")
-    draw.text((400, H - 35), "Block reward (6.25 BTC) + transaction fees go to miner's coinbase tx", fill=DIM, font=small_font, anchor="mt")
+        # Bottom summary
+        draw.rounded_rectangle((50, H - 70, 750, H - 15), radius=8, fill=PANEL, outline=BORDER)
+        draw.text((400, H - 55), "Miner increments nonce until hash < target difficulty", fill=WHITE, font=body_font, anchor="mt")
+        draw.text((400, H - 35), "Block reward (6.25 BTC) + transaction fees go to miner's coinbase tx", fill=DIM, font=small_font, anchor="mt")
 
-    frames_list.append(img)
+        frames_list.append(img)
 
-frames_list[0].save("assets/gifs/bitcoin_03_mining.gif", save_all=True, append_images=frames_list[1:], duration=DUR, loop=0)
-print("Saved assets/gifs/bitcoin_03_mining.gif")
+    frames_list[0].save("assets/gifs/bitcoin_03_mining.gif", save_all=True, append_images=frames_list[1:], duration=DUR, loop=0, optimize=True)
+    print("Saved assets/gifs/bitcoin_03_mining.gif")

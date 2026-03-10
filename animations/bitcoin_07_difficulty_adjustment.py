@@ -26,7 +26,7 @@ def load_font(size, bold=False):
         for p in [f"/usr/share/fonts/truetype/dejavu/{n}", f"/usr/share/fonts/truetype/liberation/{n}", f"/usr/share/fonts/{n}"]:
             if os.path.exists(p):
                 try: return ImageFont.truetype(p, size)
-                except: pass
+                except (OSError, IOError): pass
     return ImageFont.load_default()
 
 title_font = load_font(26, True)
@@ -186,6 +186,7 @@ def make_frame(f):
 
     return img
 
-frames = [make_frame(f) for f in range(FRAMES)]
-frames[0].save("assets/gifs/bitcoin_07_difficulty_adjustment.gif", save_all=True, append_images=frames[1:], duration=DELAY, loop=0)
-print("Saved assets/gifs/bitcoin_07_difficulty_adjustment.gif")
+if __name__ == "__main__":
+    frames = [make_frame(f) for f in range(FRAMES)]
+    frames[0].save("assets/gifs/bitcoin_07_difficulty_adjustment.gif", save_all=True, append_images=frames[1:], duration=DELAY, loop=0, optimize=True)
+    print("Saved assets/gifs/bitcoin_07_difficulty_adjustment.gif")

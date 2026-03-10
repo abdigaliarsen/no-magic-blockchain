@@ -12,7 +12,7 @@ KEY CONCEPTS:
     - Polynomial evaluation over finite fields GF(p)
     - Lagrange interpolation for polynomial reconstruction
     - (k, n) erasure code: k data chunks encoded into n total, any k suffice
-    - Systematic encoding: first k chunks are the original data
+    - Non-systematic encoding: all chunks are polynomial evaluations (not raw data)
 
 PREREQUISITE SCRIPTS:
     - core/intermediate/09_shamirs_secret_sharing.py (same polynomial math)
@@ -310,12 +310,9 @@ def demo():
     print(f"  {'-'*12}  {'-'*12}")
     for x_val, y_val in chunks:
         # Verify by hand for the first point
-        label = ""
-        if x_val <= k:
-            label = "  (data chunk)"
-        else:
-            label = "  (parity chunk)"
-        print(f"  {x_val:>12d}  {y_val:>12d}{label}")
+        # Non-systematic encoding: all chunks are polynomial evaluations,
+        # none contain the original data directly
+        print(f"  {x_val:>12d}  {y_val:>12d}")
 
     # Verify f(1) by hand
     f1 = (10 + 20*1 + 30*1 + 40*1) % FIELD_PRIME
@@ -359,8 +356,7 @@ def demo():
     chunks2 = encode(data_bytes, n2, k2)
     print(f"  Encoded chunks:")
     for i, (x_val, y_val) in enumerate(chunks2):
-        kind = "DATA  " if i < k2 else "PARITY"
-        print(f"    Chunk {i+1:2d} (x={x_val:2d}): {y_val:3d}  [{kind}]")
+        print(f"    Chunk {i+1:2d} (x={x_val:2d}): {y_val:3d}")
 
     # --- Lose 5 chunks (the maximum we can lose) ---
     print(f"\n  --- Lose 5 random chunks (max tolerable: {n2 - k2}) ---\n")

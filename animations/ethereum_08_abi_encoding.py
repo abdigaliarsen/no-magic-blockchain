@@ -192,6 +192,7 @@ def make_frame(f):
 
 
 # --- Generate GIF ---
-frames = [make_frame(f) for f in range(FRAMES)]
-frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=DELAY, loop=0, optimize=True)
-print(f"Saved {OUT}")
+if __name__ == "__main__":
+    frames = [make_frame(f) for f in range(FRAMES)]
+    frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=DELAY, loop=0, optimize=True)
+    print(f"Saved {OUT}")

@@ -62,95 +62,96 @@ def marching_arrow_h(draw, x0, y, x1, color, frame, w=2):
         d += dash * 2
     draw.polygon([(x1, y), (x1 - dx * 8, y - 4), (x1 - dx * 8, y + 4)], fill=color)
 
-frames_list = []
-for f in range(FRAMES):
-    img = Image.new("RGB", (W, H), BG)
-    draw = ImageDraw.Draw(img)
-    t = f / FRAMES
-    pulse = 0.5 + 0.5 * math.sin(2 * math.pi * t)
+if __name__ == "__main__":
+    frames_list = []
+    for f in range(FRAMES):
+        img = Image.new("RGB", (W, H), BG)
+        draw = ImageDraw.Draw(img)
+        t = f / FRAMES
+        pulse = 0.5 + 0.5 * math.sin(2 * math.pi * t)
 
-    draw.text((W // 2, 20), "Full Node vs SPV Light Client", fill=CYAN, font=title_font, anchor="mt")
+        draw.text((W // 2, 20), "Full Node vs SPV Light Client", fill=CYAN, font=title_font, anchor="mt")
 
-    # ---- LEFT: Full Node ----
-    fn_x, fn_y = 50, 65
-    fn_w, fn_h = 300, 280
-    draw.rounded_rectangle((fn_x, fn_y, fn_x + fn_w, fn_y + fn_h), radius=10, fill=PANEL, outline=ORANGE, width=2)
-    draw.text((fn_x + fn_w // 2, fn_y + 15), "Full Node", fill=ORANGE, font=header_font, anchor="mt")
-    draw.text((fn_x + fn_w // 2, fn_y + 35), "Stores EVERYTHING", fill=DIM, font=small_font, anchor="mt")
+        # ---- LEFT: Full Node ----
+        fn_x, fn_y = 50, 65
+        fn_w, fn_h = 300, 280
+        draw.rounded_rectangle((fn_x, fn_y, fn_x + fn_w, fn_y + fn_h), radius=10, fill=PANEL, outline=ORANGE, width=2)
+        draw.text((fn_x + fn_w // 2, fn_y + 15), "Full Node", fill=ORANGE, font=header_font, anchor="mt")
+        draw.text((fn_x + fn_w // 2, fn_y + 35), "Stores EVERYTHING", fill=DIM, font=small_font, anchor="mt")
 
-    # Stack of blocks
-    block_colors = [ORANGE, YELLOW, CYAN, GREEN, PURPLE]
-    for i in range(8):
-        by = fn_y + 55 + i * 27
-        bx = fn_x + 20
-        bw = fn_w - 40
-        col = block_colors[i % len(block_colors)]
-        bg = tuple(int(c * 0.2) for c in col)
-        draw.rounded_rectangle((bx, by, bx + bw, by + 23), radius=4, fill=bg, outline=col, width=1)
-        draw.text((bx + 8, by + 5), f"Block #{800000 - i}", fill=col, font=mono_sm)
-        draw.text((bx + bw - 8, by + 5), f"~1MB", fill=DIM, font=mono_sm, anchor="ra")
+        # Stack of blocks
+        block_colors = [ORANGE, YELLOW, CYAN, GREEN, PURPLE]
+        for i in range(8):
+            by = fn_y + 55 + i * 27
+            bx = fn_x + 20
+            bw = fn_w - 40
+            col = block_colors[i % len(block_colors)]
+            bg = tuple(int(c * 0.2) for c in col)
+            draw.rounded_rectangle((bx, by, bx + bw, by + 23), radius=4, fill=bg, outline=col, width=1)
+            draw.text((bx + 8, by + 5), f"Block #{800000 - i}", fill=col, font=mono_sm)
+            draw.text((bx + bw - 8, by + 5), f"~1MB", fill=DIM, font=mono_sm, anchor="ra")
 
-    # Size label
-    draw.text((fn_x + fn_w // 2, fn_y + fn_h - 15), "~550 GB total", fill=RED, font=header_font, anchor="mt")
+        # Size label
+        draw.text((fn_x + fn_w // 2, fn_y + fn_h - 15), "~550 GB total", fill=RED, font=header_font, anchor="mt")
 
-    # ---- RIGHT: SPV Node ----
-    sp_x = 450
-    sp_w, sp_h = 300, 280
-    g = int(100 + 155 * pulse)
-    draw.rounded_rectangle((sp_x, fn_y, sp_x + sp_w, fn_y + sp_h), radius=10, fill=PANEL, outline=(52, g, 153), width=2)
-    draw.text((sp_x + sp_w // 2, fn_y + 15), "SPV Light Client", fill=GREEN, font=header_font, anchor="mt")
-    draw.text((sp_x + sp_w // 2, fn_y + 35), "Headers ONLY", fill=DIM, font=small_font, anchor="mt")
+        # ---- RIGHT: SPV Node ----
+        sp_x = 450
+        sp_w, sp_h = 300, 280
+        g = int(100 + 155 * pulse)
+        draw.rounded_rectangle((sp_x, fn_y, sp_x + sp_w, fn_y + sp_h), radius=10, fill=PANEL, outline=(52, g, 153), width=2)
+        draw.text((sp_x + sp_w // 2, fn_y + 15), "SPV Light Client", fill=GREEN, font=header_font, anchor="mt")
+        draw.text((sp_x + sp_w // 2, fn_y + 35), "Headers ONLY", fill=DIM, font=small_font, anchor="mt")
 
-    # Thin header strips
-    for i in range(8):
-        by = fn_y + 55 + i * 27
-        bx = sp_x + 60
-        bw = sp_w - 120
-        col = GREEN
-        bg = GREEN_BG
-        draw.rounded_rectangle((bx, by, bx + bw, by + 23), radius=4, fill=bg, outline=col, width=1)
-        draw.text((bx + 8, by + 5), f"Header #{800000 - i}", fill=GREEN, font=mono_sm)
-        draw.text((bx + bw - 8, by + 5), "80B", fill=DIM, font=mono_sm, anchor="ra")
+        # Thin header strips
+        for i in range(8):
+            by = fn_y + 55 + i * 27
+            bx = sp_x + 60
+            bw = sp_w - 120
+            col = GREEN
+            bg = GREEN_BG
+            draw.rounded_rectangle((bx, by, bx + bw, by + 23), radius=4, fill=bg, outline=col, width=1)
+            draw.text((bx + 8, by + 5), f"Header #{800000 - i}", fill=GREEN, font=mono_sm)
+            draw.text((bx + bw - 8, by + 5), "80B", fill=DIM, font=mono_sm, anchor="ra")
 
-    # Size label
-    draw.text((sp_x + sp_w // 2, fn_y + sp_h - 15), "~60 MB total", fill=GREEN, font=header_font, anchor="mt")
+        # Size label
+        draw.text((sp_x + sp_w // 2, fn_y + sp_h - 15), "~60 MB total", fill=GREEN, font=header_font, anchor="mt")
 
-    # ---- MIDDLE: Communication ----
-    mid_y = 365
-    draw.rounded_rectangle((50, mid_y, 750, mid_y + 160), radius=10, fill=DARK_BOX, outline=BORDER)
-    draw.text((400, mid_y + 12), "SPV Verification Process", fill=WHITE, font=header_font, anchor="mt")
+        # ---- MIDDLE: Communication ----
+        mid_y = 365
+        draw.rounded_rectangle((50, mid_y, 750, mid_y + 160), radius=10, fill=DARK_BOX, outline=BORDER)
+        draw.text((400, mid_y + 12), "SPV Verification Process", fill=WHITE, font=header_font, anchor="mt")
 
-    # Step 1: Question
-    draw.rounded_rectangle((70, mid_y + 38, 250, mid_y + 80), radius=6, fill=GREEN_BG, outline=GREEN)
-    draw.text((160, mid_y + 50), "Is Tx X in Block N?", fill=GREEN, font=small_font, anchor="mt")
-    draw.text((160, mid_y + 68), "SPV asks full node", fill=DIM, font=small_font, anchor="mt")
+        # Step 1: Question
+        draw.rounded_rectangle((70, mid_y + 38, 250, mid_y + 80), radius=6, fill=GREEN_BG, outline=GREEN)
+        draw.text((160, mid_y + 50), "Is Tx X in Block N?", fill=GREEN, font=small_font, anchor="mt")
+        draw.text((160, mid_y + 68), "SPV asks full node", fill=DIM, font=small_font, anchor="mt")
 
-    # Arrow
-    marching_arrow_h(draw, 252, mid_y + 58, 310, GREEN, f)
+        # Arrow
+        marching_arrow_h(draw, 252, mid_y + 58, 310, GREEN, f)
 
-    # Step 2: Proof
-    draw.rounded_rectangle((312, mid_y + 35, 490, mid_y + 85), radius=6, fill=PURPLE_BG, outline=PURPLE)
-    draw.text((401, mid_y + 43), "Merkle Proof", fill=PURPLE, font=small_font, anchor="mt")
-    draw.text((401, mid_y + 58), "tx_hash + siblings", fill=WHITE, font=mono_sm, anchor="mt")
-    draw.text((401, mid_y + 73), "~500 bytes", fill=DIM, font=small_font, anchor="mt")
+        # Step 2: Proof
+        draw.rounded_rectangle((312, mid_y + 35, 490, mid_y + 85), radius=6, fill=PURPLE_BG, outline=PURPLE)
+        draw.text((401, mid_y + 43), "Merkle Proof", fill=PURPLE, font=small_font, anchor="mt")
+        draw.text((401, mid_y + 58), "tx_hash + siblings", fill=WHITE, font=mono_sm, anchor="mt")
+        draw.text((401, mid_y + 73), "~500 bytes", fill=DIM, font=small_font, anchor="mt")
 
-    # Arrow
-    marching_arrow_h(draw, 492, mid_y + 58, 550, PURPLE, f)
+        # Arrow
+        marching_arrow_h(draw, 492, mid_y + 58, 550, PURPLE, f)
 
-    # Step 3: Verify
-    draw.rounded_rectangle((552, mid_y + 38, 730, mid_y + 80), radius=6, fill=CYAN_BG, outline=CYAN)
-    draw.text((641, mid_y + 48), "Compute merkle root", fill=CYAN, font=small_font, anchor="mt")
-    draw.text((641, mid_y + 66), "Match header? YES", fill=GREEN, font=small_font, anchor="mt")
+        # Step 3: Verify
+        draw.rounded_rectangle((552, mid_y + 38, 730, mid_y + 80), radius=6, fill=CYAN_BG, outline=CYAN)
+        draw.text((641, mid_y + 48), "Compute merkle root", fill=CYAN, font=small_font, anchor="mt")
+        draw.text((641, mid_y + 66), "Match header? YES", fill=GREEN, font=small_font, anchor="mt")
 
-    # Bottom labels
-    draw.text((160, mid_y + 95), "Light client", fill=GREEN, font=small_font, anchor="mt")
-    draw.text((401, mid_y + 95), "Network response", fill=PURPLE, font=small_font, anchor="mt")
-    draw.text((641, mid_y + 95), "Local verification", fill=CYAN, font=small_font, anchor="mt")
+        # Bottom labels
+        draw.text((160, mid_y + 95), "Light client", fill=GREEN, font=small_font, anchor="mt")
+        draw.text((401, mid_y + 95), "Network response", fill=PURPLE, font=small_font, anchor="mt")
+        draw.text((641, mid_y + 95), "Local verification", fill=CYAN, font=small_font, anchor="mt")
 
-    draw.text((400, mid_y + 120), "Trust: SPV trusts that the longest chain has valid blocks", fill=DIM, font=small_font, anchor="mt")
-    draw.text((400, mid_y + 140), "Tradeoff: less security than full node, but runs on phones!", fill=ORANGE, font=small_font, anchor="mt")
+        draw.text((400, mid_y + 120), "Trust: SPV trusts that the longest chain has valid blocks", fill=DIM, font=small_font, anchor="mt")
+        draw.text((400, mid_y + 140), "Tradeoff: less security than full node, but runs on phones!", fill=ORANGE, font=small_font, anchor="mt")
 
-    frames_list.append(img)
+        frames_list.append(img)
 
-frames_list[0].save("assets/gifs/bitcoin_04_spv_verification.gif", save_all=True, append_images=frames_list[1:], duration=DUR, loop=0)
-print("Saved assets/gifs/bitcoin_04_spv_verification.gif")
+    frames_list[0].save("assets/gifs/bitcoin_04_spv_verification.gif", save_all=True, append_images=frames_list[1:], duration=DUR, loop=0, optimize=True)
+    print("Saved assets/gifs/bitcoin_04_spv_verification.gif")
