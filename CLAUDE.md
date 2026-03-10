@@ -13,8 +13,8 @@ and runs in seconds on CPU.
 
 ## Branch Strategy
 
-- **v1 branch**: Approach A — flat folders per chain, ~8 scripts each (CURRENT)
-- **v2 branch** (future): Approach B — tiered sub-folders (fundamentals/intermediate/advanced), 20+ scripts per chain
+- **v1 branch**: Approach A — flat folders per chain, ~8 scripts each
+- **v2 branch**: Approach B — tiered sub-folders (fundamentals/intermediate/advanced), 20+ scripts per chain (CURRENT)
 
 ## Directory Structure
 
@@ -22,10 +22,22 @@ and runs in seconds on CPU.
 no-magic-blockchain/
 ├── CLAUDE.md              # THIS FILE — project rules and conventions
 ├── README.md              # Project overview with GIF previews
-├── core/                  # Chain-agnostic fundamentals (8 scripts)
-├── bitcoin/               # Bitcoin-specific implementations (8 scripts)
-├── ethereum/              # Ethereum-specific implementations (8 scripts)
-├── solana/                # Solana-specific implementations (8 scripts)
+├── core/                  # Chain-agnostic fundamentals
+│   ├── fundamentals/      # 8 scripts (01-08)
+│   ├── intermediate/      # (planned)
+│   └── advanced/          # (planned)
+├── bitcoin/               # Bitcoin-specific implementations
+│   ├── fundamentals/      # 8 scripts (01-08)
+│   ├── intermediate/      # (planned)
+│   └── advanced/          # (planned)
+├── ethereum/              # Ethereum-specific implementations
+│   ├── fundamentals/      # 8 scripts (01-08)
+│   ├── intermediate/      # (planned)
+│   └── advanced/          # (planned)
+├── solana/                # Solana-specific implementations
+│   ├── fundamentals/      # 8 scripts (01-08)
+│   ├── intermediate/      # (planned)
+│   └── advanced/          # (planned)
 ├── animations/            # Manim animation scripts (HAS external deps, separate from core)
 │   └── requirements.txt   # manim dependency lives here only
 ├── assets/gifs/           # Pre-rendered GIFs for README
@@ -38,7 +50,7 @@ no-magic-blockchain/
 
 1. **Zero external dependencies** — ONLY Python 3.10+ standard library (hashlib, struct, os, json, math, etc.)
 2. **Single file** — each script is completely self-contained, no imports from other scripts
-3. **Runs standalone** — `python3 core/01_hashing.py` must work with no setup
+3. **Runs standalone** — `python3 core/fundamentals/01_hashing.py` must work with no setup
 4. **Runs in seconds on CPU** — no GPU, no network calls, no file I/O beyond stdout
 5. **Naming** — `NN_snake_case_topic.py` (zero-padded number for learning order)
 
@@ -149,53 +161,53 @@ but groups must be sequential (core first, then chains).
 
 | # | File | What to Build |
 |---|------|--------------|
-| 01 | `core/01_hashing.py` | SHA-256 from scratch (bit manipulation, padding, rounds). Demo: hash strings, show avalanche effect (1-bit input change → ~50% output change) |
-| 02 | `core/02_public_key_crypto.py` | Elliptic curve math over finite fields (point addition, scalar multiplication). Generate keypairs on secp256k1. Demo: generate keys, show math |
-| 03 | `core/03_digital_signatures.py` | ECDSA sign/verify from scratch. Demo: sign message, verify, then tamper and show verification fails |
-| 04 | `core/04_merkle_trees.py` | Binary hash tree. Build tree from transactions, generate/verify inclusion proofs. Demo: build tree, prove membership, show proof size vs data size |
-| 05 | `core/05_blockchain.py` | Block structure (prev_hash, timestamp, data, nonce, hash). Chain blocks, validate chain integrity. Demo: build chain, tamper with block, show detection |
-| 06 | `core/06_consensus_pow.py` | Proof-of-work: find nonce where hash < target. Difficulty adjustment. Demo: mine blocks with increasing difficulty, show time/attempts |
-| 07 | `core/07_consensus_pos.py` | Proof-of-stake: validator selection weighted by stake, slashing for double-signing. Demo: simulate validator set, show selection distribution, slash a misbehaving validator |
-| 08 | `core/08_p2p_network.py` | Gossip protocol simulation: nodes discover peers, propagate blocks, handle forks. Demo: simulate 10-node network, show message propagation steps |
+| 01 | `core/fundamentals/01_hashing.py` | SHA-256 from scratch (bit manipulation, padding, rounds). Demo: hash strings, show avalanche effect (1-bit input change → ~50% output change) |
+| 02 | `core/fundamentals/02_public_key_crypto.py` | Elliptic curve math over finite fields (point addition, scalar multiplication). Generate keypairs on secp256k1. Demo: generate keys, show math |
+| 03 | `core/fundamentals/03_digital_signatures.py` | ECDSA sign/verify from scratch. Demo: sign message, verify, then tamper and show verification fails |
+| 04 | `core/fundamentals/04_merkle_trees.py` | Binary hash tree. Build tree from transactions, generate/verify inclusion proofs. Demo: build tree, prove membership, show proof size vs data size |
+| 05 | `core/fundamentals/05_blockchain.py` | Block structure (prev_hash, timestamp, data, nonce, hash). Chain blocks, validate chain integrity. Demo: build chain, tamper with block, show detection |
+| 06 | `core/fundamentals/06_consensus_pow.py` | Proof-of-work: find nonce where hash < target. Difficulty adjustment. Demo: mine blocks with increasing difficulty, show time/attempts |
+| 07 | `core/fundamentals/07_consensus_pos.py` | Proof-of-stake: validator selection weighted by stake, slashing for double-signing. Demo: simulate validator set, show selection distribution, slash a misbehaving validator |
+| 08 | `core/fundamentals/08_p2p_network.py` | Gossip protocol simulation: nodes discover peers, propagate blocks, handle forks. Demo: simulate 10-node network, show message propagation steps |
 
 ### Group 2: bitcoin/ (after core is done)
 
 | # | File | What to Build |
 |---|------|--------------|
-| 01 | `bitcoin/01_utxo_model.py` | UTXO set management: create transactions consuming inputs, producing outputs, tracking unspent set. Demo: multi-tx chain with change outputs |
-| 02 | `bitcoin/02_bitcoin_script.py` | Stack-based Script VM: implement OP_DUP, OP_HASH160, OP_EQUALVERIFY, OP_CHECKSIG, etc. Demo: evaluate P2PKH script step-by-step showing stack state |
-| 03 | `bitcoin/03_mining.py` | Bitcoin-specific mining: coinbase transaction, block header construction, nonce search. Demo: mine a block with transactions, show reward |
-| 04 | `bitcoin/04_spv_verification.py` | Simplified Payment Verification: verify transaction inclusion using block headers + Merkle proofs without full blockchain. Demo: verify tx with minimal data |
-| 05 | `bitcoin/05_wallets_hd.py` | HD wallets: BIP-32 key derivation, master seed → child keys, derivation paths (m/44'/0'/0'/0/0). Demo: derive multiple addresses from one seed |
-| 06 | `bitcoin/06_segwit.py` | Segregated Witness: separate witness data, calculate weight units, show malleability fix. Demo: compare legacy vs segwit transaction structure |
-| 07 | `bitcoin/07_difficulty_adjustment.py` | Retarget algorithm: every 2016 blocks, adjust target based on actual vs expected time. Demo: simulate 10 epochs with varying hash rates |
-| 08 | `bitcoin/08_simplified_lightning.py` | Payment channels: funding tx, commitment txs, HTLCs, channel close. Demo: open channel, route payment through 3 nodes, settle |
+| 01 | `bitcoin/fundamentals/01_utxo_model.py` | UTXO set management: create transactions consuming inputs, producing outputs, tracking unspent set. Demo: multi-tx chain with change outputs |
+| 02 | `bitcoin/fundamentals/02_bitcoin_script.py` | Stack-based Script VM: implement OP_DUP, OP_HASH160, OP_EQUALVERIFY, OP_CHECKSIG, etc. Demo: evaluate P2PKH script step-by-step showing stack state |
+| 03 | `bitcoin/fundamentals/03_mining.py` | Bitcoin-specific mining: coinbase transaction, block header construction, nonce search. Demo: mine a block with transactions, show reward |
+| 04 | `bitcoin/fundamentals/04_spv_verification.py` | Simplified Payment Verification: verify transaction inclusion using block headers + Merkle proofs without full blockchain. Demo: verify tx with minimal data |
+| 05 | `bitcoin/fundamentals/05_wallets_hd.py` | HD wallets: BIP-32 key derivation, master seed → child keys, derivation paths (m/44'/0'/0'/0/0). Demo: derive multiple addresses from one seed |
+| 06 | `bitcoin/fundamentals/06_segwit.py` | Segregated Witness: separate witness data, calculate weight units, show malleability fix. Demo: compare legacy vs segwit transaction structure |
+| 07 | `bitcoin/fundamentals/07_difficulty_adjustment.py` | Retarget algorithm: every 2016 blocks, adjust target based on actual vs expected time. Demo: simulate 10 epochs with varying hash rates |
+| 08 | `bitcoin/fundamentals/08_simplified_lightning.py` | Payment channels: funding tx, commitment txs, HTLCs, channel close. Demo: open channel, route payment through 3 nodes, settle |
 
 ### Group 3: ethereum/ (after core is done, parallel with bitcoin)
 
 | # | File | What to Build |
 |---|------|--------------|
-| 01 | `ethereum/01_accounts_state.py` | World state: account objects (nonce, balance, codeHash, storageRoot), state transitions from transactions. Demo: process transfers, show state changes |
-| 02 | `ethereum/02_evm_bytecode.py` | EVM implementation: stack machine with PUSH, POP, ADD, MUL, MSTORE, MLOAD, SSTORE, SLOAD, JUMP, JUMPI, etc. Demo: execute bytecode step-by-step showing stack/memory/storage |
-| 03 | `ethereum/03_gas_execution.py` | Gas model: assign gas costs per opcode, track gas usage, implement EIP-1559 (base fee + priority fee, elastic block size). Demo: execute contract, show gas consumption per opcode |
-| 04 | `ethereum/04_rlp_encoding.py` | RLP encode/decode: handle strings, lists, nested structures, empty values. Demo: encode various types, show byte output, round-trip verification |
-| 05 | `ethereum/05_merkle_patricia_trie.py` | Modified Merkle Patricia Trie: extension/branch/leaf nodes, nibble path encoding, insert/lookup/proof. Demo: build trie, lookup key, generate state proof |
-| 06 | `ethereum/06_smart_contracts.py` | Contract lifecycle: deploy bytecode, call functions via ABI, read/write storage slots. Demo: deploy a simple counter contract, call increment, read value |
-| 07 | `ethereum/07_pos_beacon.py` | Beacon chain: validator registration, epoch/slot structure, attestations, finality (simplified Casper FFG). Demo: simulate validators across epochs, show finalization |
-| 08 | `ethereum/08_abi_encoding.py` | ABI encoding: function selectors (keccak256), uint256/address/bytes/string/tuple encoding, decode calldata. Demo: encode function call, decode it back |
+| 01 | `ethereum/fundamentals/01_accounts_state.py` | World state: account objects (nonce, balance, codeHash, storageRoot), state transitions from transactions. Demo: process transfers, show state changes |
+| 02 | `ethereum/fundamentals/02_evm_bytecode.py` | EVM implementation: stack machine with PUSH, POP, ADD, MUL, MSTORE, MLOAD, SSTORE, SLOAD, JUMP, JUMPI, etc. Demo: execute bytecode step-by-step showing stack/memory/storage |
+| 03 | `ethereum/fundamentals/03_gas_execution.py` | Gas model: assign gas costs per opcode, track gas usage, implement EIP-1559 (base fee + priority fee, elastic block size). Demo: execute contract, show gas consumption per opcode |
+| 04 | `ethereum/fundamentals/04_rlp_encoding.py` | RLP encode/decode: handle strings, lists, nested structures, empty values. Demo: encode various types, show byte output, round-trip verification |
+| 05 | `ethereum/fundamentals/05_merkle_patricia_trie.py` | Modified Merkle Patricia Trie: extension/branch/leaf nodes, nibble path encoding, insert/lookup/proof. Demo: build trie, lookup key, generate state proof |
+| 06 | `ethereum/fundamentals/06_smart_contracts.py` | Contract lifecycle: deploy bytecode, call functions via ABI, read/write storage slots. Demo: deploy a simple counter contract, call increment, read value |
+| 07 | `ethereum/fundamentals/07_pos_beacon.py` | Beacon chain: validator registration, epoch/slot structure, attestations, finality (simplified Casper FFG). Demo: simulate validators across epochs, show finalization |
+| 08 | `ethereum/fundamentals/08_abi_encoding.py` | ABI encoding: function selectors (keccak256), uint256/address/bytes/string/tuple encoding, decode calldata. Demo: encode function call, decode it back |
 
 ### Group 4: solana/ (after core is done, parallel with bitcoin/ethereum)
 
 | # | File | What to Build |
 |---|------|--------------|
-| 01 | `solana/01_accounts_model.py` | Solana account structure: owner, lamports, data, executable flag. Program-derived addresses (PDAs). Demo: create accounts, show ownership rules |
-| 02 | `solana/02_proof_of_history.py` | PoH: sequential SHA-256 hashing as verifiable delay function, embed external events. Demo: generate PoH sequence, verify ordering, show timestamp proofs |
-| 03 | `solana/03_programs.py` | Stateless program model: instruction processing, account validation, cross-program invocation (CPI). Demo: process instructions, show account mutations |
-| 04 | `solana/04_transactions.py` | Transaction format: message (header, account keys, recent blockhash, instructions), signatures. Demo: build, sign, and verify a multi-instruction transaction |
-| 05 | `solana/05_rent_model.py` | Rent: calculate minimum balance for rent exemption based on data size, show rent collection. Demo: create accounts of various sizes, show rent thresholds |
-| 06 | `solana/06_token_program.py` | SPL Token: mint accounts, token accounts, mint/transfer/burn instructions. Demo: create token, mint supply, transfer between accounts |
-| 07 | `solana/07_turbine_propagation.py` | Turbine: shred blocks into packets, erasure coding (Reed-Solomon simplified), tree-based propagation to validators. Demo: shred block, simulate tree broadcast, reconstruct from partial data |
-| 08 | `solana/08_gulf_stream.py` | Gulf Stream: transaction forwarding to upcoming leaders, leader schedule, mempool-less architecture. Demo: simulate leader rotation, show tx forwarding path |
+| 01 | `solana/fundamentals/01_accounts_model.py` | Solana account structure: owner, lamports, data, executable flag. Program-derived addresses (PDAs). Demo: create accounts, show ownership rules |
+| 02 | `solana/fundamentals/02_proof_of_history.py` | PoH: sequential SHA-256 hashing as verifiable delay function, embed external events. Demo: generate PoH sequence, verify ordering, show timestamp proofs |
+| 03 | `solana/fundamentals/03_programs.py` | Stateless program model: instruction processing, account validation, cross-program invocation (CPI). Demo: process instructions, show account mutations |
+| 04 | `solana/fundamentals/04_transactions.py` | Transaction format: message (header, account keys, recent blockhash, instructions), signatures. Demo: build, sign, and verify a multi-instruction transaction |
+| 05 | `solana/fundamentals/05_rent_model.py` | Rent: calculate minimum balance for rent exemption based on data size, show rent collection. Demo: create accounts of various sizes, show rent thresholds |
+| 06 | `solana/fundamentals/06_token_program.py` | SPL Token: mint accounts, token accounts, mint/transfer/burn instructions. Demo: create token, mint supply, transfer between accounts |
+| 07 | `solana/fundamentals/07_turbine_propagation.py` | Turbine: shred blocks into packets, erasure coding (Reed-Solomon simplified), tree-based propagation to validators. Demo: shred block, simulate tree broadcast, reconstruct from partial data |
+| 08 | `solana/fundamentals/08_gulf_stream.py` | Gulf Stream: transaction forwarding to upcoming leaders, leader schedule, mempool-less architecture. Demo: simulate leader rotation, show tx forwarding path |
 
 ## Animations (separate from core scripts)
 
@@ -217,11 +229,12 @@ but groups must be sequential (core first, then chains).
 - [ ] No network calls, no file reads, no external data
 - [ ] Runs in under 30 seconds on a modern laptop
 
-## v2 Plan (future — separate branch)
+## v2 Plan (in progress — v2 branch)
 
-When expanding to 20+ scripts per chain:
-1. Create `v2` branch from `v1`
-2. Reorganize each chain folder into `fundamentals/`, `intermediate/`, `advanced/`
-3. Add advanced topics: ZK proofs, MEV, sharding, cross-chain bridges, rollups, etc.
-4. Add more chains: Cosmos/Tendermint, Polkadot, Cardano
-5. Expand animations to cover all scripts
+Expanding to 16 scripts per chain (8 fundamentals + 4 intermediate + 4 advanced):
+1. ~~Create `v2` branch from `v1`~~ (done)
+2. ~~Reorganize each chain folder into `fundamentals/`, `intermediate/`, `advanced/`~~ (done)
+3. Add intermediate topics: 4 scripts per chain covering deeper protocol mechanics
+4. Add advanced topics: 4 scripts per chain (ZK proofs, MEV, sharding, rollups, etc.)
+5. Generate GIFs for all new scripts
+6. Future: add more chains (Cosmos/Tendermint, Polkadot, Cardano)
