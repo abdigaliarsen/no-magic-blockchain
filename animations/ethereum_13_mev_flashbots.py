@@ -9,7 +9,7 @@ import math
 
 # --- Constants ---
 W, H = 800, 550
-FRAMES = 36
+FRAMES = 72
 DELAY = 90
 OUT = "assets/gifs/ethereum_13_mev_flashbots.gif"
 
@@ -117,7 +117,7 @@ def make_frame(f):
     ]
 
     # Rotating highlight: which builder is winning
-    winner_idx = int(t * 6) % 3
+    winner_idx = int(t * 3) % 3
     by = 84
     for i, (name, bid, color) in enumerate(builders):
         bg = CYAN_BG if i == winner_idx else DARK_BOX

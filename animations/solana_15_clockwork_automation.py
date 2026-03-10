@@ -2,7 +2,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import math, os
 
-W, H, FRAMES, DUR = 800, 550, 36, 90
+W, H, FRAMES, DUR = 800, 550, 72, 90
 BG = (13, 17, 23)
 CYAN = (56, 189, 248)
 GREEN = (52, 211, 153)
@@ -90,7 +90,7 @@ def make_frame(fi):
     tx = th_x + 15
     for i, trig in enumerate(triggers):
         tw2, _ = text_size(d, trig, tiny_font)
-        active = i == (fi // 9) % 4  # Rotate highlight
+        active = i == (fi // 18) % 4  # Rotate highlight
         bg = YELLOW_BG if active else DARK_BOX
         bord = YELLOW if active else BORDER
         draw_rounded_rect(d, (tx, th_y + 148, tx + tw2 + 12, th_y + 165), bg, bord, r=3)
@@ -228,7 +228,7 @@ def make_frame(fi):
         ("DCA = Dollar Cost Average", "Buy fixed amounts at intervals -- reduces timing risk", GREEN),
         ("Thread Account = Automation Config", "Stores trigger, target instruction, and fee budget on-chain", CYAN),
     ]
-    idx = fi % len(explanations)
+    idx = (fi // 18) % len(explanations)
     et, ed, ec = explanations[idx]
     etw, _ = text_size(d, et, header_font)
     d.text(((W - etw) // 2, exp_y + 10), et, fill=ec, font=header_font)
@@ -242,7 +242,7 @@ def make_frame(fi):
     colors = [GREEN, CYAN, YELLOW, ORANGE]
     for i, (tg, col) in enumerate(zip(tags, colors)):
         tgw, _ = text_size(d, tg, tiny_font)
-        active = i == (fi // 9) % len(tags)
+        active = i == (fi // 18) % len(tags)
         bg = lerp_color(DARK_BOX, col, 0.15 if active else 0.0)
         bord = col if active else BORDER
         draw_rounded_rect(d, (tag_x, tag_y, tag_x + tgw + 18, tag_y + 18), bg, bord, r=3)

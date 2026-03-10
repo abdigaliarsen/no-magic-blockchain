@@ -2,7 +2,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import math, os
 
-W, H, FRAMES, DUR = 800, 550, 36, 90
+W, H, FRAMES, DUR = 800, 550, 72, 90
 BG = (13, 17, 23)
 CYAN = (56, 189, 248)
 GREEN = (52, 211, 153)
@@ -202,7 +202,7 @@ def make_frame(fi):
         ("4000+ TPS Potential", "Multiple CPU cores process independent transactions simultaneously", GREEN),
         ("Declared Account Lists", "Each tx declares accounts upfront, enabling scheduler to plan", PURPLE),
     ]
-    idx = fi % len(explanations)
+    idx = (fi // 18) % len(explanations)
     et, ed, ec = explanations[idx]
     etw, _ = text_size(d, et, header_font)
     d.text(((W - etw) // 2, bot_y + 10), et, fill=ec, font=header_font)

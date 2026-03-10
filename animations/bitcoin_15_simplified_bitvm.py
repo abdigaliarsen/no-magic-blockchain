@@ -2,7 +2,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import math, os
 
-W, H, FRAMES, DUR = 800, 550, 36, 90
+W, H, FRAMES, DUR = 800, 550, 72, 90
 BG = (13, 17, 23)
 CYAN = (56, 189, 248)
 GREEN = (52, 211, 153)

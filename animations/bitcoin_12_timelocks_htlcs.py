@@ -2,7 +2,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import math, os
 
-W, H, FRAMES, DUR = 800, 550, 36, 90
+W, H, FRAMES, DUR = 800, 550, 72, 90
 BG = (13, 17, 23)
 CYAN = (56, 189, 248)
 GREEN = (52, 211, 153)
@@ -74,12 +74,12 @@ def draw_clock(draw, cx, cy, r, color, frame):
     """Draw a simple clock icon."""
     draw.ellipse([(cx - r, cy - r), (cx + r, cy + r)], outline=color, width=2)
     # Hour hand
-    angle = -math.pi / 2 + (frame / 36) * 2 * math.pi
+    angle = -math.pi / 2 + (frame / 72) * 2 * math.pi
     hx = cx + int(r * 0.5 * math.cos(angle))
     hy = cy + int(r * 0.5 * math.sin(angle))
     draw.line([(cx, cy), (hx, hy)], fill=color, width=2)
     # Minute hand
-    m_angle = -math.pi / 2 + (frame / 36) * 2 * math.pi * 4
+    m_angle = -math.pi / 2 + (frame / 72) * 2 * math.pi * 4
     mx = cx + int(r * 0.7 * math.cos(m_angle))
     my = cy + int(r * 0.7 * math.sin(m_angle))
     draw.line([(cx, cy), (mx, my)], fill=color, width=1)
@@ -180,7 +180,7 @@ if __name__ == "__main__":
         ]
 
         # Highlight current step based on frame
-        active_step = (f // 7) % 5
+        active_step = (f // 14) % 5
         for i, (num, text, col) in enumerate(steps):
             sy = 378 + i * 17
             if i == active_step:

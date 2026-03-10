@@ -2,7 +2,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import math, os
 
-W, H, FRAMES, DUR = 800, 550, 36, 90
+W, H, FRAMES, DUR = 800, 550, 72, 90
 BG = (13, 17, 23)
 CYAN = (56, 189, 248)
 GREEN = (52, 211, 153)
@@ -84,7 +84,7 @@ def make_frame(fi):
     stage_mid_y = pipe_y + 35
 
     # Animated highlight showing which stage is "active"
-    active_stage = int(fi / 3) % 4
+    active_stage = int(fi / 6) % 4
 
     for i, (name, color, desc) in enumerate(stages):
         sx = stage_start_x + i * (stage_w + stage_gap)
@@ -248,7 +248,7 @@ def make_frame(fi):
         ("Pipelined Architecture", "Fetch, verify, execute, broadcast happen simultaneously on different data", CYAN),
         ("Account Locking", "Threads process non-conflicting txs in parallel -- conflicts serialized", PURPLE),
     ]
-    idx = fi % len(explanations)
+    idx = (fi // 18) % len(explanations)
     et, ed, ec = explanations[idx]
     etw, _ = text_size(d, et, header_font)
     d.text(((W - etw) // 2, exp_y + 10), et, fill=ec, font=header_font)

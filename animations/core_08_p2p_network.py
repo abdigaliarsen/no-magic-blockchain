@@ -7,7 +7,7 @@ import math
 
 # --- Configuration ---
 W, H = 800, 550
-FRAMES = 36
+FRAMES = 72
 DELAY_MS = 90
 
 # Colors
@@ -114,7 +114,7 @@ for n, w in sorted(wave_assignment.items(), key=lambda x: x[1]):
 # Frames 4-8: wave 1 arrows animate
 # Frames 9-13: wave 1 nodes light up
 # Continue for each wave, then hold
-FRAMES_PER_PHASE = 5
+FRAMES_PER_PHASE = 10
 
 def get_phase(frame):
     """Return (wave_showing, sub_phase) where sub_phase: 'arrow' or 'lit'."""

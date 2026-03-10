@@ -35,7 +35,7 @@ BORDER = (40, 50, 65)
 WHITE = (235, 240, 245)
 DIM = (100, 110, 125)
 
-N_FRAMES = 36
+N_FRAMES = 72
 FRAME_MS = 90
 
 
@@ -162,10 +162,10 @@ def draw_frame(fi):
 
     # ── Determine which phase to highlight ──
     # Cycle through 3 phases: pre-prepare, prepare, commit
-    cycle = fi % 18
-    if cycle < 6:
+    cycle = fi % 36
+    if cycle < 12:
         active_phase = 0   # pre-prepare
-    elif cycle < 12:
+    elif cycle < 24:
         active_phase = 1   # prepare
     else:
         active_phase = 2   # commit

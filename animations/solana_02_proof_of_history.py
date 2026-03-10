@@ -9,7 +9,7 @@ import math
 
 # --- Config ---
 W, H = 800, 550
-FRAMES = 36
+FRAMES = 72
 DELAY = 90
 OUT = "assets/gifs/solana_02_proof_of_history.gif"
 
@@ -121,7 +121,7 @@ def make_frame(frame_idx):
         [3, 1, 0, 2],
         [1, 3, 2, 0],
     ]
-    shuffle = shuffle_orders[frame_idx % len(shuffle_orders)]
+    shuffle = shuffle_orders[(frame_idx // 18) % len(shuffle_orders)]
 
     for draw_i in range(4):
         event_i = shuffle[draw_i]
@@ -261,7 +261,7 @@ def make_frame(frame_idx):
          GREEN),
     ]
 
-    idx = frame_idx % len(explanations)
+    idx = (frame_idx // 18) % len(explanations)
     et, ed, ec = explanations[idx]
 
     etw, eth = text_size(draw, et, font_header)

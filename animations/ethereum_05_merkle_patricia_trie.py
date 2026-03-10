@@ -9,7 +9,7 @@ import math
 
 # --- Configuration ---
 W, H = 800, 550
-FRAMES = 36
+FRAMES = 72
 DELAY = 90
 OUT = "assets/gifs/ethereum_05_merkle_patricia_trie.gif"
 
@@ -106,9 +106,9 @@ def draw_frame(frame_idx):
     img = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(img)
 
-    # Phase: cycle through 3 paths (12 frames each)
-    path_idx = frame_idx // 12
-    local_t = (frame_idx % 12) / 11.0
+    # Phase: cycle through 3 paths (24 frames each)
+    path_idx = frame_idx // 24
+    local_t = (frame_idx % 24) / 23.0
 
     current_path = PATHS[path_idx]
     path_keys = current_path["keys"]

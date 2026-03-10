@@ -9,7 +9,7 @@ import math
 
 # --- CONSTANTS ---
 W, H = 800, 550
-FRAMES = 36
+FRAMES = 72
 DELAY = 90
 BG = (13, 17, 23)
 PANEL = (17, 21, 28)
@@ -84,8 +84,8 @@ def make_frame(frame_idx):
     # 6 epoch boxes in a chain
     epochs = ["E60", "E61", "E62", "E63", "E64", "E65"]
     # States evolve with frame: earlier epochs finalize as animation progresses
-    # phase: 0-11 = round 1 voting, 12-23 = round 2 voting, 24-35 = finalization
-    phase = frame_idx // 12  # 0, 1, 2
+    # phase: 0-23 = round 1 voting, 24-47 = round 2 voting, 48-71 = finalization
+    phase = frame_idx // 24  # 0, 1, 2
 
     epoch_states = []
     for i in range(6):
@@ -163,8 +163,8 @@ def make_frame(frame_idx):
         if completed:
             pct = 1.0
         elif active:
-            sub_frame = frame_idx % 12
-            pct = min(1.0, sub_frame / 10.0)
+            sub_frame = frame_idx % 24
+            pct = min(1.0, sub_frame / 22.0)
         else:
             pct = 0.0
 
@@ -233,7 +233,7 @@ def make_frame(frame_idx):
 
     # --- SCANNING LINE ---
     # Horizontal scan across the voting panel
-    scan_x = 40 + int((W - 80) * ((frame_idx % 18) / 17.0))
+    scan_x = 40 + int((W - 80) * ((frame_idx % 36) / 35.0))
     draw.line([(scan_x, vote_y + 32), (scan_x, vote_y + 33)], fill=WHITE, width=1)
 
     return img

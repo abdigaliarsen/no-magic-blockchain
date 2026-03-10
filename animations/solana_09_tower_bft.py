@@ -2,7 +2,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import math, os
 
-W, H, FRAMES, DUR = 800, 550, 36, 90
+W, H, FRAMES, DUR = 800, 550, 72, 90
 BG = (13, 17, 23)
 CYAN = (56, 189, 248)
 GREEN = (52, 211, 153)
@@ -83,7 +83,7 @@ def make_frame(fi):
     box_w, box_h = 170, 28
     start_y = panel_top + 32
     # Pulsing highlight on one vote
-    highlight_idx = fi % len(votes)
+    highlight_idx = (fi // 10) % len(votes)
 
     for i, (slot, lockout, color) in enumerate(votes):
         bx = lt_x + (lt_w - box_w) // 2
@@ -210,7 +210,7 @@ def make_frame(fi):
         ("Stake-Weighted Fork Choice", "The fork with the most staked SOL voting on it wins", GREEN),
         ("Optimistic Confirmation", "66%+ stake on a slot = optimistically confirmed in ~400ms", PURPLE),
     ]
-    idx = fi % len(explanations)
+    idx = (fi // 18) % len(explanations)
     et, ed, ec = explanations[idx]
     etw, _ = text_size(d, et, header_font)
     d.text(((W - etw) // 2, bot_y + 10), et, fill=ec, font=header_font)

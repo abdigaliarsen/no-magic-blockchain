@@ -10,7 +10,7 @@ import math
 
 # --- Constants ---
 W, H = 800, 550
-FRAMES = 36
+FRAMES = 72
 DELAY = 90
 OUT = "assets/gifs/ethereum_15_evm_precompiles.gif"
 
@@ -104,7 +104,7 @@ def make_frame(f):
     draw.text((40, 78), "Native code at fixed addresses, cheaper than EVM bytecode", font=font_small, fill=DIM)
 
     # Which precompile is highlighted (cycles through)
-    highlight_idx = int(t * 9) % 9
+    highlight_idx = f // 8 % 9
 
     grid_x0 = 40
     grid_y0 = 98

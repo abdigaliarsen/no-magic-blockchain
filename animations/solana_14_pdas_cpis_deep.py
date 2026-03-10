@@ -2,7 +2,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import math, os
 
-W, H, FRAMES, DUR = 800, 550, 36, 90
+W, H, FRAMES, DUR = 800, 550, 72, 90
 BG = (13, 17, 23)
 CYAN = (56, 189, 248)
 GREEN = (52, 211, 153)
@@ -237,7 +237,7 @@ def make_frame(fi):
         ("invoke_signed()", "Program provides seeds to prove PDA ownership -- runtime verifies derivation", ORANGE),
         ("Bump Seed", "Tries 255..0 until SHA-256(seeds ++ program_id) lands off ed25519 curve", CYAN),
     ]
-    idx = fi % len(explanations)
+    idx = (fi // 18) % len(explanations)
     et, ed, ec = explanations[idx]
     etw, _ = text_size(d, et, header_font)
     d.text(((W - etw) // 2, exp_y + 10), et, fill=ec, font=header_font)
